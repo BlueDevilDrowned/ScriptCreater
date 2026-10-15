@@ -1,0 +1,14 @@
+TARGET: D:/UnityHub/Project/程序化生成/Assets/Scripts/WorldGen/Density/
+MODIFIED_FILE role: each density type is now a separate C# file: DensityContext.cs, IDensityFunction.cs, DensityFunctions.cs, ConstantFunction.cs, UnaryFunction.cs, BinaryFunction.cs, ClampFunction.cs, RangeChoiceFunction.cs, YGradientFunction.cs, CacheOnceFunction.cs, ValueNoiseFunction.cs, WorldFields.cs.
+DIFF_FILE: D:/UnityHub/Project/程序化生成/Artifacts/DensityFunctionMigration/DensityFunction.patch
+VERIFICATION.txt: D:/UnityHub/Project/程序化生成/Artifacts/DensityFunctionMigration/VERIFICATION.txt
+ROLLBACK.sh: D:/UnityHub/Project/程序化生成/Artifacts/DensityFunctionMigration/ROLLBACK.sh
+BASELINE behavior: all types were co-located in DensityFunction.cs.
+MODIFIED command: dotnet run --project D:/UnityHub/Project/程序化生成/Temp/DensitySmoke/DensitySmoke.csproj
+MODIFIED stdout:
+final=33.870700718800066
+temp=0.5498639742326455
+solid=True
+MODIFIED exit: 0
+MODIFIED behavior: same API and deterministic output, compiled from separate files.
+ROLLBACK behavior: prior single-file source snapshot remains recoverable through the patch artifact; no runtime behavior changes.

@@ -1,0 +1,299 @@
+diff --git a/Assets/Scripts/WorldGen/Density/DensityFunction.cs b/Assets/Scripts/WorldGen/Density/DensityFunction.cs
+new file mode 100644
+index 0000000..3868fd7
+--- /dev/null
++++ b/Assets/Scripts/WorldGen/Density/DensityFunction.cs
+@@ -0,0 +1,293 @@
++using System;
++using System.Collections.Generic;
++
++namespace ProceduralGeneration.WorldGen.Density
++{
++    /// <summary>坐标上下文。DensityFunction 保持纯函数语义：相同输入得到相同输出。</summary>
++    public readonly struct DensityContext
++    {
++        public readonly int X;
++        public readonly int Y;
++        public readonly int Z;
++
++        public DensityContext(int x, int y, int z)
++        {
++            X = x;
++            Y = y;
++            Z = z;
++        }
++    }
++
++    /// <summary>Minecraft DensityFunction 的最小可组合接口。</summary>
++    public interface IDensityFunction
++    {
++        double Sample(in DensityContext context);
++    }
++
++    public static class DensityFunctions
++    {
++        public static IDensityFunction Constant(double value) => new ConstantFunction(value);
++        public static IDensityFunction Noise(int seed, double scale = 0.01, double amplitude = 1.0)
++            => new ValueNoiseFunction(seed, scale, amplitude);
++        public static IDensityFunction Add(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x + y);
++        public static IDensityFunction Subtract(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x - y);
++        public static IDensityFunction Multiply(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x * y);
++        public static IDensityFunction Multiply(IDensityFunction a, double b) => Multiply(a, Constant(b));
++        public static IDensityFunction Min(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, Math.Min);
++        public static IDensityFunction Max(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, Math.Max);
++        public static IDensityFunction Abs(IDensityFunction input) => new UnaryFunction(input, Math.Abs);
++        public static IDensityFunction Clamp(IDensityFunction input, double min, double max)
++            => new ClampFunction(input, min, max);
++        public static IDensityFunction RangeChoice(
++            IDensityFunction input, double minInclusive, double maxExclusive,
++            IDensityFunction inRange, IDensityFunction outOfRange)
++            => new RangeChoiceFunction(input, minInclusive, maxExclusive, inRange, outOfRange);
++        public static IDensityFunction YClampedGradient(
++            int fromY, int toY, double fromValue, double toValue)
++            => new YGradientFunction(fromY, toY, fromValue, toValue);
++
++        /// <summary>以一次采样结果为常量的简单缓存，适合固定坐标的重复读取。</summary>
++        public static IDensityFunction CacheOnce(IDensityFunction input) => new CacheOnceFunction(input);
++    }
++
++    internal sealed class ConstantFunction : IDensityFunction
++    {
++        private readonly double value;
++        public ConstantFunction(double value) { this.value = value; }
++        public double Sample(in DensityContext context) => value;
++    }
++
++    internal sealed class UnaryFunction : IDensityFunction
++    {
++        private readonly IDensityFunction input;
++        private readonly Func<double, double> operation;
++        public UnaryFunction(IDensityFunction input, Func<double, double> operation)
++        {
++            this.input = input ?? throw new ArgumentNullException(nameof(input));
++            this.operation = operation ?? throw new ArgumentNullException(nameof(operation));
++        }
++        public double Sample(in DensityContext context) => operation(input.Sample(context));
++    }
++
++    internal sealed class BinaryFunction : IDensityFunction
++    {
++        private readonly IDensityFunction left;
++        private readonly IDensityFunction right;
++        private readonly Func<double, double, double> operation;
++        public BinaryFunction(IDensityFunction left, IDensityFunction right, Func<double, double, double> operation)
++        {
++            this.left = left ?? throw new ArgumentNullException(nameof(left));
++            this.right = right ?? throw new ArgumentNullException(nameof(right));
++            this.operation = operation ?? throw new ArgumentNullException(nameof(operation));
++        }
++        public double Sample(in DensityContext context)
++            => operation(left.Sample(context), right.Sample(context));
++    }
++
++    internal sealed class ClampFunction : IDensityFunction
++    {
++        private readonly IDensityFunction input;
++        private readonly double min;
++        private readonly double max;
++        public ClampFunction(IDensityFunction input, double min, double max)
++        {
++            if (min > max) throw new ArgumentException("min must be <= max");
++            this.input = input ?? throw new ArgumentNullException(nameof(input));
++            this.min = min;
++            this.max = max;
++        }
++        public double Sample(in DensityContext context)
++            => Math.Max(min, Math.Min(max, input.Sample(context)));
++    }
++
++    internal sealed class RangeChoiceFunction : IDensityFunction
++    {
++        private readonly IDensityFunction input;
++        private readonly double minInclusive;
++        private readonly double maxExclusive;
++        private readonly IDensityFunction inRange;
++        private readonly IDensityFunction outOfRange;
++        public RangeChoiceFunction(IDensityFunction input, double minInclusive, double maxExclusive,
++            IDensityFunction inRange, IDensityFunction outOfRange)
++        {
++            this.input = input ?? throw new ArgumentNullException(nameof(input));
++            this.inRange = inRange ?? throw new ArgumentNullException(nameof(inRange));
++            this.outOfRange = outOfRange ?? throw new ArgumentNullException(nameof(outOfRange));
++            this.minInclusive = minInclusive;
++            this.maxExclusive = maxExclusive;
++        }
++        public double Sample(in DensityContext context)
++        {
++            double value = input.Sample(context);
++            return value >= minInclusive && value < maxExclusive
++                ? inRange.Sample(context)
++                : outOfRange.Sample(context);
++        }
++    }
++
++    internal sealed class YGradientFunction : IDensityFunction
++    {
++        private readonly int fromY;
++        private readonly int toY;
++        private readonly double fromValue;
++        private readonly double toValue;
++        public YGradientFunction(int fromY, int toY, double fromValue, double toValue)
++        {
++            if (fromY == toY) throw new ArgumentException("fromY and toY must differ");
++            this.fromY = fromY;
++            this.toY = toY;
++            this.fromValue = fromValue;
++            this.toValue = toValue;
++        }
++        public double Sample(in DensityContext context)
++        {
++            double t = (context.Y - fromY) / (double)(toY - fromY);
++            t = Math.Max(0.0, Math.Min(1.0, t));
++            return fromValue + (toValue - fromValue) * t;
++        }
++    }
++
++    internal sealed class CacheOnceFunction : IDensityFunction
++    {
++        private readonly IDensityFunction input;
++        private bool hasValue;
++        private DensityContext lastContext;
++        private double lastValue;
++        public CacheOnceFunction(IDensityFunction input) { this.input = input ?? throw new ArgumentNullException(nameof(input)); }
++        public double Sample(in DensityContext context)
++        {
++            if (!hasValue || context.X != lastContext.X || context.Y != lastContext.Y || context.Z != lastContext.Z)
++            {
++                lastContext = context;
++                lastValue = input.Sample(context);
++                hasValue = true;
++            }
++            return lastValue;
++        }
++    }
++
++    /// <summary>无第三方依赖的确定性三维 value noise。它是学习用途的 Noise 节点，不追求 1.20.1 数值复刻。</summary>
++    internal sealed class ValueNoiseFunction : IDensityFunction
++    {
++        private readonly int seed;
++        private readonly double scale;
++        private readonly double amplitude;
++        public ValueNoiseFunction(int seed, double scale, double amplitude)
++        {
++            if (scale <= 0) throw new ArgumentOutOfRangeException(nameof(scale));
++            this.seed = seed;
++            this.scale = scale;
++            this.amplitude = amplitude;
++        }
++        public double Sample(in DensityContext context)
++        {
++            double x = context.X * scale;
++            double y = context.Y * scale;
++            double z = context.Z * scale;
++            int x0 = FloorToInt(x), y0 = FloorToInt(y), z0 = FloorToInt(z);
++            double tx = Smooth(x - x0), ty = Smooth(y - y0), tz = Smooth(z - z0);
++            double c000 = Lattice(x0, y0, z0), c100 = Lattice(x0 + 1, y0, z0);
++            double c010 = Lattice(x0, y0 + 1, z0), c110 = Lattice(x0 + 1, y0 + 1, z0);
++            double c001 = Lattice(x0, y0, z0 + 1), c101 = Lattice(x0 + 1, y0, z0 + 1);
++            double c011 = Lattice(x0, y0 + 1, z0 + 1), c111 = Lattice(x0 + 1, y0 + 1, z0 + 1);
++            double x00 = Lerp(c000, c100, tx), x10 = Lerp(c010, c110, tx);
++            double x01 = Lerp(c001, c101, tx), x11 = Lerp(c011, c111, tx);
++            return Lerp(Lerp(x00, x10, ty), Lerp(x01, x11, ty), tz) * amplitude;
++        }
++        private double Lattice(int x, int y, int z)
++        {
++            unchecked
++            {
++                uint h = (uint)seed;
++                h ^= (uint)x * 374761393u;
++                h ^= (uint)y * 668265263u;
++                h ^= (uint)z * 2147483647u;
++                h = (h ^ (h >> 13)) * 1274126177u;
++                h ^= h >> 16;
++                return (h / (double)uint.MaxValue) * 2.0 - 1.0;
++            }
++        }
++        private static int FloorToInt(double value) => (int)Math.Floor(value);
++        private static double Smooth(double value) => value * value * (3.0 - 2.0 * value);
++        private static double Lerp(double a, double b, double t) => a + (b - a) * t;
++    }
++
++    /// <summary>将多个有语义的世界场集中保存，供 biome、地形、流体和矿脉系统分别读取。</summary>
++    public sealed class WorldFields
++    {
++        public readonly IDensityFunction Temperature;
++        public readonly IDensityFunction Vegetation;
++        public readonly IDensityFunction Continents;
++        public readonly IDensityFunction Erosion;
++        public readonly IDensityFunction Depth;
++        public readonly IDensityFunction Ridges;
++        public readonly IDensityFunction FinalDensity;
++        public readonly IDensityFunction FluidFloodedness;
++        public readonly IDensityFunction FluidSpread;
++        public readonly IDensityFunction Lava;
++        public readonly IDensityFunction VeinToggle;
++        public readonly IDensityFunction VeinRidged;
++        public readonly IDensityFunction VeinGap;
++
++        public WorldFields(
++            IDensityFunction temperature,
++            IDensityFunction vegetation,
++            IDensityFunction continents,
++            IDensityFunction erosion,
++            IDensityFunction depth,
++            IDensityFunction ridges,
++            IDensityFunction finalDensity,
++            IDensityFunction fluidFloodedness = null,
++            IDensityFunction fluidSpread = null,
++            IDensityFunction lava = null,
++            IDensityFunction veinToggle = null,
++            IDensityFunction veinRidged = null,
++            IDensityFunction veinGap = null)
++        {
++            Temperature = temperature ?? throw new ArgumentNullException(nameof(temperature));
++            Vegetation = vegetation ?? throw new ArgumentNullException(nameof(vegetation));
++            Continents = continents ?? throw new ArgumentNullException(nameof(continents));
++            Erosion = erosion ?? throw new ArgumentNullException(nameof(erosion));
++            Depth = depth ?? throw new ArgumentNullException(nameof(depth));
++            Ridges = ridges ?? throw new ArgumentNullException(nameof(ridges));
++            FinalDensity = finalDensity ?? throw new ArgumentNullException(nameof(finalDensity));
++            FluidFloodedness = fluidFloodedness ?? DensityFunctions.Constant(0);
++            FluidSpread = fluidSpread ?? DensityFunctions.Constant(0);
++            Lava = lava ?? DensityFunctions.Constant(0);
++            VeinToggle = veinToggle ?? DensityFunctions.Constant(0);
++            VeinRidged = veinRidged ?? DensityFunctions.Constant(0);
++            VeinGap = veinGap ?? DensityFunctions.Constant(0);
++        }
++
++        /// <summary>用一个种子生成可运行的学习版世界场集合。</summary>
++        public static WorldFields CreateLearningDefaults(int seed)
++        {
++            IDensityFunction continents = DensityFunctions.Noise(seed + 1, 0.0025, 1.0);
++            IDensityFunction erosion = DensityFunctions.Noise(seed + 2, 0.008, 1.0);
++            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise(seed + 3, 0.012, 1.0));
++            IDensityFunction mountains = DensityFunctions.Multiply(
++                DensityFunctions.Clamp(DensityFunctions.Subtract(continents, DensityFunctions.Constant(0.15)), 0, 1),
++                DensityFunctions.Constant(55));
++            IDensityFunction detail = DensityFunctions.Multiply(DensityFunctions.Noise(seed + 4, 0.035, 1), 8);
++            IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 1.0, -1.0);
++            IDensityFunction finalDensity = DensityFunctions.Add(
++                DensityFunctions.Add(mountains, detail),
++                DensityFunctions.Multiply(vertical, 35));
++
++            return new WorldFields(
++                DensityFunctions.Noise(seed + 10, 0.004, 1),
++                DensityFunctions.Noise(seed + 11, 0.004, 1),
++                continents,
++                erosion,
++                DensityFunctions.Noise(seed + 5, 0.006, 1),
++                ridges,
++                finalDensity,
++                DensityFunctions.Noise(seed + 20, 0.02, 1),
++                DensityFunctions.Noise(seed + 21, 0.01, 1),
++                DensityFunctions.Noise(seed + 22, 0.02, 1),
++                DensityFunctions.Noise(seed + 30, 0.04, 1),
++                DensityFunctions.Noise(seed + 31, 0.04, 1),
++                DensityFunctions.Noise(seed + 32, 0.04, 1));
++        }
++    }
++}
