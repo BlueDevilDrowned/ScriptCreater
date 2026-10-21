@@ -1,0 +1,192 @@
+--- a/DensityFunctions.cs
++++ b/DensityFunctions.cs
+@@ -7,6 +7,17 @@
+         public static IDensityFunction Constant(double value) => new ConstantFunction(value);
+         public static IDensityFunction Noise(int seed, double scale = 0.01, double amplitude = 1.0)
+             => new ValueNoiseFunction(seed, scale, amplitude);
++        /// <summary>固定输入场的 Y=0，保留 XZ 变化。</summary>
++        public static IDensityFunction ProjectXZ(IDensityFunction input) => new ProjectedXZFunction(input);
++        public static IDensityFunction Noise2D(int seed, double scale = 0.01, double amplitude = 1.0)
++            => ProjectXZ(Noise(seed, scale, amplitude));
++        public static IDensityFunction HalfNegative(IDensityFunction input)
++            => new UnaryFunction(input, value => value > 0 ? value : value * 0.5);
++        public static IDensityFunction QuarterNegative(IDensityFunction input)
++            => new UnaryFunction(input, value => value > 0 ? value : value * 0.25);
++        /// <summary>对应 NoiseRouterData.noiseGradientDensity：先乘 Factor，再压缩负值，最后乘 4。</summary>
++        public static IDensityFunction NoiseGradientDensity(IDensityFunction factor, IDensityFunction depthWithJaggedness)
++            => Multiply(QuarterNegative(Multiply(depthWithJaggedness, factor)), 4.0);
+         public static IDensityFunction Add(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x + y);
+         public static IDensityFunction Subtract(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x - y);
+         public static IDensityFunction Multiply(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x * y);
+--- a/DensityFunction方法解读.md
++++ b/DensityFunction方法解读.md
+@@ -341,9 +341,10 @@
+ 当前学习版最终地形密度大致是：
+ 
+ ```text
+-rawDensity = (verticalGradient + terrainOffset) * terrainFactor
+-           + terrainJaggedness
+-           + base3DNoise
++depth = verticalGradient(y) + terrainOffset(x,z)
++jaggedTerm = terrainJaggedness(x,z) * HalfNegative(jaggedNoise(x,z))
++rawDensity = 4 * QuarterNegative((depth + jaggedTerm) * terrainFactor(x,z))
++           + base3DNoise(x,y,z)
+ finalDensity = VerticalSlide(rawDensity)
+ ```
+ 
+@@ -434,8 +435,8 @@
+ 
+ ```text
+ depth = verticalGradient + offset
+-baseTerrain = depth * factor
+-finalDensity = baseTerrain + jaggedness + base3DNoise
++baseTerrain = 4 * QuarterNegative((depth + jaggedness * HalfNegative(jaggedNoise)) * factor)
++finalDensity = VerticalSlide(baseTerrain + base3DNoise)
+ ```
+ 
+ `CubicSplinePoint` 保存三个量：
+@@ -450,4 +451,4 @@
+ 
+ `CubicSplineFunction.Sample` 会先采样 `coordinate`，查找相邻控制点，再执行 Hermite 三次插值。输入超出控制点范围时，使用端点斜率线性外推。
+ 
+-当前实现是 Minecraft `CubicSpline.Multipoint` 的一维简化版。它还没有实现“控制点的 value 继续引用另一个样条”的嵌套结构；嵌套样条是下一阶段，用于更接近 `TerrainProvider.overworldOffset`、`overworldFactor` 和 `overworldJaggedness` 的真实多维地形映射。
++当前已支持控制点的 value 引用另一个函数，包括嵌套样条。大陆性、侵蚀度、山脊度及它们派生的样条参数使用 XZ 二维输入；同一列共享这些参数。最新实现、目的、源码差异与验证记录见同目录《世界生成变更记录.md》。
+--- /dev/null
++++ b/ProjectedXZFunction.cs
+@@ -0,0 +1,21 @@
++using System;
++
++namespace ProceduralGeneration.WorldGen.Density
++{
++    /// <summary>把输入场投影到 Y=0，使同一 XZ 列的参数保持一致。不是缓存。</summary>
++    internal sealed class ProjectedXZFunction : IDensityFunction
++    {
++        private readonly IDensityFunction input;
++
++        public ProjectedXZFunction(IDensityFunction input)
++        {
++            this.input = input ?? throw new ArgumentNullException(nameof(input));
++        }
++
++        public double Sample(in DensityContext context)
++        {
++            var column = new DensityContext(context.X, 0, context.Z);
++            return input.Sample(column);
++        }
++    }
++}
+--- a/WorldFields.cs
++++ b/WorldFields.cs
+@@ -60,9 +60,10 @@
+         /// <summary>用一个种子生成可运行的学习版世界场集合。</summary>
+         public static WorldFields CreateLearningDefaults(int seed)
+         {
+-            IDensityFunction continents = DensityFunctions.Noise(seed + 1, 0.0025, 1.0);
+-            IDensityFunction erosion = DensityFunctions.Noise(seed + 2, 0.008, 1.0);
+-            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise(seed + 3, 0.012, 1.0));
++            // 地形环境是二维场：同一 XZ 列共享样条参数，不随 Y 漂移。
++            IDensityFunction continents = DensityFunctions.Noise2D(seed + 1, 0.0025, 1.0);
++            IDensityFunction erosion = DensityFunctions.Noise2D(seed + 2, 0.008, 1.0);
++            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise2D(seed + 3, 0.012, 1.0));
+             IDensityFunction lowlandOffset = DensityFunctions.Spline(erosion,
+                 new CubicSplinePoint(-1.0, -0.55, 0.0),
+                 new CubicSplinePoint(0.0, -0.20, 0.1),
+@@ -90,11 +91,15 @@
+             // 垂直渐变只提供中尺度趋势；上下边界由 VerticalSlideFunction 处理。
+             IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 0.75, -0.75);
+             IDensityFunction depth = DensityFunctions.Add(vertical, offset);
+-            IDensityFunction baseTerrain = DensityFunctions.Multiply(depth, factor);
++            // 原版 JAGGED 的 Y 采样倍率为 0；Jaggedness 是强度，不是正向密度常量。
++            IDensityFunction jaggedNoise = DensityFunctions.Noise2D(seed + 6, 0.035, 1.0);
++            IDensityFunction jaggedTerm = DensityFunctions.Multiply(
++                jaggedness, DensityFunctions.HalfNegative(jaggedNoise));
++            IDensityFunction baseTerrain = DensityFunctions.NoiseGradientDensity(
++                factor, DensityFunctions.Add(depth, jaggedTerm));
+             IDensityFunction base3DNoise = DensityFunctions.Multiply(
+                 DensityFunctions.Noise(seed + 4, 0.02, 1.0), 0.35);
+-            IDensityFunction rawDensity = DensityFunctions.Add(
+-                DensityFunctions.Add(baseTerrain, jaggedness), base3DNoise);
++            IDensityFunction rawDensity = DensityFunctions.Add(baseTerrain, base3DNoise);
+             IDensityFunction finalDensity = DensityFunctions.VerticalSlide(
+                 rawDensity,
+                 minY: 0,
+@@ -105,11 +110,11 @@
+                 topTarget: -1.0);
+ 
+             return new WorldFields(
+-                DensityFunctions.Noise(seed + 10, 0.004, 1),
+-                DensityFunctions.Noise(seed + 11, 0.004, 1),
++                DensityFunctions.Noise2D(seed + 10, 0.004, 1),
++                DensityFunctions.Noise2D(seed + 11, 0.004, 1),
+                 continents,
+                 erosion,
+-                DensityFunctions.Noise(seed + 5, 0.006, 1),
++                depth,
+                 ridges,
+                 finalDensity,
+                 DensityFunctions.Noise(seed + 20, 0.02, 1),
+--- /dev/null
++++ b/世界生成变更记录.md
+@@ -0,0 +1,62 @@
++# 世界生成变更记录
++
++从 2026-10-19 开始记录。后续修改按日期追加，保留目的、原因、公式、验证结果和未完成项。历史讨论不等于已实现；实现状态以代码和验证记录为准。
++
++## 2026-10-19：XZ 地形参数控制垂直密度曲线
++
++### 目的与原因
++
++让同一 `(x,z)` 下不同高度共享大陆性、侵蚀度、山脊度及样条参数。此前这些参数直接采样三维噪声，沿 Y 会改变，相当于一根柱子在不同高度切换地形环境。
++
++此前 `Jaggedness` 直接作为正向密度相加，不是源码中“山脊噪声的强度”；公开的 `Depth` 也错误地指向独立噪声，没有返回实际参与地形计算的深度。
++
++### 修改内容
++
++- 新增独立类 `ProjectedXZFunction`，把采样坐标的 Y 固定为 0。保留三维 Value Noise，实现简单的二维切片；这不是二维缓存，也不是原版 shiftedNoise2d 的精确复刻。
++- 新增 `ProjectXZ`、`Noise2D`、`HalfNegative`、`QuarterNegative`、`NoiseGradientDensity` 工厂方法。
++- Continents、Erosion、Ridges 改成二维输入；嵌套样条计算出的 Offset、Factor、Jaggedness 随之只依赖 XZ。
++- Temperature、Vegetation 也改为二维基础气候场；尚未接入原版群系选择器、温度高度修正或材质规则。
++- Jaggedness 改为乘以二维 JaggedNoise 的 HalfNegative 结果，再放到 Factor 乘法内部。
++- 按源码顺序先乘 Factor，再 QuarterNegative，最后乘 4。
++- `WorldFields.Depth` 返回实际的 `YGradient + Offset`。
++- 保留当前三维基础噪声与上下边界滑动。
++
++### 当前公式和原理
++
++```text
++C = Continents(x,z), E = Erosion(x,z), R = Ridges(x,z)
++O = OffsetSpline(C,E)
++F = FactorSpline(E)
++J = JaggednessSpline(R)
++
++V(y) = lerp(0.75, -0.75, clamp(y / 160, 0, 1))
++Depth = V(y) + O
++JaggedTerm = J * HalfNegative(JaggedNoise(x,z))
++T = F * (Depth + JaggedTerm)
++Terrain = 4 * QuarterNegative(T)
++RawDensity = Terrain + 0.35 * Base3DNoise(x,y,z)
++FinalDensity = VerticalSlide(RawDensity)
++
++HalfNegative(v)    = v >= 0 ? v : v * 0.5
++QuarterNegative(v) = v >= 0 ? v : v * 0.25
++```
++
++O 改变竖直曲线的位置；F 改变密度随高度下降的速度，以及基础 3D 噪声的相对影响。忽略噪声时，正的 F 不改变零点，因此不能简单解释成“F 越小地形越平”。J 控制有正有负的山脊扰动幅度，不再一律增加密度。
++
++在 0～160 内，`dV/dy = -1.5/160`。固定 XZ 时，O、F、J 都不变；忽略基础 3D 噪声与边界滑动，T 的斜率就是 `-1.5*F/160`。QuarterNegative 再让负值部分的斜率缩小四倍。Y 方向变化有明确的数学来源。
++
++### 源码依据和当前差异
++
++Minecraft Java 1.20.1：`NoiseRouterData.registerTerrainNoises`、`noiseGradientDensity`、`DensityFunctions.Mapped`。
++
++纠正此前讲解：源码 JaggedNoise 的 Y 倍率为 0，也是二维变化；二维性来自噪声采样设置，而不是 cache2d 自动把任意三维噪声变成二维。
++
++本次移植组合结构，保留学习版尺度：原版垂直梯度为 `(-64,320,1.5,-1.5)`，项目仍为 `(0,160,0.75,-0.75)`。坐标单位是体素采样坐标；0.5 的显示尺寸不改变此范围。预览高度 128 只截取世界的一段，顶部不必为空，调整采样起点会移动这个窗口。
++
++仍未复刻原版样条控制点、Offset 的 -0.50375 校准、shiftedNoise2d、BlendedNoise、洞穴与群系选择。上下滑动仍是已有学习版参数，不能据此声称完整复刻原版世界生成或消除所有悬浮块。
++
++### 验证与后续
++
++独立 C# 验证对比修改前、修改后、回滚后的同一组坐标与 Seed，检查列参数、Depth、最终密度；另检查二维不变性、三维变化、算子顺序和边界。完整命令、输出、退出码及哈希见 `Artifacts/XZTerrainMigration/VERIFICATION.txt`。
++
++后续可分别推进：真实地形样条与坐标尺度、分形/混合基础噪声、群系与材质、洞穴。每一步单独记录与验证，避免同时修改所有因素。

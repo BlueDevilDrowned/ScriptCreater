@@ -1,0 +1,3437 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.LocalizationRuntimeModule</name>
+    </assembly>
+    <member name="T:Unity.Localization.Android.AdaptiveIcons">
+      <summary>
+        <para>
+ Holds one localized Android adaptive launcher icon per screen density.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Android.AdaptiveIcons.Background">
+      <summary>
+        <para>
+ The layer drawn behind the foreground, which the launcher may move to animate the icon.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Android.AdaptiveIcons.Foreground">
+      <summary>
+        <para>
+ The layer drawn on top of the background, holding the part of the icon that should stay readable.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Android.AdaptiveIcons.IsEmpty">
+      <summary>
+        <para>
+ Reports whether no density has both layers assigned.
+ </para>
+      </summary>
+      <returns>
+        <para>True when no density has both layers, otherwise false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.Android.AppInfo">
+      <summary>
+        <para>
+ Stores the localized values that describe an Android application in its resources.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Android.AppInfo.AdaptiveIcons">
+      <summary>
+        <para>
+ The layered launcher icons used from Android 8.0 onwards.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Android.AppInfo.DisplayName">
+      <summary>
+        <para>
+ The user-visible name of the application.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Android.AppInfo.LegacyIcons">
+      <summary>
+        <para>
+ The square launcher icons used by devices before adaptive icons.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Android.AppInfo.RoundIcons">
+      <summary>
+        <para>
+ The circular launcher icons used by launchers that ask for a round icon.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Android.IconDensity">
+      <summary>
+        <para>
+ Identifies the screen density an Android launcher icon is drawn for.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Android.IconDensity.ExtraExtraExtraHigh">
+      <summary>
+        <para>
+ Three times extra high density screens, the mipmap-xxxhdpi qualifier.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Android.IconDensity.ExtraExtraHigh">
+      <summary>
+        <para>
+ Twice extra high density screens, the mipmap-xxhdpi qualifier.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Android.IconDensity.ExtraHigh">
+      <summary>
+        <para>
+ Extra high density screens, the mipmap-xhdpi qualifier.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Android.IconDensity.High">
+      <summary>
+        <para>
+ High density screens, the mipmap-hdpi qualifier.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Android.IconDensity.Low">
+      <summary>
+        <para>
+ Low density screens, the mipmap-ldpi qualifier.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Android.IconDensity.Medium">
+      <summary>
+        <para>
+ Medium density screens, the mipmap-mdpi qualifier.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Android.Icons">
+      <summary>
+        <para>
+ Holds one localized Android launcher icon per screen density.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Android.Icons.GetIcon(Unity.Localization.Android.IconDensity)">
+      <summary>
+        <para>
+ Returns the icon assigned for a density.
+ </para>
+      </summary>
+      <param name="density">The density to read.</param>
+      <returns>
+        <para>The icon for that density.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Android.Icons.IsEmpty">
+      <summary>
+        <para>
+ Reports whether no density has an icon assigned.
+ </para>
+      </summary>
+      <returns>
+        <para>True when every density is empty, otherwise false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.Apple.AppInfo">
+      <summary>
+        <para>
+ Stores the localized values that describe an Apple application in its property list.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Apple.AppInfo.CameraUsageDescription">
+      <summary>
+        <para>
+ The reason the application asks for access to the camera.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Apple.AppInfo.DisplayName">
+      <summary>
+        <para>
+ The full user-visible name of the application.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Apple.AppInfo.LocationUsageDescription">
+      <summary>
+        <para>
+ The reason the application asks for the device location while it is in the foreground.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Apple.AppInfo.MicrophoneUsageDescription">
+      <summary>
+        <para>
+ The reason the application asks for access to the microphone.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Apple.AppInfo.ShortName">
+      <summary>
+        <para>
+ The short user-visible name of the application.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Apple.AppInfo.UserTrackingUsageDescription">
+      <summary>
+        <para>
+ The reason the application asks to track the user or the device.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.AssetEntry">
+      <summary>
+        <para>
+ Represents a localized asset stored as a direct object reference that ships and loads with the table.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.AssetEntry.#ctor">
+      <summary>
+        <para>
+ Creates an empty entry.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.AssetEntry.#ctor(System.Int64)">
+      <summary>
+        <para>
+ Creates an entry for a key id.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id.</param>
+    </member>
+    <member name="P:Unity.Localization.AssetEntry.DirectAsset">
+      <summary>
+        <para>
+ The directly referenced asset for this entry.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.AssetEntryBase`1">
+      <summary>
+        <para>
+ Serves as the base class for asset entries that own a stored reference and load and release the asset themselves.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.AssetEntryBase_1.Default">
+      <summary>
+        <para>
+ The stored reference this entry loads its asset from.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.AssetEntryBase_1.HasValue(TStore)">
+      <summary>
+        <para>
+ Returns whether the given stored reference holds a value.
+ </para>
+      </summary>
+      <param name="store">The stored reference to test.</param>
+      <returns>
+        <para>true when the reference holds a value; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.AssetEntryBase_1.Release(TStore,UnityEngine.Object)">
+      <summary>
+        <para>
+ Releases an asset that was loaded from a stored reference.
+ </para>
+      </summary>
+      <param name="store">The resolved stored reference the asset was loaded from.</param>
+      <param name="asset">The asset to release.</param>
+    </member>
+    <member name="M:Unity.Localization.AssetEntryBase_1.TryLoadSync(TStore,UnityEngine.Object&amp;)">
+      <summary>
+        <para>
+ Resolves the asset from the given stored reference synchronously, when the kind supports it.
+ </para>
+      </summary>
+      <param name="store">The resolved store.</param>
+      <param name="asset">The resolved asset, or null on a miss.</param>
+      <returns>
+        <para>true when the asset resolved synchronously; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.CommandLineLocaleSelector">
+      <summary>
+        <para>
+ Selects the locale from a command line argument, such as -language=fr.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.CommandLineLocaleSelector.CommandLineArgument">
+      <summary>
+        <para>
+ The command line argument prefix used to assign the locale.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Comment">
+      <summary>
+        <para>
+ Stores a free-text author comment that can be attached to any localization target.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Comment.CommentText">
+      <summary>
+        <para>
+ The comment text.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeAssetEvent`1">
+      <summary>
+        <para>
+ Serves as the base component that resolves a localized asset and forwards it through a UnityEvent whenever the value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Components.LocalizeAssetEvent_1.AssetReference">
+      <summary>
+        <para>
+ The localized asset reference to resolve.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Components.LocalizeAssetEvent_1.OnUpdateAsset">
+      <summary>
+        <para>
+ The event invoked with the localized asset each time it resolves.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeAudioClipEvent">
+      <summary>
+        <para>
+ Component that resolves a localized audio clip and forwards it through a UnityEvent whenever the value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeGameObjectEvent">
+      <summary>
+        <para>
+ Component that resolves a localized prefab and forwards it through a UnityEvent whenever the value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeSpriteEvent">
+      <summary>
+        <para>
+ Component that resolves a localized sprite and forwards it through a UnityEvent whenever the value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeStringEvent">
+      <summary>
+        <para>
+ Component that resolves a localized string and forwards it through a UnityEvent whenever the value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Components.LocalizeStringEvent.OnUpdateString">
+      <summary>
+        <para>
+ The event invoked with the localized string each time it resolves.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Components.LocalizeStringEvent.StringReference">
+      <summary>
+        <para>
+ The localized string reference to resolve.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeStringListEvent">
+      <summary>
+        <para>
+ Component that resolves a localized string list and forwards it through a UnityEvent whenever a value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Components.LocalizeStringListEvent.ListReference">
+      <summary>
+        <para>
+ The localized string list reference to resolve.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Components.LocalizeStringListEvent.OnUpdateList">
+      <summary>
+        <para>
+ The event invoked with the localized values each time the list resolves.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Components.LocalizeTextureEvent">
+      <summary>
+        <para>
+ Component that resolves a localized texture and forwards it through a UnityEvent whenever the value or the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.DistributedUIDGenerator">
+      <summary>
+        <para>
+ The default key generator. It produces a distributed unique id, Snowflake-style, that combines a timestamp, a
+ machine id, and a per-millisecond sequence.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.DistributedUIDGenerator.#ctor">
+      <summary>
+        <para>
+ Creates a generator that measures timestamps from the default epoch.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.DistributedUIDGenerator.#ctor(System.Int64)">
+      <summary>
+        <para>
+ Creates a generator that measures timestamps from a specific epoch.
+ </para>
+      </summary>
+      <param name="customEpoch">The epoch, in Unix milliseconds, that timestamps are measured from.</param>
+    </member>
+    <member name="P:Unity.Localization.DistributedUIDGenerator.CustomEpoch">
+      <summary>
+        <para>
+ The epoch, in Unix milliseconds, that timestamps are measured from.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.DistributedUIDGenerator.GetNextKey">
+      <summary>
+        <para>
+ Returns the next distributed unique id.
+ </para>
+      </summary>
+      <returns>
+        <para>A distributed unique id suitable for a table key.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.DistributedUIDGenerator.MachineId">
+      <summary>
+        <para>
+ The machine id folded into each id.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.ExcludeEntryFromEditorExport">
+      <summary>
+        <para>
+ Marks a key or entry so that editor exporters skip it.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.ExcludeEntryFromPlayerExport">
+      <summary>
+        <para>
+ Marks a key or entry so that it is left out of the files generated for a built player.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.IAssetEntry">
+      <summary>
+        <para>
+ Represents a resource entry whose localized value is an asset that the entry loads and releases itself.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IAssetEntry.HasAsset">
+      <summary>
+        <para>
+ Returns whether this entry has an asset assigned.
+ </para>
+      </summary>
+      <returns>
+        <para>true when an asset is assigned; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.IAssetEntry.ReleaseAsset(UnityEngine.Object)">
+      <summary>
+        <para>
+ Releases an asset previously returned by a load.
+ </para>
+      </summary>
+      <param name="asset">The asset to release.</param>
+    </member>
+    <member name="?:Unity.Localization.IAsyncAssetEntry">
+      <summary>
+        <para>
+ An optional capability for an asset entry that loads its asset asynchronously.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IAsyncAssetEntry.LoadAssetAsync(System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Loads the asset assigned to this entry.
+ </para>
+      </summary>
+      <param name="cancellationToken">A token that cancels the load.</param>
+      <returns>
+        <para>An awaitable that resolves to the loaded asset, or null on a miss.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.IFileDataEntry">
+      <summary>
+        <para>
+ Marks a resource entry whose stored value is plain data that round-trips through JSON, so a file-backed table
+ provider can export it to a data file and rebuild it at runtime without shipping the authored table asset.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.IKeyGenerator">
+      <summary>
+        <para>
+ Generates the unique ids assigned to table keys.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IKeyGenerator.GetNextKey">
+      <summary>
+        <para>
+ Returns the next id to assign to a key.
+ </para>
+      </summary>
+      <returns>
+        <para>The id to assign to the next key.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.ILocaleDiscovery">
+      <summary>
+        <para>
+ Optional interface an asset provider implements to discover and register additional locales at runtime.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ILocaleDiscovery.DiscoverLocalesAsync(Unity.Localization.LocalizationSettings,System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Registers any additional locales this provider can serve.
+ </para>
+      </summary>
+      <param name="settings">The settings to register discovered locales on.</param>
+      <param name="cancellationToken">The token that signals the discovery should be canceled.</param>
+      <returns>
+        <para>An Awaitable that completes once locale discovery finishes.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.ILocalizedStringList">
+      <summary>
+        <para>
+ Interface for resolving a localized list of strings.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ILocalizedStringList.GetLocalizedList">
+      <summary>
+        <para>
+ Resolves the localized values without waiting.
+ </para>
+      </summary>
+      <returns>
+        <para>The localized values, in list order.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ILocalizedStringList.GetLocalizedListAsync">
+      <summary>
+        <para>
+ Resolves the localized values, loading tables as needed.
+ </para>
+      </summary>
+      <returns>
+        <para>The localized values, in list order.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.ILocalizedStringList.ListChanged(Unity.Localization.ListChangeHandler)">
+      <summary>
+        <para>
+ Raised with the localized values when the list first resolves and again whenever a value changes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:Unity.Localization.IMetadata">
+      <summary>
+        <para>
+ Marks a type as metadata that can be attached to a locale, a table, a shared key, or a per-locale entry.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.IPostProcessValueLocale">
+      <summary>
+        <para>
+ Transforms resolved localization values before they are handed back to the caller.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IPostProcessValueLocale.PostProcessValue(T)">
+      <summary>
+        <para>
+ Returns the transformed value, or the value unchanged.
+ </para>
+      </summary>
+      <param name="value">The resolved value.</param>
+      <returns>
+        <para>The transformed value, or value when the implementation leaves it alone.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.IResourceEntry">
+      <summary>
+        <para>
+ Represents a single entry in a resource table, identified by a stable key id and carrying per-entry metadata.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IResourceEntry.KeyId">
+      <summary>
+        <para>
+ The stable key id this entry provides a value for.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IResourceEntry.Metadata">
+      <summary>
+        <para>
+ The metadata attached to this entry, such as comments or custom properties.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IResourceEntry.SharedEntry">
+      <summary>
+        <para>
+ The shared key data for this entry, common to the key across every locale.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IResourceEntry.Table">
+      <summary>
+        <para>
+ The table this entry belongs to.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.IStartupLocaleInitialize">
+      <summary>
+        <para>
+ Optional hook a startup selector implements to run code once after initialization completes.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IStartupLocaleInitialize.PostInitialize(Unity.Localization.LocalizationSettings)">
+      <summary>
+        <para>
+ Runs one-time setup once the startup locale has been selected.
+ </para>
+      </summary>
+      <param name="settings">The localization settings instance that finished initializing.</param>
+    </member>
+    <member name="?:Unity.Localization.IStartupLocalePrepare">
+      <summary>
+        <para>
+ Optional hook a startup selector implements to load what it needs before the locale is chosen.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IStartupLocalePrepare.PrepareAsync(Unity.Localization.LocalizationSettings,System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Loads whatever the selector needs before it is asked for a locale.
+ </para>
+      </summary>
+      <param name="settings">The localization settings that are initializing.</param>
+      <param name="cancellationToken">The token that signals the preparation should be canceled.</param>
+      <returns>
+        <para>An Awaitable that completes once the selector is ready to choose.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.IStartupLocaleSelector">
+      <summary>
+        <para>
+ Selects the locale to activate when the localization system initializes at startup.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.IStartupLocaleSelector.GetStartupLocale(Unity.Localization.LocalizationSettings)">
+      <summary>
+        <para>
+ Returns the locale to select, or null to defer to the next selector.
+ </para>
+      </summary>
+      <param name="settings">The localization settings whose locales the selector chooses from.</param>
+      <returns>
+        <para>The locale to use as the startup locale, or null to let the next selector in the chain decide.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.IStringEntry">
+      <summary>
+        <para>
+ Represents a resource entry whose localized value is a string.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IStringEntry.Value">
+      <summary>
+        <para>
+ The localized text for this entry, before Smart String formatting.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.ISynchronousAssetEntry">
+      <summary>
+        <para>
+ An optional capability for an asset entry that can resolve its asset immediately, without an asynchronous load.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ISynchronousAssetEntry.TryLoadAsset(UnityEngine.Object&amp;)">
+      <summary>
+        <para>
+ Tries to resolve the entry's asset without loading asynchronously.
+ </para>
+      </summary>
+      <param name="asset">The resolved asset, or null on a miss.</param>
+      <returns>
+        <para>true when the asset resolved synchronously; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.IVariantSelector">
+      <summary>
+        <para>
+ Picks which variant key applies right now, for example the current platform, storefront, or gender.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IVariantSelector.AvailableKeys">
+      <summary>
+        <para>
+ Every key this selector can report.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IVariantSelector.CurrentKey">
+      <summary>
+        <para>
+ The variant key that applies to the current runtime context.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.IVariantSelector.SelectorId">
+      <summary>
+        <para>
+ Stable identifier for this selector kind.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.ListChangeHandler">
+      <summary>
+        <para>
+ Receives the localized values whenever a localized string list resolves or changes.
+ </para>
+      </summary>
+      <param name="values">The localized values, in list order.</param>
+    </member>
+    <member name="T:Unity.Localization.LoadingPreference">
+      <summary>
+        <para>
+ Selects whether the localization system resolves values asynchronously or synchronously when it has the choice.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.LoadingPreference.Asynchronous">
+      <summary>
+        <para>
+ Resolves values through an asynchronous load, deferring the result until the content is available.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.LoadingPreference.Synchronous">
+      <summary>
+        <para>
+ Resolves values synchronously when possible, falling back to an asynchronous load when it is not.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Locale">
+      <summary>
+        <para>
+ Represents a selectable language or region in a localized project.
+ A locale carries a culture code, an optional display name, a formatting culture, and an optional fallback.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Locale.Code">
+      <summary>
+        <para>
+ The culture code, for example "en" or "fr-CA".
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Locale.#ctor">
+      <summary>
+        <para>
+ Creates a locale with no culture code.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Locale.#ctor(System.String,System.String)">
+      <summary>
+        <para>
+ Creates a locale for a culture code, with an optional display name.
+ </para>
+      </summary>
+      <param name="code">The culture code, for example "en" or "fr-CA".</param>
+      <param name="localeName">The display name to show for this locale, or null to derive one from the culture.</param>
+    </member>
+    <member name="P:Unity.Localization.Locale.CultureInfo">
+      <summary>
+        <para>
+ The formatting culture for this locale, or the invariant culture when the code is not a known culture.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Locale.Enabled">
+      <summary>
+        <para>
+ Whether the locale is active: a disabled locale is excluded from runtime selection and its tables are not shipped in a build.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Locale.FallbackCode">
+      <summary>
+        <para>
+ The culture code of the fallback locale, resolved through the settings, or null when there is no fallback.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Locale.Identifier">
+      <summary>
+        <para>
+ The identifier for this locale.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Locale.LocaleName">
+      <summary>
+        <para>
+ The display name, for example "English". When not set, falls back to the culture's native name, then the code.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocaleIdentifier">
+      <summary>
+        <para>
+ Identifies a locale by its culture code, for example "en" or "fr-CA".
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocaleIdentifier.Code">
+      <summary>
+        <para>
+ The culture code, or the empty string when the identifier is undefined.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocaleIdentifier.#ctor(System.String)">
+      <summary>
+        <para>
+ Creates an identifier from a culture code.
+ </para>
+      </summary>
+      <param name="code">The culture code, for example "en" or "fr-CA".</param>
+    </member>
+    <member name="M:Unity.Localization.LocaleIdentifier.Equals(Unity.Localization.LocaleIdentifier)">
+      <summary>
+        <para>
+ Checks whether this identifier has the same culture code as another.
+ </para>
+      </summary>
+      <param name="other">The identifier to compare with this one.</param>
+      <returns>
+        <para>true if both identifiers have the same culture code, ignoring case; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocaleIdentifier.Equals(System.Object)">
+      <summary>
+        <para>
+ Checks whether this identifier equals another object.
+ </para>
+      </summary>
+      <param name="obj">The object to compare with this identifier.</param>
+      <returns>
+        <para>true if obj is an identifier with the same culture code, ignoring case; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocaleIdentifier.GetHashCode">
+      <summary>
+        <para>
+ Computes a hash code for this identifier.
+ </para>
+      </summary>
+      <returns>
+        <para>An integer hash code derived from the culture code.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.LocaleIdentifier.implop_LocaleIdentifier(string)(System.String)">
+      <summary>
+        <para>
+ Converts a culture code string into an identifier.
+ </para>
+      </summary>
+      <param name="code">The culture code to convert.</param>
+      <returns>
+        <para>An identifier for the given culture code.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.LocaleIdentifier.op_Equal(Unity.Localization.LocaleIdentifier,Unity.Localization.LocaleIdentifier)">
+      <summary>
+        <para>
+ Determines whether two identifiers have the same culture code.
+ </para>
+      </summary>
+      <param name="a">The first identifier to compare.</param>
+      <param name="b">The second identifier to compare.</param>
+      <returns>
+        <para>true if both identifiers have the same culture code, ignoring case; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.LocaleIdentifier.op_NotEqual(Unity.Localization.LocaleIdentifier,Unity.Localization.LocaleIdentifier)">
+      <summary>
+        <para>
+ Determines whether two identifiers have different culture codes.
+ </para>
+      </summary>
+      <param name="a">The first identifier to compare.</param>
+      <param name="b">The second identifier to compare.</param>
+      <returns>
+        <para>true if the identifiers have different culture codes, ignoring case; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocaleIdentifier.ToString">
+      <summary>
+        <para>
+ Returns the culture code for this identifier.
+ </para>
+      </summary>
+      <returns>
+        <para>The culture code, or the empty string when the identifier is undefined.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.LocalizationSettings">
+      <summary>
+        <para>
+ The runtime settings for localization: the available locales, the selected locale, and the resource database.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizationSettings.AddLocale(Unity.Localization.Locale)">
+      <summary>
+        <para>
+ Registers a locale as available, deduplicated by locale code.
+ </para>
+      </summary>
+      <param name="locale">The locale to register as available.</param>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.AndroidAppInfo">
+      <summary>
+        <para>
+ The localized values that describe an Android application in its resources.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.AppleAppInfo">
+      <summary>
+        <para>
+ The localized values that describe an Apple application in its property list.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.AvailableLocales">
+      <summary>
+        <para>
+ The locales registered on this settings instance.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.LocalizationSettings.ConfigName">
+      <summary>
+        <para>
+ The key under which the active settings are stored as an editor build config object.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.Database">
+      <summary>
+        <para>
+ The resource database that resolves localized content for this instance.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.DeferInitialization">
+      <summary>
+        <para>
+ Whether the system waits for an explicit call to Unity.Localization.LocalizationSettings.InitializeAsync before it initializes.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizationSettings.EvaluateStartupLocale(System.Func`2&lt;Unity.Localization.IStartupLocaleSelector,System.Boolean&gt;)">
+      <summary>
+        <para>
+ Runs the startup selector chain and returns the locale it produces, without selecting it.
+ </para>
+      </summary>
+      <param name="filter">Returns true for each selector to evaluate, or null to evaluate them all.</param>
+      <returns>
+        <para>The locale the chain produces, or null when there is no project locale either.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizationSettings.GetLocale(Unity.Localization.LocaleIdentifier)">
+      <summary>
+        <para>
+ Returns the available locale with the given identifier, or null.
+ </para>
+      </summary>
+      <param name="identifier">The identifier of the locale to find.</param>
+      <returns>
+        <para>The registered locale that matches the identifier, or null when none matches.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizationSettings.GetSmartFormatter">
+      <summary>
+        <para>
+ Returns the Smart formatter used to format Smart String entries.
+ </para>
+      </summary>
+      <returns>
+        <para>The Smart formatter that formats this project's entries.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.HasSettings">
+      <summary>
+        <para>
+ Whether an active settings instance is registered.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.LocalizationSettings.InitializationCompleted(System.Action)">
+      <summary>
+        <para>
+ Raised once after initialization completes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="M:Unity.Localization.LocalizationSettings.InitializeAsync">
+      <summary>
+        <para>
+ Loads the available locales and selects the startup locale, running once.
+ </para>
+      </summary>
+      <returns>
+        <para>An awaitable that completes when initialization has finished, or immediately when it has already run.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.Instance">
+      <summary>
+        <para>
+ The active settings instance, or null when none is registered.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.IsInitialized">
+      <summary>
+        <para>
+ Whether initialization has completed.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.PreferredLoading">
+      <summary>
+        <para>
+ The default loading behaviour used by the reference accessors and their change events.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.PreloadBehavior">
+      <summary>
+        <para>
+ The preload behavior the flagged table collections follow.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.ProjectLocale">
+      <summary>
+        <para>
+ The default project locale used when no other locale is selected.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizationSettings.RemoveLocale(Unity.Localization.Locale)">
+      <summary>
+        <para>
+ Removes a locale from the available set.
+ </para>
+      </summary>
+      <param name="locale">The locale to remove from the available set.</param>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.ResourceDatabase">
+      <summary>
+        <para>
+ The active resource database, or null when no settings instance is registered.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.SelectedLocale">
+      <summary>
+        <para>
+ The currently selected locale, or null when none is selected.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.LocalizationSettings.SelectedLocaleChanged(System.Action`1&lt;Unity.Localization.Locale&gt;)">
+      <summary>
+        <para>
+ Raised after the selected locale changes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.SelectedProvider">
+      <summary>
+        <para>
+ The asset provider used as the default when creating new localized content.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.SmartStringsSettings">
+      <summary>
+        <para>
+ The Smart Strings settings whose formatter resolves this project's Smart String entries.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.StartupSelector">
+      <summary>
+        <para>
+ The selector that chose the startup locale, or null when the chain fell through to the project locale.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizationSettings.StartupSelectors">
+      <summary>
+        <para>
+ The startup locale selectors, evaluated in order to pick the selected locale on initialization.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedAsset`1">
+      <summary>
+        <para>
+ A serializable reference to a localized asset that updates as the selected locale changes.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.LocalizedAsset_1.AssetChanged(Unity.Localization.LocalizedAsset`1/ChangeHandler&lt;TObject&gt;)">
+      <summary>
+        <para>
+ Occurs when the resolved asset changes, and once immediately when a handler subscribes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:Unity.Localization.LocalizedAsset_1.ChangeHandler">
+      <summary>
+        <para>
+ Represents a method that receives a resolved localized asset value.
+ </para>
+      </summary>
+      <param name="value">The resolved asset, or null when no asset is available.</param>
+    </member>
+    <member name="M:Unity.Localization.LocalizedAsset_1.GetLocalizedAsset">
+      <summary>
+        <para>
+ Resolves the localized asset synchronously when a synchronous provider and entry can supply it.
+ </para>
+      </summary>
+      <returns>
+        <para>The resolved asset, or null when it cannot be resolved synchronously.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizedAsset_1.GetLocalizedAssetAsync">
+      <summary>
+        <para>
+ Loads the localized asset asynchronously through the resource database.
+ </para>
+      </summary>
+      <returns>
+        <para>An awaitable that produces the loaded asset, or null when it cannot be resolved.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizedAsset_1.RefreshAsset">
+      <summary>
+        <para>
+ Re-resolves the asset and pushes the result to subscribers.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedAudioClip">
+      <summary>
+        <para>
+ A serializable reference to a localized audio clip asset.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedEntry`1">
+      <summary>
+        <para>
+ A serializable reference to a single localization table entry that resolves to a typed entry value.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedEntry_1.GetEntry">
+      <summary>
+        <para>
+ Resolves the entry synchronously from already-loaded tables without triggering a load.
+ </para>
+      </summary>
+      <returns>
+        <para>The resolved entry, or null when it is not available synchronously.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizedEntry_1.GetEntryAsync(System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Resolves the entry asynchronously, loading the table if it is not already available.
+ </para>
+      </summary>
+      <param name="cancellationToken">A token that cancels the asynchronous load. The default token never cancels.</param>
+      <returns>
+        <para>An awaitable that produces the resolved entry, or null when it cannot be resolved.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.LocalizedEntry_1.IsEmpty">
+      <summary>
+        <para>
+ Whether this reference is unset and resolves to no value.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedEntry_1.SetReference(Unity.Localization.TableReference,Unity.Localization.TableEntryReference)">
+      <summary>
+        <para>
+ Sets the table and entry references together so the reference refreshes only once.
+ </para>
+      </summary>
+      <param name="table">The table collection to resolve the entry from.</param>
+      <param name="entry">The entry within the table collection to resolve.</param>
+    </member>
+    <member name="P:Unity.Localization.LocalizedEntry_1.TableEntryReference">
+      <summary>
+        <para>
+ The entry within the table collection that this reference resolves.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedFont">
+      <summary>
+        <para>
+ A serializable reference to a localized font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedFontAsset">
+      <summary>
+        <para>
+ A serializable reference to a localized font asset for UI Toolkit text.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedGameObject">
+      <summary>
+        <para>
+ A serializable reference to a localized GameObject asset.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedMaterial">
+      <summary>
+        <para>
+ A serializable reference to a localized material asset.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedObject">
+      <summary>
+        <para>
+ A serializable reference to a localized asset of any Object-derived type.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedReference">
+      <summary>
+        <para>
+ The serializable base for a reference into a localization table, pairing a table collection with an optional locale override.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizedReference.EnableFallback">
+      <summary>
+        <para>
+ Whether to walk the locale fallback chain when the resolving locale has no value for this reference.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedReference.ForceUpdate">
+      <summary>
+        <para>
+ Called when the reference changes so subclasses can refresh any live listeners.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizedReference.HasLocaleOverride">
+      <summary>
+        <para>
+ Whether a locale override is set on this reference.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizedReference.IsEmpty">
+      <summary>
+        <para>
+ Whether this reference is unset and resolves to no value.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizedReference.LocaleOverride">
+      <summary>
+        <para>
+ The locale used to resolve this reference instead of the locale selected in the project settings.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedReference.OnActivated">
+      <summary>
+        <para>
+ Starts resolving the reference when it becomes active on an element.
+ </para>
+      </summary>
+      <param name="context">Describes the element and property the binding was activated for.</param>
+    </member>
+    <member name="M:Unity.Localization.LocalizedReference.OnDeactivated">
+      <summary>
+        <para>
+ Stops resolving the reference once it is no longer active on any element.
+ </para>
+      </summary>
+      <param name="context">Describes the element and property the binding was deactivated for.</param>
+    </member>
+    <member name="M:Unity.Localization.LocalizedReference.ResolveOverrideLocale">
+      <summary>
+        <para>
+ Resolves the override locale from the project settings for subclasses to pass to the resource database.
+ </para>
+      </summary>
+      <returns>
+        <para>The resolved override locale, or null when no override applies.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.LocalizedReference.TableReference">
+      <summary>
+        <para>
+ The localization table collection that this reference resolves against.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedReference.Update">
+      <summary>
+        <para>
+ Writes the resolved value to the bound field.
+ </para>
+      </summary>
+      <param name="context">Describes the element and property to write to.</param>
+      <returns>
+        <para>Whether the value reached the bound field.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.LocalizedSprite">
+      <summary>
+        <para>
+ A serializable reference to a localized sprite asset.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedString">
+      <summary>
+        <para>
+ A serializable reference that resolves and formats a localized text value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedString.ChangeHandler">
+      <summary>
+        <para>
+ Represents a method that receives a resolved localized string value.
+ </para>
+      </summary>
+      <param name="value">The resolved and formatted localized string.</param>
+    </member>
+    <member name="M:Unity.Localization.LocalizedString.GetLocalizedString(System.Object[])">
+      <summary>
+        <para>
+ Resolves the localized string synchronously when the table is cached or a synchronous provider can supply it.
+ </para>
+      </summary>
+      <param name="args">Optional arguments that Smart String placeholders format against.</param>
+      <returns>
+        <para>The formatted localized string, or an empty string when it is not available synchronously.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizedString.GetLocalizedStringAsync(System.Object[])">
+      <summary>
+        <para>
+ Resolves the localized string asynchronously, formatting it with the given arguments.
+ </para>
+      </summary>
+      <param name="args">Optional arguments that Smart String placeholders format against.</param>
+      <returns>
+        <para>An awaitable that produces the formatted localized string, or an empty string when the reference is empty.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizedString.GetSourceValue(Unity.SmartStrings.Core.Extensions.ISelectorInfo)">
+      <summary>
+        <para>
+ Resolves this string so it can be read as a Smart String placeholder in another string.
+ </para>
+      </summary>
+      <param name="selector">Describes the placeholder being resolved.</param>
+      <returns>
+        <para>The resolved text, or an empty string when the reference is unset or the nesting limit is reached.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.LocalizedString.LocalVariables">
+      <summary>
+        <para>
+ The local variables that Smart String placeholders resolve against when this string is formatted.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedString.RefreshString">
+      <summary>
+        <para>
+ Re-resolves the value and pushes the result to subscribers.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.LocalizedString.StringChanged(Unity.Localization.LocalizedString/ChangeHandler)">
+      <summary>
+        <para>
+ Occurs when the resolved string value changes, and once immediately when a handler subscribes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:Unity.Localization.LocalizedStringGroup">
+      <summary>
+        <para>
+ A localized string list that combines several localized string references.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizedStringGroup.Strings">
+      <summary>
+        <para>
+ The localized strings that make up the list, in list order.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedStringList">
+      <summary>
+        <para>
+ A localized string list stored as one table entry whose value is split on a separator.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.LocalizedStringList.Separator">
+      <summary>
+        <para>
+ The text that separates the items inside the entry's value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalizedTable">
+      <summary>
+        <para>
+ A serializable reference to an entire localization table resolved for a locale.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedTable.GetTable">
+      <summary>
+        <para>
+ Returns the table synchronously if it is already loaded.
+ </para>
+      </summary>
+      <returns>
+        <para>The resolved table, or null when it is not available synchronously.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalizedTable.GetTableAsync(System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Resolves the table asynchronously for the reference's locale.
+ </para>
+      </summary>
+      <param name="cancellationToken">A token that cancels the asynchronous load. The default token never cancels.</param>
+      <returns>
+        <para>An awaitable that produces the resolved table, or null when it cannot be resolved.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.LocalizedTexture">
+      <summary>
+        <para>
+ A serializable reference to a localized texture asset.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalizedTexture.#ctor">
+      <summary>
+        <para>
+ Creates a localized texture reference.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.LocalVariablesGroup">
+      <summary>
+        <para>
+ A named collection of Smart String variables owned by a localized string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalVariablesGroup.Add(Unity.SmartStrings.PersistentVariables.IVariable,System.String)">
+      <summary>
+        <para>
+ Adds a variable under a unique, whitespace-normalized name and returns that name.
+ </para>
+      </summary>
+      <param name="variable">The variable to store in the group.</param>
+      <param name="name">A preferred name for the variable, or null to use the default.</param>
+      <returns>
+        <para>The unique name that the variable was stored under.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.LocalVariablesGroup.Clear">
+      <summary>
+        <para>
+ Removes every variable from the group.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalVariablesGroup.ContainsName(System.String)">
+      <summary>
+        <para>
+ Determines whether a variable is stored under the given name.
+ </para>
+      </summary>
+      <param name="name">The variable name to look for.</param>
+      <returns>
+        <para>true when a variable is stored under the name; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.LocalVariablesGroup.Count">
+      <summary>
+        <para>
+ The number of variables in the group.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.LocalVariablesGroup.Remove(System.String)">
+      <summary>
+        <para>
+ Removes the variable stored under the given name.
+ </para>
+      </summary>
+      <param name="name">The name of the variable to remove.</param>
+      <returns>
+        <para>true when a variable was removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.MetadataAttribute">
+      <summary>
+        <para>
+ Declares where a metadata kind may be attached and how it appears in the editor's "Add Metadata" menu.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.MetadataAttribute.AllowedTypes">
+      <summary>
+        <para>
+ Where this metadata may be attached.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.MetadataAttribute.AllowMultiple">
+      <summary>
+        <para>
+ Whether more than one of this metadata kind may be added to the same target.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.MetadataAttribute.MenuItem">
+      <summary>
+        <para>
+ The menu path shown in the "Add Metadata" menu.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.MetadataCollection">
+      <summary>
+        <para>
+ Holds the metadata items attached to a single localization target.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.MetadataCollection.AddMetadata(Unity.Localization.IMetadata)">
+      <summary>
+        <para>
+ Adds a metadata item to the collection.
+ </para>
+      </summary>
+      <param name="metadata">The item to add.</param>
+    </member>
+    <member name="M:Unity.Localization.MetadataCollection.Contains">
+      <summary>
+        <para>
+ Checks whether a metadata item of the given type is present.
+ </para>
+      </summary>
+      <returns>
+        <para>true if at least one item is assignable to T; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.MetadataCollection.Entries">
+      <summary>
+        <para>
+ The metadata items in this collection.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.MetadataCollection.GetMetadata">
+      <summary>
+        <para>
+ Returns the first metadata item of the given type.
+ </para>
+      </summary>
+      <returns>
+        <para>The first item assignable to T, or null when none is present.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.MetadataCollection.GetMetadatas">
+      <summary>
+        <para>
+ Enumerates every metadata item of the given type.
+ </para>
+      </summary>
+      <returns>
+        <para>A sequence of the items assignable to T.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.MetadataCollection.HasData">
+      <summary>
+        <para>
+ Whether any metadata is present.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.MetadataCollection.RemoveMetadata(Unity.Localization.IMetadata)">
+      <summary>
+        <para>
+ Removes a specific metadata item from the collection.
+ </para>
+      </summary>
+      <param name="metadata">The item to remove.</param>
+      <returns>
+        <para>true if the item was present and removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.MetadataType">
+      <summary>
+        <para>
+ Identifies where a kind of metadata may be attached in a localized project.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.MetadataType.All">
+      <summary>
+        <para>
+ Attachable to every target.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.MetadataType.None">
+      <summary>
+        <para>
+ Not attachable anywhere.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.MetadataType.ResourceEntry">
+      <summary>
+        <para>
+ Attachable to a per-locale entry.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.MetadataType.ResourceTable">
+      <summary>
+        <para>
+ Attachable to a resource table, which holds the entries for one locale.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.MetadataType.SharedTableData">
+      <summary>
+        <para>
+ Attachable to the shared table data, which covers the whole collection.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.MetadataType.SharedTableEntry">
+      <summary>
+        <para>
+ Attachable to a shared key, which is common to all locales.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.PlayerPrefLocaleSelector">
+      <summary>
+        <para>
+ Stores the last selected locale in PlayerPrefs and restores it on startup.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.PlayerPrefLocaleSelector.PlayerPreferenceKey">
+      <summary>
+        <para>
+ The PlayerPrefs key used to store the selected locale code.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.PreloadBehavior">
+      <summary>
+        <para>
+ Options for preloading the table collections flagged in the Editor.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.PreloadBehavior.NoPreloading">
+      <summary>
+        <para>
+ Nothing preloads; every table loads on first use.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.PreloadBehavior.PreloadAllLocales">
+      <summary>
+        <para>
+ The flagged tables preload for every enabled locale.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.PreloadBehavior.PreloadSelectedLocale">
+      <summary>
+        <para>
+ The flagged tables preload for the selected locale.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.PreloadBehavior.PreloadSelectedLocaleAndFallbacks">
+      <summary>
+        <para>
+ The flagged tables preload for the selected locale and every locale in its fallback chain.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.AssetKey">
+      <summary>
+        <para>
+ Identifies a single asset to load through an asset provider. The key pairs a provider specific address with an
+ expected asset type, and optionally the name of a sub-asset at that address.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Providers.AssetKey.Address">
+      <summary>
+        <para>
+ The provider-specific address that identifies the asset.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetKey.#ctor(System.String,System.Type,System.String)">
+      <summary>
+        <para>
+ Creates a key for the given address, interpreted by the active provider.
+ </para>
+      </summary>
+      <param name="address">The provider-specific address, for example a Resources path.</param>
+      <param name="type">The expected asset type. Defaults to Object.</param>
+      <param name="subAssetName">The optional name of a sub-asset at the address.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetKey.Equals(Unity.Localization.Providers.AssetKey)">
+      <summary>
+        <para>
+ Checks whether this key identifies the same asset as another.
+ </para>
+      </summary>
+      <param name="other">The key to compare with this one.</param>
+      <returns>
+        <para>true if both keys identify the same asset; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetKey.Equals(System.Object)">
+      <summary>
+        <para>
+ Checks whether this key equals another object.
+ </para>
+      </summary>
+      <param name="obj">The object to compare with this key.</param>
+      <returns>
+        <para>true if obj is a key that identifies the same asset; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetKey.GetHashCode">
+      <summary>
+        <para>
+ Computes a hash code for this key.
+ </para>
+      </summary>
+      <returns>
+        <para>An integer hash code derived from the address, sub-asset name, and type.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Providers.AssetKey.IsValid">
+      <summary>
+        <para>
+ Whether this key carries an address.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.Providers.AssetKey.op_Equal(Unity.Localization.Providers.AssetKey,Unity.Localization.Providers.AssetKey)">
+      <summary>
+        <para>
+ Compares two keys for equality.
+ </para>
+      </summary>
+      <param name="a">The first key.</param>
+      <param name="b">The second key.</param>
+      <returns>
+        <para>true if the keys identify the same asset; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.Providers.AssetKey.op_NotEqual(Unity.Localization.Providers.AssetKey,Unity.Localization.Providers.AssetKey)">
+      <summary>
+        <para>
+ Compares two keys for inequality.
+ </para>
+      </summary>
+      <param name="a">The first key.</param>
+      <param name="b">The second key.</param>
+      <returns>
+        <para>true if the keys identify different assets; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Providers.AssetKey.SubAssetName">
+      <summary>
+        <para>
+ The name of the sub-asset at the address, or null when the key targets the whole asset.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetKey.ToString">
+      <summary>
+        <para>
+ Returns a readable string describing this key.
+ </para>
+      </summary>
+      <returns>
+        <para>A human-readable description of the key.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Providers.AssetKey.Type">
+      <summary>
+        <para>
+ The expected asset type.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.AssetProvider">
+      <summary>
+        <para>
+ An ordered chain of asset providers used to load localized assets. Providers are tried in order and the first one
+ to resolve an asset wins.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetProvider.AddProvider(Unity.Localization.Providers.IAssetProvider)">
+      <summary>
+        <para>
+ Adds a provider to the end of the chain.
+ </para>
+      </summary>
+      <param name="provider">The provider to add.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetProvider.#ctor">
+      <summary>
+        <para>
+ Creates an empty chain.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetProvider.GetProvider">
+      <summary>
+        <para>
+ Returns the first provider of the given type in the chain, or null when there is none.
+ </para>
+      </summary>
+      <returns>
+        <para>The first matching provider, or null when none is present.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetProvider.InsertProvider(System.Int32,Unity.Localization.Providers.IAssetProvider)">
+      <summary>
+        <para>
+ Inserts a provider at the given position in the chain.
+ </para>
+      </summary>
+      <param name="index">The position to insert at.</param>
+      <param name="provider">The provider to insert.</param>
+    </member>
+    <member name="P:Unity.Localization.Providers.AssetProvider.Providers">
+      <summary>
+        <para>
+ The providers, in the order they are tried.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.AssetProvider.RemoveProvider(Unity.Localization.Providers.IAssetProvider)">
+      <summary>
+        <para>
+ Removes a provider from the chain.
+ </para>
+      </summary>
+      <param name="provider">The provider to remove.</param>
+      <returns>
+        <para>true if the provider was present and removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Providers.AssetProvider.Selected">
+      <summary>
+        <para>
+ The selected provider: the entry used as the default for new content, or null when none is chosen.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.EntryData">
+      <summary>
+        <para>
+ One row of a snapshot: a key's shared data plus this locale's value, either a string or a serialized entry.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.EntryJson">
+      <summary>
+        <para>
+ A non-string entry's own fields as JSON.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.Id">
+      <summary>
+        <para>
+ The stable key id, preserved so references by id keep resolving.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.IsSmart">
+      <summary>
+        <para>
+ Whether the key's string values are Smart Strings.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.Key">
+      <summary>
+        <para>
+ The key text.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.Selector">
+      <summary>
+        <para>
+ The variant selector for this key, or a default when the key is plain.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.TypeName">
+      <summary>
+        <para>
+ The assembly-qualified type name of a non-string entry, or empty when the row is a string entry.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.Value">
+      <summary>
+        <para>
+ The default string value, used when the entry is a string entry and no variant matches.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.VariantKeys">
+      <summary>
+        <para>
+ The active variant keys for this key.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.EntryData.Variants">
+      <summary>
+        <para>
+ The per-variant string values for a string entry.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.FileTableProvider">
+      <summary>
+        <para>
+ An asset provider that serves a table by reading a data file and reconstructing the table in memory.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.FileTables.FileTableProvider.AddCollection(System.String,System.String)">
+      <summary>
+        <para>
+ Records a collection so its addresses resolve at runtime.
+ </para>
+      </summary>
+      <param name="guid">The collection guid.</param>
+      <param name="name">The collection name.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.FileTables.FileTableProvider.ClearCollections">
+      <summary>
+        <para>
+ Removes every collection this provider serves.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.FileTableProvider.CollectionRef">
+      <summary>
+        <para>
+ A collection this provider serves, by guid and name so either address form resolves.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.FileTableProvider.CollectionRef.Guid">
+      <summary>
+        <para>
+ The collection guid, which is also the file name stem.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.FileTableProvider.CollectionRef.Name">
+      <summary>
+        <para>
+ The collection name, an alternate address form.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Providers.FileTables.FileTableProvider.Collections">
+      <summary>
+        <para>
+ The collections this provider serves.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Providers.FileTables.FileTableProvider.FileExtension">
+      <summary>
+        <para>
+ The file extension the format uses, without the leading dot.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.FileTables.FileTableProvider.FileName(System.String,System.String,System.String)">
+      <summary>
+        <para>
+ The file name a table is stored under, with characters invalid in a file name replaced.
+ </para>
+      </summary>
+      <param name="collectionName">The collection name.</param>
+      <param name="localeCode">The locale code.</param>
+      <param name="extension">The file extension without the leading dot.</param>
+      <returns>
+        <para>The file name the table is stored under.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Providers.FileTables.FileTableProvider.PlayMode">
+      <summary>
+        <para>
+ What this provider serves in the editor when entering Play Mode.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Providers.FileTables.FileTableProvider.Reader">
+      <summary>
+        <para>
+ Reads a table snapshot from a file in this provider's format.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.FileTables.FileTableProvider.RemoveCollection(System.String)">
+      <summary>
+        <para>
+ Removes a collection so this provider no longer serves its addresses.
+ </para>
+      </summary>
+      <param name="guid">The guid of the collection to remove.</param>
+      <returns>
+        <para>true if a collection was removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Providers.FileTables.FileTableProvider.SubPath">
+      <summary>
+        <para>
+ The subfolder within StreamingAssets the files are placed in, customizable per provider.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.Providers.FileTables.ITableFileReader">
+      <summary>
+        <para>
+ Reads a table snapshot from a file at runtime, so a file-backed provider can rebuild a table without shipping
+ the authored table asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Providers.FileTables.ITableFileReader.FileExtension">
+      <summary>
+        <para>
+ The file extension the format uses, without the leading dot.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.FileTables.ITableFileReader.Read(System.IO.Stream)">
+      <summary>
+        <para>
+ Reads a table snapshot from a stream.
+ </para>
+      </summary>
+      <param name="stream">The source stream to read from.</param>
+      <returns>
+        <para>The table snapshot read from the stream.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.JsonResourceProvider">
+      <summary>
+        <para>
+ A file table provider that reads tables from JSON, the default player format.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.JsonTableReader">
+      <summary>
+        <para>
+ The default table file reader, reading table snapshots from JSON.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.JsonTableReader.Instance">
+      <summary>
+        <para>
+ The shared stateless reader instance.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.PlayModeSource">
+      <summary>
+        <para>
+ Selects what a file table provider serves in the editor when entering Play Mode.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.PlayModeSource.GeneratedFiles">
+      <summary>
+        <para>
+ Generate the data files and read them back, exercising the real file path.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.PlayModeSource.SourceAssets">
+      <summary>
+        <para>
+ Serve the live authored table assets directly, without generating files. This is the fast default for entering Play Mode.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.ResourceTableData">
+      <summary>
+        <para>
+ A flat, serializable snapshot of one per-locale table.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.ResourceTableData.CollectionGuid">
+      <summary>
+        <para>
+ The stable collection guid, used as the address the runtime resolves the table under.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.ResourceTableData.CollectionName">
+      <summary>
+        <para>
+ The collection name this table belongs to.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.ResourceTableData.CurrentSchemaVersion">
+      <summary>
+        <para>
+ The format version this Unity writes and reads.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.ResourceTableData.Entries">
+      <summary>
+        <para>
+ The entries in this table, one row per key, carrying both the shared key data and this locale's value.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.ResourceTableData.LocaleCode">
+      <summary>
+        <para>
+ The locale code this table targets.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.ResourceTableData.SchemaVersion">
+      <summary>
+        <para>
+ The format version, so a reader can reject or migrate older data.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.SelectorData">
+      <summary>
+        <para>
+ A serialized variant selector: its type plus the selector's own serialized fields.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.SelectorData.Json">
+      <summary>
+        <para>
+ The selector's fields as JSON.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.SelectorData.TypeName">
+      <summary>
+        <para>
+ The selector's assembly-qualified type name, or empty when there is no selector.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Providers.FileTables.VariantData">
+      <summary>
+        <para>
+ One variant value: the selector key it applies to and the string payload.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.VariantData.Key">
+      <summary>
+        <para>
+ The selector key this value applies to.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.Providers.FileTables.VariantData.Value">
+      <summary>
+        <para>
+ The string payload.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.Providers.IAssetProvider">
+      <summary>
+        <para>
+ The base capability shared by asset providers in the localization system.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Providers.IAssetProvider.Id">
+      <summary>
+        <para>
+ The identifier a table collection uses to name the provider that serves it.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.IAssetProvider.Release(UnityEngine.Object)">
+      <summary>
+        <para>
+ Releases an asset previously returned by this provider.
+ </para>
+      </summary>
+      <param name="asset">The asset to release.</param>
+    </member>
+    <member name="?:Unity.Localization.Providers.IAsyncAssetProvider">
+      <summary>
+        <para>
+ An optional capability for an asset provider that loads assets asynchronously.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.IAsyncAssetProvider.LoadAssetAsync(Unity.Localization.Providers.AssetKey,System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Loads the asset identified by the key as the requested type.
+ </para>
+      </summary>
+      <param name="key">The asset to load.</param>
+      <param name="cancellationToken">A token that cancels the load.</param>
+      <returns>
+        <para>The loaded asset, or null when it cannot be resolved.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.Providers.ISynchronousAssetProvider">
+      <summary>
+        <para>
+ An optional capability for an asset provider that can resolve an asset immediately, without an asynchronous load.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.ISynchronousAssetProvider.TryLoadAsset(Unity.Localization.Providers.AssetKey,T&amp;)">
+      <summary>
+        <para>
+ Tries to resolve the asset for a key without loading asynchronously.
+ </para>
+      </summary>
+      <param name="key">The asset to resolve.</param>
+      <param name="asset">The resolved asset, or null on a miss.</param>
+      <returns>
+        <para>true when the asset resolved synchronously; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.Providers.ReferencedAssetProvider">
+      <summary>
+        <para>
+ An asset provider that resolves an address to a directly referenced asset. Use it when assets are assigned by
+ reference rather than loaded from built content, a Resources folder, or Addressables.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.ReferencedAssetProvider.Add(System.String,UnityEngine.Object)">
+      <summary>
+        <para>
+ Maps an address to a directly referenced asset, replacing any existing mapping for that address.
+ </para>
+      </summary>
+      <param name="address">The address callers request through an Unity.Localization.Providers.AssetKey.</param>
+      <param name="asset">The asset to return for that address.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.ReferencedAssetProvider.Contains(System.String)">
+      <summary>
+        <para>
+ Checks whether an asset is registered under the given address.
+ </para>
+      </summary>
+      <param name="address">The address to test.</param>
+      <returns>
+        <para>true if an asset is registered under the address; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Providers.ReferencedAssetProvider.Release(UnityEngine.Object)">
+      <summary>
+        <para>
+ Does nothing, because this provider does not own the assets it returns.
+ </para>
+      </summary>
+      <param name="asset">The asset to release. Ignored.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.ReferencedAssetProvider.Remove(System.String)">
+      <summary>
+        <para>
+ Removes any entry registered under the given address.
+ </para>
+      </summary>
+      <param name="address">The address to clear.</param>
+      <returns>
+        <para>true if an entry was removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Providers.ReferencedAssetProvider.TryLoadAsset(Unity.Localization.Providers.AssetKey,T&amp;)">
+      <summary>
+        <para>
+ Resolves the referenced asset for the key without an asynchronous load.
+ </para>
+      </summary>
+      <param name="key">The asset to resolve.</param>
+      <param name="asset">The resolved asset, or null on a miss.</param>
+      <returns>
+        <para>true when the asset resolved; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.Providers.ResourceFolderProvider">
+      <summary>
+        <para>
+ An asset provider that loads assets from Resources folders, treating the address as a Resources path.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Providers.ResourceFolderProvider.AddAlias(System.String,System.String)">
+      <summary>
+        <para>
+ Maps an address to a Resources path, replacing any existing alias for that address.
+ </para>
+      </summary>
+      <param name="address">The address callers request through an Unity.Localization.Providers.AssetKey, for example a table guid address.</param>
+      <param name="path">The Resources path the address resolves to.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.ResourceFolderProvider.LoadAssetAsync(Unity.Localization.Providers.AssetKey,System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Loads the asset for the key from a Resources folder as the requested type.
+ </para>
+      </summary>
+      <param name="key">The asset to load.</param>
+      <param name="cancellationToken">A token that cancels the load.</param>
+      <returns>
+        <para>The loaded asset, or null when nothing at the path matches.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Providers.ResourceFolderProvider.Release(UnityEngine.Object)">
+      <summary>
+        <para>
+ Unloads an asset previously loaded from a Resources folder.
+ </para>
+      </summary>
+      <param name="asset">The asset to unload.</param>
+    </member>
+    <member name="M:Unity.Localization.Providers.ResourceFolderProvider.Remove(System.String)">
+      <summary>
+        <para>
+ Removes any alias registered under the given address.
+ </para>
+      </summary>
+      <param name="address">The address to clear.</param>
+      <returns>
+        <para>true if an alias was removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.ResourceAssetEntry">
+      <summary>
+        <para>
+ Represents a localized asset stored as a path into a Resources folder.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceAssetEntry.#ctor">
+      <summary>
+        <para>
+ Creates an empty entry.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceAssetEntry.#ctor(System.Int64)">
+      <summary>
+        <para>
+ Creates an entry for a key id.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id.</param>
+    </member>
+    <member name="T:Unity.Localization.ResourceDatabase">
+      <summary>
+        <para>
+ Resolves localized strings and assets for the active localization settings.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.ResourceDatabase.AssetProvider">
+      <summary>
+        <para>
+ The provider chain used to load tables and localized assets.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetEntry(Unity.Localization.TableReference,Unity.Localization.TableEntryReference,Unity.Localization.Locale,System.Boolean)">
+      <summary>
+        <para>
+ Resolves an entry synchronously, following the fallback chain, or null when an async load is required.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection that holds the entry.</param>
+      <param name="entryRef">The reference to the entry to resolve within the table.</param>
+      <param name="locale">The locale to resolve in; null uses the selected locale.</param>
+      <param name="enableFallback">Whether to walk the locale fallback chain when the locale has no usable value.</param>
+      <returns>
+        <para>The resolved entry, or null when the table is not loaded or no usable value exists.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetEntryAsync(Unity.Localization.TableReference,Unity.Localization.TableEntryReference,Unity.Localization.Locale,System.Threading.CancellationToken,System.Boolean)">
+      <summary>
+        <para>
+ Resolves an entry, following the locale fallback chain when the entry is missing or empty.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection that holds the entry.</param>
+      <param name="entryRef">The reference to the entry to resolve within the table.</param>
+      <param name="locale">The locale to resolve in; null uses the selected locale.</param>
+      <param name="cancellationToken">The token that cancels the load operation.</param>
+      <param name="enableFallback">Whether to walk the locale fallback chain when the locale has no usable value.</param>
+      <returns>
+        <para>The resolved entry, or null when neither the locale nor its fallback chain has a usable value.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetLocalizedAsset(Unity.Localization.TableReference,Unity.Localization.TableEntryReference,Unity.Localization.Locale)">
+      <summary>
+        <para>
+ Resolves a localized asset synchronously from a synchronous provider and entry.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection that holds the entry.</param>
+      <param name="entryRef">The reference to the entry to resolve within the table.</param>
+      <param name="locale">The locale to resolve in; null uses the selected locale.</param>
+      <returns>
+        <para>The resolved asset, or null when it cannot be resolved synchronously.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetLocalizedAssetAsync(Unity.Localization.TableReference,Unity.Localization.TableEntryReference,Unity.Localization.Locale,System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Resolves a localized asset: the direct reference when present, otherwise through the provider chain.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection that holds the entry.</param>
+      <param name="entryRef">The reference to the asset entry to resolve within the table.</param>
+      <param name="locale">The locale to resolve in; null uses the selected locale.</param>
+      <param name="cancellationToken">The token that cancels the load operation.</param>
+      <returns>
+        <para>The loaded localized asset, or null when the entry has no asset for the locale.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetLocalizedString(Unity.Localization.TableReference,Unity.Localization.TableEntryReference,Unity.Localization.Locale,System.Object[],System.Boolean,Unity.SmartStrings.PersistentVariables.IVariableGroup)">
+      <summary>
+        <para>
+ Resolves a localized string synchronously, or null when it cannot be resolved without an asynchronous load.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection that holds the entry.</param>
+      <param name="entryRef">The reference to the string entry to resolve.</param>
+      <param name="locale">The locale to resolve in; null uses the selected locale.</param>
+      <param name="args">The Smart String arguments to format placeholders with; null when the entry takes no arguments.</param>
+      <param name="enableFallback">Whether to walk the locale fallback chain when the locale has no value.</param>
+      <param name="localVariables">The extra variables that Smart String placeholders resolve against, in addition to the arguments.</param>
+      <returns>
+        <para>The formatted localized string, or null when the table is not loaded or the entry has no value.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetLocalizedStringAsync(Unity.Localization.TableReference,Unity.Localization.TableEntryReference,Unity.Localization.Locale,System.Object[],System.Threading.CancellationToken,System.Boolean,Unity.SmartStrings.PersistentVariables.IVariableGroup)">
+      <summary>
+        <para>
+ Resolves a localized string, applying Smart formatting and the locale post-processing hook.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection that holds the entry.</param>
+      <param name="entryRef">The reference to the string entry to resolve.</param>
+      <param name="locale">The locale to resolve in; null uses the selected locale.</param>
+      <param name="args">The Smart String arguments to format placeholders with; null when the entry takes no arguments.</param>
+      <param name="cancellationToken">The token that cancels the load operation.</param>
+      <param name="enableFallback">Whether to walk the locale fallback chain when the locale has no value.</param>
+      <param name="localVariables">The extra variables that Smart String placeholders resolve against, in addition to the arguments.</param>
+      <returns>
+        <para>The formatted localized string, or null when the entry is not a string entry or has no value.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetTable(Unity.Localization.TableReference,Unity.Localization.Locale)">
+      <summary>
+        <para>
+ Returns the resource table for a reference if it is already loaded, or null otherwise.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection to look up.</param>
+      <param name="locale">The locale to look up; null uses the selected locale.</param>
+      <returns>
+        <para>The resource table for the reference in the locale, or null when it cannot be resolved synchronously.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.GetTableAsync(Unity.Localization.TableReference,Unity.Localization.Locale,System.Threading.CancellationToken)">
+      <summary>
+        <para>
+ Loads the resource table for a table reference in a locale through the provider chain.
+ </para>
+      </summary>
+      <param name="tableRef">The reference to the table collection to load.</param>
+      <param name="locale">The locale to load the table for; null uses the selected locale.</param>
+      <param name="cancellationToken">The token that cancels the load operation.</param>
+      <returns>
+        <para>The loaded resource table, or null when no table matches the reference in the locale.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.ReleaseAllAssets">
+      <summary>
+        <para>
+ Releases every cached asset across all locales.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceDatabase.ReleaseAssets(Unity.Localization.Locale)">
+      <summary>
+        <para>
+ Releases every cached asset loaded for the given locale.
+ </para>
+      </summary>
+      <param name="locale">The locale whose cached assets to release.</param>
+    </member>
+    <member name="T:Unity.Localization.ResourceEntryBase">
+      <summary>
+        <para>
+ Serves as the base class for the built-in resource entry kinds, holding the stable key id and per-entry metadata.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.ResourceTable">
+      <summary>
+        <para>
+ A localization table that holds the translated values for one locale in a collection.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.AddEntry(Unity.Localization.IResourceEntry)">
+      <summary>
+        <para>
+ Adds an entry, replacing any existing entry with the same key id.
+ </para>
+      </summary>
+      <param name="entry">The entry to add.</param>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.AddStringEntry">
+      <summary>
+        <para>
+ Adds or updates a plain string entry for a key.
+ </para>
+      </summary>
+      <param name="key">The key text; added to the shared data when new.</param>
+      <param name="value">The localized value to store for this locale.</param>
+      <param name="isSmart">Whether the value is a Smart String, formatted at resolve time; omit it to leave the key's flag unchanged.</param>
+      <returns>
+        <para>The added or updated entry, or null when it cannot be added.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.AddStringVariant(System.String,System.String,System.String)">
+      <summary>
+        <para>
+ Adds or updates a variant value for a string key in this table.
+ </para>
+      </summary>
+      <param name="key">The key text; added to the shared data when new.</param>
+      <param name="variantKey">The selector key this value applies to, for example "Steam".</param>
+      <param name="value">The localized value to store for this locale and variant.</param>
+      <returns>
+        <para>The added or updated entry, or null when it cannot be added.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.ResourceTable.Entries">
+      <summary>
+        <para>
+ The entries this table holds for its locale.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.GetEntry(System.Int64)">
+      <summary>
+        <para>
+ Returns the entry stored for a stable key id.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id to look up.</param>
+      <returns>
+        <para>The matching entry, or null when none exists.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.GetEntry(System.Int64)">
+      <summary>
+        <para>
+ Returns the entry stored for a stable key id as a specific entry kind.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id to look up.</param>
+      <returns>
+        <para>The matching entry as T, or null when it is missing or a different kind.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.GetEntry(System.String)">
+      <summary>
+        <para>
+ Returns the entry stored for a key.
+ </para>
+      </summary>
+      <param name="key">The key text to look up.</param>
+      <returns>
+        <para>The matching entry, or null when none exists.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.GetEntry(System.String)">
+      <summary>
+        <para>
+ Returns the entry stored for a key as a specific entry kind.
+ </para>
+      </summary>
+      <param name="key">The key text to look up.</param>
+      <returns>
+        <para>The matching entry as T, or null when it is missing or a different kind.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.ResourceTable.LocaleIdentifier">
+      <summary>
+        <para>
+ The locale this table provides values for.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.ResourceTable.Metadata">
+      <summary>
+        <para>
+ The metadata attached to this table for its locale.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.RemoveAllEntries">
+      <summary>
+        <para>
+ Removes every entry from this table.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.RemoveEntry(System.Int64)">
+      <summary>
+        <para>
+ Removes the entry for a stable key id from this table.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id of the entry to remove.</param>
+    </member>
+    <member name="M:Unity.Localization.ResourceTable.RemoveVariant(System.String,System.String)">
+      <summary>
+        <para>
+ Removes one variant value from a key's entry in this table.
+ </para>
+      </summary>
+      <param name="key">The key text.</param>
+      <param name="variantKey">The selector key to remove the value for.</param>
+      <returns>
+        <para>true when the entry held variants; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.ResourceTable.SharedData">
+      <summary>
+        <para>
+ The shared key data for the collection this table belongs to.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.ResourceTable.TableCollectionName">
+      <summary>
+        <para>
+ The name of the collection this table belongs to.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.SharedEntryFlags">
+      <summary>
+        <para>
+ Per-key flags stored once on the shared table entry and shared across every locale.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.SharedEntryFlags.None">
+      <summary>
+        <para>
+ No flags are set.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.SharedEntryFlags.Smart">
+      <summary>
+        <para>
+ The key's string values are Smart Strings, formatted through Smart Strings at resolve time.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.SharedTableData">
+      <summary>
+        <para>
+ The shared key table for a localization table collection: the set of string keys and their stable ids that every
+ per-locale table in the collection uses.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.AddKey(System.String)">
+      <summary>
+        <para>
+ Adds a key and returns its entry.
+ </para>
+      </summary>
+      <param name="key">The key to add.</param>
+      <returns>
+        <para>The new or existing entry, or null when the key is empty.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.AddKey(System.String,System.Int64)">
+      <summary>
+        <para>
+ Adds a key with an explicit id and returns its entry.
+ </para>
+      </summary>
+      <param name="key">The key to add.</param>
+      <param name="id">The stable id to assign.</param>
+      <returns>
+        <para>The new or existing entry, or null when the key or id cannot be used.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.Clear">
+      <summary>
+        <para>
+ Removes every key from the shared data.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.Entries">
+      <summary>
+        <para>
+ The keys in this shared data, in their current order.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.GetEntry(System.String)">
+      <summary>
+        <para>
+ Returns the entry for a key.
+ </para>
+      </summary>
+      <param name="key">The key to look up.</param>
+      <returns>
+        <para>The matching entry, or null when the key is absent.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.GetEntry(System.Int64)">
+      <summary>
+        <para>
+ Returns the entry for a stable id.
+ </para>
+      </summary>
+      <param name="id">The id to look up.</param>
+      <returns>
+        <para>The matching entry, or null when the id is absent.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.GetId(System.String)">
+      <summary>
+        <para>
+ Returns the stable id for a key.
+ </para>
+      </summary>
+      <param name="key">The key to look up.</param>
+      <returns>
+        <para>The key's stable id, or 0 when it is absent.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.GetKey(System.Int64)">
+      <summary>
+        <para>
+ Returns the key text for a stable id.
+ </para>
+      </summary>
+      <param name="id">The id to look up.</param>
+      <returns>
+        <para>The key text, or null when the id is absent.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.IsSmart(System.Int64)">
+      <summary>
+        <para>
+ Returns whether a key is marked as a Smart String.
+ </para>
+      </summary>
+      <param name="id">The stable key id.</param>
+      <returns>
+        <para>true when the key's values are Smart Strings; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.KeyGenerator">
+      <summary>
+        <para>
+ The generator that assigns stable ids to new keys.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.Metadata">
+      <summary>
+        <para>
+ Collection-level metadata shared across all locale tables.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.RemoveKey(System.String)">
+      <summary>
+        <para>
+ Removes a key from the shared data.
+ </para>
+      </summary>
+      <param name="key">The key to remove.</param>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.RenameKey(System.Int64,System.String)">
+      <summary>
+        <para>
+ Renames a key while keeping its id.
+ </para>
+      </summary>
+      <param name="id">The stable id of the key to rename.</param>
+      <param name="newKey">The new key text.</param>
+      <returns>
+        <para>true when the key was renamed or already had the requested name; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.SharedTableData.SetKeyOrder(System.Collections.Generic.IReadOnlyList`1&lt;System.Int64&gt;)">
+      <summary>
+        <para>
+ Reorders the keys to match a given sequence of ids.
+ </para>
+      </summary>
+      <param name="orderedIds">The desired key-id order.</param>
+    </member>
+    <member name="T:Unity.Localization.SharedTableData.SharedTableEntry">
+      <summary>
+        <para>
+ A single key in the shared data, pairing the key text with its stable id.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.SharedTableEntry.Flags">
+      <summary>
+        <para>
+ Per-key flags shared across every locale.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.SharedTableEntry.Id">
+      <summary>
+        <para>
+ The stable id of the key.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.SharedTableEntry.IsSmart">
+      <summary>
+        <para>
+ Whether the key's string values are Smart Strings.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.SharedTableEntry.Key">
+      <summary>
+        <para>
+ The key text.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.SharedTableEntry.Metadata">
+      <summary>
+        <para>
+ Metadata attached to the key across every locale.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.TableCollectionName">
+      <summary>
+        <para>
+ The name of the table collection this shared data belongs to.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SharedTableData.TableCollectionNameGuid">
+      <summary>
+        <para>
+ The asset guid of the table collection.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.SpecificLocaleSelector">
+      <summary>
+        <para>
+ Selects a fixed locale by its identifier when that locale is available.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.SpecificLocaleSelector.LocaleId">
+      <summary>
+        <para>
+ The identifier of the locale to select.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.StringEntry">
+      <summary>
+        <para>
+ Represents a localized string entry that stores a single text value with no variants.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.StringEntry.#ctor">
+      <summary>
+        <para>
+ Creates an empty entry.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.StringEntry.#ctor(System.Int64,System.String)">
+      <summary>
+        <para>
+ Creates an entry for a key id.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id.</param>
+      <param name="value">The localized value.</param>
+    </member>
+    <member name="T:Unity.Localization.SystemLocaleSelector">
+      <summary>
+        <para>
+ Detects the language the device is set to and matches the closest available locale.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.SystemLocaleSelector.GetSystemCulture">
+      <summary>
+        <para>
+ Returns the culture used to detect the startup locale.
+ </para>
+      </summary>
+      <returns>
+        <para>The culture used to detect the locale; by default the language the device is set to.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.TableEntryReference">
+      <summary>
+        <para>
+ A serializable reference to a single table entry, identified either by its key text or by its stable key id.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.TableEntryReference.Equals(Unity.Localization.TableEntryReference)">
+      <summary>
+        <para>
+ Checks whether this reference identifies the same entry as another.
+ </para>
+      </summary>
+      <param name="other">The entry reference to compare with this one.</param>
+      <returns>
+        <para>true if both references identify the same entry; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableEntryReference.Equals(System.Object)">
+      <summary>
+        <para>
+ Checks whether this reference equals another object.
+ </para>
+      </summary>
+      <param name="obj">The object to compare with this reference.</param>
+      <returns>
+        <para>true if obj is an entry reference that identifies the same entry; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableEntryReference.GetHashCode">
+      <summary>
+        <para>
+ Computes a hash code for this reference.
+ </para>
+      </summary>
+      <returns>
+        <para>An integer hash code derived from the part of the reference that resolution uses.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.TableEntryReference.implop_TableEntryReference(long)(System.Int64)">
+      <summary>
+        <para>
+ Converts a key id into an id-based entry reference.
+ </para>
+      </summary>
+      <param name="keyId">The stable key id of the entry to reference.</param>
+      <returns>
+        <para>An entry reference that identifies the entry by key id.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.TableEntryReference.implop_TableEntryReference(string)(System.String)">
+      <summary>
+        <para>
+ Converts key text into a name-based entry reference.
+ </para>
+      </summary>
+      <param name="key">The key text of the entry to reference.</param>
+      <returns>
+        <para>An entry reference that identifies the entry by key text.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.TableEntryReference.IsEmpty">
+      <summary>
+        <para>
+ Whether this reference points at nothing.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.TableEntryReference.Key">
+      <summary>
+        <para>
+ The key text of the referenced entry, or null when the reference is empty or id-based.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.TableEntryReference.KeyId">
+      <summary>
+        <para>
+ The stable key id of the referenced entry, or 0 when the reference is empty or name-based.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.TableEntryReference.ReferenceType">
+      <summary>
+        <para>
+ How this reference identifies its entry.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.TableEntryReference.ResolveKeyId(Unity.Localization.SharedTableData)">
+      <summary>
+        <para>
+ Resolves this reference to a numeric key id using the given shared table data.
+ </para>
+      </summary>
+      <param name="sharedData">The shared table data to resolve the key against.</param>
+      <returns>
+        <para>The resolved key id, or 0 when the reference cannot be resolved.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableEntryReference.ResolveKeyName(Unity.Localization.SharedTableData)">
+      <summary>
+        <para>
+ Resolves this reference to a key name using the given shared table data.
+ </para>
+      </summary>
+      <param name="sharedData">The shared table data to resolve the key against.</param>
+      <returns>
+        <para>The resolved key text, or null when the reference cannot be resolved.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableEntryReference.ToString">
+      <summary>
+        <para>
+ Returns a readable string describing this reference.
+ </para>
+      </summary>
+      <returns>
+        <para>A human-readable description of the reference.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.TableEntryReference.Type">
+      <summary>
+        <para>
+ The way a table entry reference identifies its entry.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.TableEntryReference.Type.Empty">
+      <summary>
+        <para>
+ This reference points at no table entry.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.TableEntryReference.Type.Id">
+      <summary>
+        <para>
+ The entry is referenced by its stable key id.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.TableEntryReference.Type.Name">
+      <summary>
+        <para>
+ The entry is referenced by its key text.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.TableReference">
+      <summary>
+        <para>
+ A serializable reference to a table collection, identified either by its name or by its collection GUID.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.TableReference.Equals(Unity.Localization.TableReference)">
+      <summary>
+        <para>
+ Checks whether this reference identifies the same collection as another.
+ </para>
+      </summary>
+      <param name="other">The table reference to compare with this one.</param>
+      <returns>
+        <para>true if both references identify the same collection; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableReference.Equals(System.Object)">
+      <summary>
+        <para>
+ Checks whether this reference equals another object.
+ </para>
+      </summary>
+      <param name="obj">The object to compare with this reference.</param>
+      <returns>
+        <para>true if obj is a table reference that identifies the same collection; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableReference.FromGuid(System.String)">
+      <summary>
+        <para>
+ Creates a table reference that identifies a collection by its GUID.
+ </para>
+      </summary>
+      <param name="tableCollectionNameGuid">The GUID of the table collection to reference.</param>
+      <returns>
+        <para>A table reference that identifies the collection by GUID.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableReference.FromGuid(UnityEngine.GUID)">
+      <summary>
+        <para>
+ Creates a table reference that identifies a collection by its GUID.
+ </para>
+      </summary>
+      <param name="tableCollectionNameGuid">The GUID of the table collection to reference.</param>
+      <returns>
+        <para>A table reference that identifies the collection by GUID.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.TableReference.GetHashCode">
+      <summary>
+        <para>
+ Computes a hash code for this reference.
+ </para>
+      </summary>
+      <returns>
+        <para>An integer hash code derived from the part of the reference that resolution uses.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.TableReference.implop_TableReference(string)(System.String)">
+      <summary>
+        <para>
+ Converts a collection name into a name-based table reference.
+ </para>
+      </summary>
+      <param name="tableCollectionName">The name of the table collection to reference.</param>
+      <returns>
+        <para>A table reference that identifies the collection by name.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.TableReference.IsEmpty">
+      <summary>
+        <para>
+ Whether this reference points at nothing.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.TableReference.ReferenceType">
+      <summary>
+        <para>
+ How this reference identifies its collection.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.TableReference.TableCollectionName">
+      <summary>
+        <para>
+ The name of the referenced collection, or null when the reference is empty or GUID-based.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.TableReference.TableCollectionNameGuid">
+      <summary>
+        <para>
+ The GUID of the referenced collection, or an empty GUID when the reference is empty or name-based.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.TableReference.ToString">
+      <summary>
+        <para>
+ Returns a readable string describing this reference.
+ </para>
+      </summary>
+      <returns>
+        <para>A human-readable description of the reference.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.TableReference.Type">
+      <summary>
+        <para>
+ The way a table reference identifies its collection.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.TableReference.Type.Empty">
+      <summary>
+        <para>
+ This reference points at no table collection.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.TableReference.Type.Guid">
+      <summary>
+        <para>
+ The collection is referenced by its GUID.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.Localization.TableReference.Type.Name">
+      <summary>
+        <para>
+ The collection is referenced by its name.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.UI.LanguageDropdown">
+      <summary>
+        <para>
+ A dropdown that lets the player pick a language.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.UI.LanguageDropdown.#ctor">
+      <summary>
+        <para>
+ Creates a language dropdown with no label.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.UI.LanguageDropdown.#ctor(System.String)">
+      <summary>
+        <para>
+ Creates a language dropdown with a label in front of it.
+ </para>
+      </summary>
+      <param name="label">The label to display in front of the dropdown.</param>
+    </member>
+    <member name="T:Unity.Localization.UI.LanguageRadioButtonGroup">
+      <summary>
+        <para>
+ A radio button group that lets the player pick a language.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.UI.LanguageRadioButtonGroup.#ctor">
+      <summary>
+        <para>
+ Creates a language radio button group with no label.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.UI.LanguageRadioButtonGroup.#ctor(System.String)">
+      <summary>
+        <para>
+ Creates a language radio button group with a label above it.
+ </para>
+      </summary>
+      <param name="label">The label to display for the group.</param>
+    </member>
+    <member name="T:Unity.Localization.VariantSelectorMetadata">
+      <summary>
+        <para>
+ Makes a key variant-driven by attaching the selector that chooses its current variant.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.VariantSelectorMetadata.AddKey(System.String)">
+      <summary>
+        <para>
+ Adds key to the authored variant keys if absent.
+ </para>
+      </summary>
+      <param name="key">The selector key.</param>
+    </member>
+    <member name="M:Unity.Localization.VariantSelectorMetadata.#ctor">
+      <summary>
+        <para>
+ Creates empty variant metadata.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.VariantSelectorMetadata.#ctor(Unity.Localization.IVariantSelector)">
+      <summary>
+        <para>
+ Creates variant metadata for a selector.
+ </para>
+      </summary>
+      <param name="selector">The selector that chooses the current variant key.</param>
+    </member>
+    <member name="P:Unity.Localization.VariantSelectorMetadata.Keys">
+      <summary>
+        <para>
+ The variant keys authored for this scope, used by the editor to lay out variant rows.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.VariantSelectorMetadata.RemoveKey(System.String)">
+      <summary>
+        <para>
+ Removes key from the authored variant keys.
+ </para>
+      </summary>
+      <param name="key">The selector key.</param>
+      <returns>
+        <para>Whether the key was present.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.VariantSelectorMetadata.Selector">
+      <summary>
+        <para>
+ The selector that chooses the current variant key.
+ </para>
+      </summary>
+    </member>
+    <member name="A:UnityEngine.LocalizationRuntimeModule">
+      <summary>
+        <para>The Localization Runtime module provides the runtime foundation for localizing an application: locales, resource tables, and the settings, database, and asset providers that resolve localized content for the active locale.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

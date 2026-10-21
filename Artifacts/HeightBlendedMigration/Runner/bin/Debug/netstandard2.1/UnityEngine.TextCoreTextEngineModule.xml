@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.TextCoreTextEngineModule</name>
+    </assembly>
+    <member name="T:UnityEngine.TextCore.FontAutoSize">
+      <summary>
+        <para>Automatic font sizing settings for the Advanced Text Generator.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.FontAutoSize.enabled">
+      <summary>
+        <para>Shrink or grow the font size between TextCore.FontAutoSize._minSize and TextCore.FontAutoSize._maxSize so the text fits the extents.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.FontAutoSize.maxSize">
+      <summary>
+        <para>Maximum font size, in pixels.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.FontAutoSize.minSize">
+      <summary>
+        <para>Minimum font size, in pixels.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.FontAutoSize.#ctor(System.Boolean,System.Single,System.Single)">
+      <summary>
+        <para>Creates automatic sizing settings.</para>
+      </summary>
+      <param name="enabled">Whether automatic sizing is applied.</param>
+      <param name="minSize">Minimum font size, in pixels.</param>
+      <param name="maxSize">Maximum font size, in pixels.</param>
+    </member>
+    <member name="P:UnityEngine.TextCore.FontAutoSize.Default">
+      <summary>
+        <para>Automatic sizing disabled, with a size range of 0 to 100 pixels.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Generation.TextGenerationSettings">
+      <summary>
+        <para>A struct that stores the settings for the Advanced Text Generator.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.autoSize">
+      <summary>
+        <para>Automatic font sizing, which shrinks or grows the font size so the text fits the extents.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.color">
+      <summary>
+        <para>The base color for the text generation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.extents">
+      <summary>
+        <para>The layout area, in pixels. Text is aligned within it and lines wrap at a positive horizontal extent when TextCore.Generation.TextGenerationSettings._wrapMode allows it. A zero or negative axis is unconstrained.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.font">
+      <summary>
+        <para>Font to use for generation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.fontSize">
+      <summary>
+        <para>Font size, in pixels.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.fontStyle">
+      <summary>
+        <para>Font style.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.fontWeight">
+      <summary>
+        <para>Font weight.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.horizontalAlignment">
+      <summary>
+        <para>Horizontal alignment of the text within the extents.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.languageDirection">
+      <summary>
+        <para>The base direction paragraphs are laid out in.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.richText">
+      <summary>
+        <para>Allow rich text markup in generation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.text">
+      <summary>
+        <para>The text to generate.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.verticalAlignment">
+      <summary>
+        <para>Vertical alignment of the text within the extents. Takes effect when the vertical extent is positive.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.whitespaceCollapse">
+      <summary>
+        <para>How sequences of white space are handled.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextGenerationSettings.wrapMode">
+      <summary>
+        <para>Whether lines wrap at the horizontal extent.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Generation.TextGenerationSettings.Default">
+      <summary>
+        <para>
+ A set of settings initialized to sensible defaults.
+ </para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Generation.TextGenerator">
+      <summary>
+        <para>
+ Generates renderable text geometry using the Advanced Text Generator (ATG).
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Generation.TextGenerator.GenerateText(UnityEngine.TextCore.Generation.TextGenerationSettings)">
+      <summary>
+        <para>
+ Generates the renderable geometry for the given settings.
+ </para>
+      </summary>
+      <param name="settings">The description of the text and layout to generate.</param>
+      <returns>
+        <para>
+ The generated geometry; fill a Mesh with TextCore.Generation.TextMesh.FillMesh and render its
+ sub-meshes with TextCore.Generation.TextMesh._materials.
+ </para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.TextCore.Generation.TextMesh">
+      <summary>
+        <para>The renderable geometry produced by the Advanced Text Generator for a piece of text.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextMesh.isElided">
+      <summary>
+        <para>Whether the text was truncated to fit the layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextMesh.materials">
+      <summary>
+        <para>The material of each sub-mesh, in sub-mesh order, ready to assign to the renderer that draws the filled mesh.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Generation.TextMesh.size">
+      <summary>
+        <para>The rendered size of the text, in pixels.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Generation.TextMesh.FillMesh(UnityEngine.Mesh)">
+      <summary>
+        <para>Fills the mesh with the generated geometry, one sub-mesh per material.</para>
+      </summary>
+      <param name="mesh">The mesh to fill. Its previous content is cleared.</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Generation.TextMesh.ToUIVertices">
+      <summary>
+        <para>Flattens every sub-mesh into a single list of vertices, for consumers of UIVertex geometry such as custom UI Graphics.</para>
+      </summary>
+      <returns>
+        <para>The vertices of every sub-mesh, in generation order.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.TextCore.HorizontalAlignment">
+      <summary>
+        <para>How text is horizontally aligned within its layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.HorizontalAlignment.Center">
+      <summary>
+        <para>Text is centered within the layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.HorizontalAlignment.Flush">
+      <summary>
+        <para>Spaces are stretched so every line, including the last, fills the layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.HorizontalAlignment.Justified">
+      <summary>
+        <para>Spaces are stretched so lines fill the layout area; the last line stays left-aligned.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.HorizontalAlignment.Left">
+      <summary>
+        <para>Text is aligned to the left of the layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.HorizontalAlignment.Right">
+      <summary>
+        <para>Text is aligned to the right of the layout area.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.AtlasPopulationMode">
+      <summary>
+        <para>Options to specify the atlas population mode, which defines the type of font asset.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.AtlasPopulationMode.Dynamic">
+      <summary>
+        <para>Dynamic font assets can be populated at runtime, but incur a higher performance overhead than static font assets. A dynamic font asset depends on its source font file, which is included in builds.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.AtlasPopulationMode.DynamicOS">
+      <summary>
+        <para>Dynamic OS font assets provide the same functionality and performance as dynamic font assets. In the Editor, a Dynamic OS font asset depends on its source font file. For a Dynamic OS font asset to work in a build, the target platform must contain its source font file.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.AtlasPopulationMode.Static">
+      <summary>
+        <para>Static font assets offer the best performance of any font asset type. You create and pre-populate them in the Editor.They cannot be modified at runtime. A static font asset is standalone. Its source font file is not included in builds.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.Character">
+      <summary>
+        <para>Represents a single character.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.Character.#ctor">
+      <summary>
+        <para>
+ Default constructor.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.Character.#ctor(System.UInt32,UnityEngine.TextCore.Glyph)">
+      <summary>
+        <para>
+ Constructor for new character
+ </para>
+      </summary>
+      <param name="unicode">Unicode value.</param>
+      <param name="glyph">Glyph</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.Character.#ctor(System.UInt32,UnityEngine.TextCore.Text.FontAsset,UnityEngine.TextCore.Glyph)">
+      <summary>
+        <para>
+ Constructor for new character
+ </para>
+      </summary>
+      <param name="unicode">Unicode value.</param>
+      <param name="fontAsset">The font asset to which this character belongs.</param>
+      <param name="glyph">Glyph</param>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.DynamicDataPersistence">
+      <summary>
+        <para>Options to specify whether the glyphs and atlas textures that a dynamic font asset generates in the Editor are stored in the asset.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.DynamicDataPersistence.Persistent">
+      <summary>
+        <para>Glyphs generated in the Editor are saved into the asset file and shipped in builds.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.DynamicDataPersistence.SessionOnly">
+      <summary>
+        <para>Glyphs generated in the Editor stay in memory until the Editor closes. The asset file is not modified and builds start with an empty atlas.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.FontAsset">
+      <summary>
+        <para>
+ Contains deprecated FontAsset APIs that are being phased out as ATG (Advanced Text Generator)
+ becomes the primary text backend. These APIs are no longer required for ATG-based text rendering.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.atlasHeight">
+      <summary>
+        <para>
+ The height of the atlas texture(s) used by this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.atlasPadding">
+      <summary>
+        <para>
+ The padding used between glyphs contained in the atlas texture(s) used by this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.atlasTexture">
+      <summary>
+        <para>
+ The font atlas used by this font asset.
+ This is always the texture at index [0] of the fontAtlasTextures.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.atlasTextureCount">
+      <summary>
+        <para>
+ Number of atlas textures used by this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.atlasTextures">
+      <summary>
+        <para>
+ Array of atlas textures that contain the glyphs used by this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.atlasWidth">
+      <summary>
+        <para>
+ The width of the atlas texture(s) used by this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.boldStyleSpacing">
+      <summary>
+        <para>
+ The spacing between characters when using regular style.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.boldStyleWeight">
+      <summary>
+        <para>
+ Defines the dilation of the text when using bold style.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.characterLookupTable">
+      <summary>
+        <para>
+ Dictionary used to lookup characters contained in the font asset or its fallbacks by their unicode values.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.characterTable">
+      <summary>
+        <para>
+ List containing the characters of the given font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.dynamicDataPersistence">
+      <summary>
+        <para>
+ Determines if the dynamic font asset data generated in the Editor is stored in the asset file.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.faceInfo">
+      <summary>
+        <para>
+ Information about the font's face.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.fallbackFontAssetTable">
+      <summary>
+        <para>
+ List containing the Fallback font assets for this font.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.fontAssetCreationEditorSettings">
+      <summary>
+        <para>
+ The settings used in the Font Asset Creator when this font asset was created or edited.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.fontFeatureTable">
+      <summary>
+        <para>
+ Table containing the various font features of this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.fontWeightTable">
+      <summary>
+        <para>
+ Array containing font assets to be used as alternative typefaces for the various potential font weights of this font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.getFontFeatures">
+      <summary>
+        <para>
+ Determines if OpenType font features should be retrieved from the source font file as new characters and glyphs are added dynamically to the font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.glyphLookupTable">
+      <summary>
+        <para>
+ Dictionary used to lookup glyphs contained in the font asset by their index.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.glyphTable">
+      <summary>
+        <para>
+ List of glyphs contained in the font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.isMultiAtlasTexturesEnabled">
+      <summary>
+        <para>
+ Enables the font asset to create additional atlas textures as needed.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.italicStyleSlant">
+      <summary>
+        <para>
+ Defines the slant of the text when using italic style.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.regularStyleSpacing">
+      <summary>
+        <para>
+ The spacing between characters when using regular style.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.regularStyleWeight">
+      <summary>
+        <para>
+ Defines the dilation of the text when using regular style.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.sourceFontFile">
+      <summary>
+        <para>
+ Source font file when atlas population mode is set to dynamic. Null when the atlas population mode is set to static.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.FontAsset.tabMultiple">
+      <summary>
+        <para>
+ The number of spaces that a tab represents.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.ClearFontAssetData(System.Boolean)">
+      <summary>
+        <para>
+ Clears font asset data including the glyph and character tables and textures.
+ Function might be changed to Internal and only used in tests.
+ </para>
+      </summary>
+      <param name="setAtlasSizeToZero">Will set the atlas texture size to zero width and height if true.</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.CreateFontAsset(System.String,System.String,System.Int32)">
+      <summary>
+        <para>
+ Creates a new font asset instance from the given family name and style.
+ </para>
+      </summary>
+      <param name="familyName">The family name of the source font.</param>
+      <param name="styleName">The style name of the source font face.</param>
+      <param name="pointSize">Optional point size.</param>
+      <returns>
+        <para>An instance of the newly created font asset.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.CreateFontAsset(System.String,System.String,System.Int32,System.Int32,UnityEngine.TextCore.LowLevel.GlyphRenderMode)">
+      <summary>
+        <para>
+ Creates a new font asset instance from the given family name, style, point size, padding and render mode.
+ </para>
+      </summary>
+      <param name="familyName">The family name of the source font.</param>
+      <param name="styleName">The style name of the source font face.</param>
+      <param name="pointSize">The desired point size.</param>
+      <param name="padding">The font padding.</param>
+      <param name="renderMode">The glyph render mode (ie. sdf vs. bitmap).</param>
+      <returns>
+        <para>An instance of the newly created font asset.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.CreateFontAsset(System.String,System.Int32,System.Int32,System.Int32,UnityEngine.TextCore.LowLevel.GlyphRenderMode,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Creates a new font asset instance from the font file at the given file path.
+ </para>
+      </summary>
+      <param name="fontFilePath">The file path of the font file.</param>
+      <param name="faceIndex">The index of font face.</param>
+      <param name="samplingPointSize">The sampling point size.</param>
+      <param name="atlasPadding">The padding between individual glyphs in the font atlas texture.</param>
+      <param name="renderMode">The atlas render mode.</param>
+      <param name="atlasWidth">The atlas texture width.</param>
+      <param name="atlasHeight">The atlas texture height.</param>
+      <returns>
+        <para>An instance of the newly created font asset.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.CreateFontAsset(UnityEngine.Font)">
+      <summary>
+        <para>
+ Creates a new font asset instance from the provided font object.
+ </para>
+      </summary>
+      <param name="font">The source font object.</param>
+      <returns>
+        <para>An instance of the newly created font asset.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.CreateFontAsset(UnityEngine.Font,System.Int32,System.Int32,UnityEngine.TextCore.LowLevel.GlyphRenderMode,System.Int32,System.Int32,UnityEngine.TextCore.Text.AtlasPopulationMode,System.Boolean)">
+      <summary>
+        <para>
+ Creates a new font asset instance from the provided font object.
+ </para>
+      </summary>
+      <param name="font">The source font object.</param>
+      <param name="samplingPointSize">The sampling point size.</param>
+      <param name="atlasPadding">The padding between individual glyphs in the font atlas texture.</param>
+      <param name="renderMode">The atlas render mode.</param>
+      <param name="atlasWidth">The atlas texture width.</param>
+      <param name="atlasHeight">The atlas texture height.</param>
+      <param name="atlasPopulationMode">The atlas population mode.</param>
+      <param name="enableMultiAtlasSupport">Enable multi atlas texture.</param>
+      <returns>
+        <para>An instance of the newly created font asset.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.GetCharacters(UnityEngine.TextCore.Text.FontAsset)">
+      <summary>
+        <para>
+ Function to extract all the characters from a font asset.
+ </para>
+      </summary>
+      <param name="fontAsset"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.GetCharactersArray(UnityEngine.TextCore.Text.FontAsset)">
+      <summary>
+        <para>
+ Function which returns an array that contains all the characters from a font asset.
+ </para>
+      </summary>
+      <param name="fontAsset"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.HasCharacter(System.Int32)">
+      <summary>
+        <para>
+ Function to check if a certain character exists in the font asset.
+ </para>
+      </summary>
+      <param name="character"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.HasCharacter(System.Char,System.Boolean,System.Boolean)">
+      <summary>
+        <para>
+ Function to check if a character is contained in the font asset with the option to also check potential local fallbacks.
+ </para>
+      </summary>
+      <param name="character"></param>
+      <param name="searchFallbacks"></param>
+      <param name="tryAddCharacter"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.HasCharacter(System.UInt32,System.Boolean,System.Boolean)">
+      <summary>
+        <para>
+ Function to check if a character is contained in the font asset with the option to also check potential local fallbacks.
+ </para>
+      </summary>
+      <param name="character"></param>
+      <param name="searchFallbacks"></param>
+      <param name="tryAddCharacter"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.HasCharacters(System.String,System.Collections.Generic.List`1&lt;System.Char&gt;&amp;)">
+      <summary>
+        <para>
+ Function to check if certain characters exists in the font asset. Function returns a list of missing characters.
+ </para>
+      </summary>
+      <param name="text">String containing the characters to check.</param>
+      <param name="missingCharacters">List of missing characters.</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.HasCharacters(System.String,System.UInt32[]&amp;,System.Boolean,System.Boolean)">
+      <summary>
+        <para>
+ Function to check if the characters in the given string are contained in the font asset with the option to also check its potential local fallbacks.
+ </para>
+      </summary>
+      <param name="text">String containing the characters to check.</param>
+      <param name="missingCharacters">Array containing the unicode values of the missing characters.</param>
+      <param name="searchFallbacks">Determines if fallback font assets assigned to this font asset should be searched.</param>
+      <param name="tryAddCharacter"></param>
+      <returns>
+        <para>Returns true if all requested characters are available in the font asset and potential fallbacks.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.HasCharacters(System.String)">
+      <summary>
+        <para>
+ Function to check if certain characters exists in the font asset. Function returns false if any characters are missing.
+ </para>
+      </summary>
+      <param name="text">String containing the characters to check</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.ReadFontAssetDefinition">
+      <summary>
+        <para>
+ Reads the various data tables of the font asset and populates various data structures to allow for faster lookup of related font asset data.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.TryAddCharacters(System.UInt32[],System.Boolean)">
+      <summary>
+        <para>
+ Try adding the characters from the provided string to the font asset.
+ </para>
+      </summary>
+      <param name="unicodes">Array that contains the characters to add to the font asset.</param>
+      <param name="includeFontFeatures"></param>
+      <returns>
+        <para>Returns true if all the characters were successfully added to the font asset. Return false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.TryAddCharacters(System.UInt32[],System.UInt32[]&amp;,System.Boolean)">
+      <summary>
+        <para>
+ Try adding the characters from the provided string to the font asset.
+ </para>
+      </summary>
+      <param name="unicodes">Array that contains the characters to add to the font asset.</param>
+      <param name="missingUnicodes">Array containing the characters that could not be added to the font asset.</param>
+      <param name="includeFontFeatures"></param>
+      <returns>
+        <para>Returns true if all the characters were successfully added to the font asset. Return false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.TryAddCharacters(System.String,System.Boolean)">
+      <summary>
+        <para>
+ Try adding the characters from the provided string to the font asset.
+ </para>
+      </summary>
+      <param name="characters">String containing the characters to add to the font asset.</param>
+      <param name="includeFontFeatures"></param>
+      <returns>
+        <para>Returns true if all the characters were successfully added to the font asset. Return false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.TryAddCharacters(System.String,System.String&amp;,System.Boolean)">
+      <summary>
+        <para>
+ Try adding the characters from the provided string to the font asset.
+ </para>
+      </summary>
+      <param name="characters">String containing the characters to add to the font asset.</param>
+      <param name="missingCharacters">String containing the characters that could not be added to the font asset.</param>
+      <param name="includeFontFeatures"></param>
+      <returns>
+        <para>Returns true if all the characters were successfully added to the font asset. Return false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.TryGetGlyphIndex(System.UInt32,System.UInt32&amp;)">
+      <summary>
+        <para>
+ Tries to get the index of the glyph mapped to the given Unicode code point in the font asset's source font.
+ </para>
+      </summary>
+      <param name="unicode">The Unicode code point to look up.</param>
+      <param name="glyphIndex">The index of the glyph mapped to the code point, or 0 if the font has none.</param>
+      <returns>
+        <para>Returns true if the font has a glyph for the code point. Otherwise, returns false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontAsset.TryGetGlyphMetrics(System.UInt32,UnityEngine.TextCore.GlyphMetrics&amp;)">
+      <summary>
+        <para>
+ Tries to get the metrics of the glyph at the given glyph index.
+ </para>
+      </summary>
+      <param name="glyphIndex">The index of the glyph in the font asset's source font.</param>
+      <param name="metrics">The metrics of the glyph, or default if the font has no glyph at that index.</param>
+      <returns>
+        <para>Returns true if the font has a glyph at the given index. Otherwise, returns false.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.FontFeatureTable">
+      <summary>
+        <para>Represents a table that contains the font features available for a given font asset.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontFeatureTable.SortGlyphPairAdjustmentRecords">
+      <summary>
+        <para>Sorts the glyph pair adjustment records by glyph index.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontFeatureTable.SortMarkToBaseAdjustmentRecords">
+      <summary>
+        <para>Sorts the Mark-to-Base Adjustment Table records.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.FontFeatureTable.SortMarkToMarkAdjustmentRecords">
+      <summary>
+        <para>Sorts the Mark-to-Mark Adjustment Table records.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.FontStyles">
+      <summary>
+        <para>
+ Font styles and text decorations
+ </para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.FontWeightPair">
+      <summary>
+        <para>
+ Defines a pair of font assets for the regular and italic styles associated with a given font weight.
+ </para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.OTL_FeatureTag">
+      <summary>
+        <para>
+ Enumeration of currently supported OpenType Layout features.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.SpriteAsset.faceInfo">
+      <summary>
+        <para>
+ Information about the sprite asset's face.
+ </para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.SpriteAsset.fallbackSpriteAssets">
+      <summary>
+        <para>
+ List which contains the Fallback font assets for this font.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.SpriteAsset.spriteCharacterLookupTable">
+      <summary>
+        <para>
+ Dictionary used to lookup sprite characters by their unicode value.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.SpriteAsset.spriteCharacterTable">
+      <summary>
+        <para>
+ List containing the sprite characters.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.SpriteAsset.spriteSheet">
+      <summary>
+        <para>
+ The texture containing the sprites referenced by this sprite asset.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.GetSpriteIndexFromHashcode(System.Int32)">
+      <summary>
+        <para>
+ Function which returns the sprite index using the hashcode of the name
+ </para>
+      </summary>
+      <param name="hashCode"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.GetSpriteIndexFromName(System.String)">
+      <summary>
+        <para>
+ Returns the index of the sprite for the given name.
+ </para>
+      </summary>
+      <param name="name"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.GetSpriteIndexFromUnicode(System.UInt32)">
+      <summary>
+        <para>
+ Returns the index of the sprite for the given unicode value.
+ </para>
+      </summary>
+      <param name="unicode"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.SearchForSpriteByHashCode(UnityEngine.TextCore.Text.SpriteAsset,System.Int32,System.Boolean,System.Int32&amp;,UnityEngine.TextCore.Text.TextSettings)">
+      <summary>
+        <para>
+ Search the given sprite asset and fallbacks for a sprite whose hash code value of its name matches the target hash code.
+ </para>
+      </summary>
+      <param name="spriteAsset">The Sprite Asset to search for the given sprite whose name matches the hashcode value</param>
+      <param name="hashCode">The hash code value matching the name of the sprite</param>
+      <param name="includeFallbacks">Include fallback sprite assets in the search</param>
+      <param name="spriteIndex">The index of the sprite matching the provided hash code</param>
+      <param name="textSettings"></param>
+      <returns>
+        <para>The Sprite Asset that contains the sprite</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.SearchForSpriteByUnicode(UnityEngine.TextCore.Text.SpriteAsset,System.UInt32,System.Boolean,System.Int32&amp;)">
+      <summary>
+        <para>
+ Search through the given sprite asset and its fallbacks for the specified sprite matching the given unicode character.
+ </para>
+      </summary>
+      <param name="spriteAsset">The sprite asset asset to search for the given unicode.</param>
+      <param name="unicode">The unicode character to find.</param>
+      <param name="includeFallbacks">Include fallback sprite assets in the search?</param>
+      <param name="spriteIndex">The index of the sprite in the sprite asset (if found)</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.SortGlyphTable">
+      <summary>
+        <para>
+ Sort the sprite glyph table by glyph index.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteAsset.UpdateLookupTables">
+      <summary>
+        <para>
+ Function to update the sprite name and unicode lookup tables.
+ This function should be called when a sprite's name or unicode value changes or when a new sprite is added.
+ </para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.SpriteCharacter">
+      <summary>
+        <para>
+ A basic element of text representing a pictograph, image, sprite or emoji.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.SpriteCharacter.name">
+      <summary>
+        <para>
+ The name of the sprite element.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteCharacter.#ctor">
+      <summary>
+        <para>
+ Default constructor.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteCharacter.#ctor(System.UInt32,UnityEngine.TextCore.Text.SpriteGlyph)">
+      <summary>
+        <para>
+ Constructor for new sprite character.
+ </para>
+      </summary>
+      <param name="unicode">Unicode value of the sprite character.</param>
+      <param name="glyph">Glyph used by the sprite character.</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteCharacter.#ctor(System.UInt32,UnityEngine.TextCore.Text.SpriteAsset,UnityEngine.TextCore.Text.SpriteGlyph)">
+      <summary>
+        <para>
+ Constructor for new sprite character.
+ </para>
+      </summary>
+      <param name="unicode">Unicode value of the sprite character.</param>
+      <param name="spriteAsset">Sprite Asset used by this sprite character.</param>
+      <param name="glyph">Glyph used by the sprite character.</param>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.SpriteGlyph">
+      <summary>
+        <para>
+ The visual representation of the sprite character using this glyph.
+ </para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.Text.SpriteGlyph.sprite">
+      <summary>
+        <para>
+ An optional reference to the underlying sprite used to create this glyph.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteGlyph.#ctor(System.UInt32,UnityEngine.TextCore.GlyphMetrics,UnityEngine.TextCore.GlyphRect,System.Single,System.Int32)">
+      <summary>
+        <para>
+ Constructor for new sprite glyph.
+ </para>
+      </summary>
+      <param name="index">Index of the sprite glyph.</param>
+      <param name="metrics">Metrics which define the position of the glyph in the context of text layout.</param>
+      <param name="glyphRect">GlyphRect which defines the coordinates of the glyph in the atlas texture.</param>
+      <param name="scale">Scale of the glyph.</param>
+      <param name="atlasIndex">Index of the atlas texture that contains the glyph.</param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.SpriteGlyph.#ctor(System.UInt32,UnityEngine.TextCore.GlyphMetrics,UnityEngine.TextCore.GlyphRect,System.Single,System.Int32,UnityEngine.Sprite)">
+      <summary>
+        <para>
+ Constructor for new sprite glyph.
+ </para>
+      </summary>
+      <param name="index">&gt;Index of the sprite glyph.</param>
+      <param name="metrics">Metrics which define the position of the glyph in the context of text layout.</param>
+      <param name="glyphRect">GlyphRect which defines the coordinates of the glyph in the atlas texture.</param>
+      <param name="scale">Scale of the glyph.</param>
+      <param name="atlasIndex">Index of the atlas texture that contains the glyph.</param>
+      <param name="sprite">A reference to the Unity Sprite representing this sprite glyph.</param>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextAsset.entityId">
+      <summary>
+        <para>
+ Instance ID of the TMP Asset
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextAsset.hashCode">
+      <summary>
+        <para>
+ HashCode based on the name of the asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextAsset.material">
+      <summary>
+        <para>
+ The material used by this asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextAsset.materialHashCode">
+      <summary>
+        <para>
+ HashCode based on the name of the material assigned to this asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextAsset.version">
+      <summary>
+        <para>
+ The version of the text asset class.
+ Version 1.1.0 introduces new data structure to be compatible with new font asset structure.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextColorGradient.#ctor">
+      <summary>
+        <para>
+ Default Constructor which sets each of the colors as white.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextColorGradient.#ctor(UnityEngine.Color)">
+      <summary>
+        <para>
+ Constructor allowing to set the default color of the Color Gradient.
+ </para>
+      </summary>
+      <param name="color"></param>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextColorGradient.#ctor(UnityEngine.Color,UnityEngine.Color,UnityEngine.Color,UnityEngine.Color)">
+      <summary>
+        <para>
+ The vertex colors at the corners of the characters.
+ </para>
+      </summary>
+      <param name="color0">Top left color.</param>
+      <param name="color1">Top right color.</param>
+      <param name="color2">Bottom left color.</param>
+      <param name="color3">Bottom right color.</param>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.TextElement">
+      <summary>
+        <para>
+ Base class for all text elements like Character and SpriteCharacter.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextElement.elementType">
+      <summary>
+        <para>
+ The type of text element which can be a character or sprite.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextElement.glyph">
+      <summary>
+        <para>
+ The glyph used by this text element.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextElement.glyphIndex">
+      <summary>
+        <para>
+ The index of the glyph used by this text element.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextElement.scale">
+      <summary>
+        <para>
+ The relative scale of the character.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextElement.textAsset">
+      <summary>
+        <para>
+ The Text Asset to which this Text Element belongs.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextElement.unicode">
+      <summary>
+        <para>
+ The unicode value (code point) of the character.
+ </para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.Text.TextFontWeight">
+      <summary>
+        <para>
+ Defines the potential font weights of a given font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.defaultColorGradientPresetsPath">
+      <summary>
+        <para>
+ The relative path to a Resources folder in the project where the text system will look to load color gradient presets.
+ The default location is "Resources/Color Gradient Presets".
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.defaultFontAsset">
+      <summary>
+        <para>
+ The Font Asset automatically assigned to newly created text objects.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.defaultFontAssetPath">
+      <summary>
+        <para>
+ The relative path to a Resources folder in the project where the text system will look to load font assets.
+ The default location is "Resources/Fonts &amp; Materials".
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.defaultSpriteAsset">
+      <summary>
+        <para>
+ The Sprite Asset to be used by default.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.defaultSpriteAssetPath">
+      <summary>
+        <para>
+ The relative path to a Resources folder in the project where the text system will look to load sprite assets.
+ The default location is "Resources/Sprite Assets".
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.defaultStyleSheet">
+      <summary>
+        <para>
+ The Default Style Sheet used by the text objects.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.displayWarnings">
+      <summary>
+        <para>
+ Controls the display of warning messages in the console.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.emojiFallbackTextAssets">
+      <summary>
+        <para>
+ list of Fallback Text Assets (Font Assets and Sprite Assets) used to lookup characters defined in the Unicode as Emojis.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.enableEmojiSupport">
+      <summary>
+        <para>
+ Determines if Emoji support is enabled in the Input Field TouchScreenKeyboard.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.fallbackFontAssets">
+      <summary>
+        <para>
+ List of potential font assets the text system will search recursively to look for requested characters.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.fallbackSpriteAssets">
+      <summary>
+        <para>
+ The Fallback Sprite Assets list is now obsolete. Use the emojiFallbackTextAssets instead.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.lineBreakingRules">
+      <summary>
+        <para>
+ Text file that contains the line breaking rules for all unicode characters.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.matchMaterialPreset">
+      <summary>
+        <para>
+ Determines if the text system will use an instance material derived from the primary material preset or use the default material of the fallback font asset.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.missingCharacterUnicode">
+      <summary>
+        <para>
+ The unicode value of the character that will be used when the requested character is missing from the font asset and potential fallbacks.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.missingSpriteCharacterUnicode">
+      <summary>
+        <para>
+ The unicode value of the sprite character that will be used when the requested character sprite is missing from the sprite asset and potential fallbacks.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.styleSheetsResourcePath">
+      <summary>
+        <para>
+ This property is obsolete and no longer used. It will be removed in a future version.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextSettings.version">
+      <summary>
+        <para>
+ The version of the TextSettings class.
+ Version 1.2.0 was introduced with the TextCore package
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextStyle.hashCode">
+      <summary>
+        <para>
+ The hash code corresponding to the name of this style.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextStyle.name">
+      <summary>
+        <para>
+ The name identifying this style. ex. &lt;style="name"&gt;.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextStyle.styleClosingDefinition">
+      <summary>
+        <para>
+ The closing definition of the style. ex. &lt;b&gt; &lt;u&gt;.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.TextStyle.styleOpeningDefinition">
+      <summary>
+        <para>
+ The initial definition of the style. ex. &lt;b&gt; &lt;u&gt;.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextStyle.RefreshStyle">
+      <summary>
+        <para>
+ Function to update the content of the int[] resulting from changes to OpeningDefinition &amp; ClosingDefinition.
+ </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextStyleSheet.GetStyle(System.Int32)">
+      <summary>
+        <para>
+ Get the Style for the given hash code value.
+ </para>
+      </summary>
+      <param name="hashCode">Hash code of the style.</param>
+      <returns>
+        <para>The style matching the hash code.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextStyleSheet.GetStyle(System.String)">
+      <summary>
+        <para>
+ Get the Style for the given name.
+ </para>
+      </summary>
+      <param name="name">The name of the style.</param>
+      <returns>
+        <para>The style if found.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TextCore.Text.TextStyleSheet.RefreshStyles">
+      <summary>
+        <para>
+ Function to refresh the Style Dictionary.
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.UnicodeLineBreakingRules.followingCharacters">
+      <summary>
+        <para>
+ Text file that contains the following characters
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.UnicodeLineBreakingRules.leadingCharacters">
+      <summary>
+        <para>
+ Text file that contains the leading characters
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.UnicodeLineBreakingRules.lineBreakingRules">
+      <summary>
+        <para>
+ Text file that contains the Unicode line breaking rules defined here https:www.unicode.orgreportstr14/tr14-22.html
+ </para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.TextCore.Text.UnicodeLineBreakingRules.useModernHangulLineBreakingRules">
+      <summary>
+        <para>
+ Determines if Modern or Traditional line breaking rules should be used for Korean text.
+ </para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.TextDirection">
+      <summary>
+        <para>The base direction text is laid out in.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.TextDirection.LTR">
+      <summary>
+        <para>Left-to-right language direction.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.TextDirection.RTL">
+      <summary>
+        <para>Right-to-left language direction.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.TextWrapMode">
+      <summary>
+        <para>Whether lines wrap at the horizontal extent.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.TextWrapMode.NoWrap">
+      <summary>
+        <para>Lines do not wrap.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.TextWrapMode.Wrap">
+      <summary>
+        <para>Lines wrap at the horizontal extent.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.VerticalAlignment">
+      <summary>
+        <para>How text is vertically aligned within its layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.VerticalAlignment.Bottom">
+      <summary>
+        <para>Text is aligned to the bottom of the layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.VerticalAlignment.Middle">
+      <summary>
+        <para>Text is centered vertically within the layout area.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.VerticalAlignment.Top">
+      <summary>
+        <para>Text is aligned to the top of the layout area.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.TextCore.WhitespaceCollapse">
+      <summary>
+        <para>How sequences of white space are handled.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.WhitespaceCollapse.Collapse">
+      <summary>
+        <para>Sequences of white space collapse into a single space.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.TextCore.WhitespaceCollapse.Preserve">
+      <summary>
+        <para>White space is preserved.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,19 @@
+Vertical slide migration verification
+
+Changed symbol: DensityFunctions.VerticalSlide and WorldFields.CreateLearningDefaults finalDensity.
+Behavior:
+- rawDensity is sampled normally in the middle height range.
+- y=0..24 is linearly blended toward bottomTarget=1.0.
+- y=136..160 is linearly blended toward topTarget=-1.0.
+- y=24..136 is unchanged by the slide node.
+
+Command:
+  dotnet run --project Temp/DensitySmoke/DensitySmoke.csproj
+Observed exit status: 0
+Observed stdout:
+  nested=2.2960000000000003
+  final=0.582622929781906
+  offset=0.3548093773303535
+Observed stderr: empty
+
+The smoke project compiles every file in Assets/Scripts/WorldGen/Density, including VerticalSlideFunction.cs.

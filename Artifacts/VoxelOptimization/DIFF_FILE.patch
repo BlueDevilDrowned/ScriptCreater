@@ -1,0 +1,135 @@
+diff --git a/Artifacts/VoxelOptimization/BASELINE_VoxelWorldPreview.cs b/Artifacts/VoxelOptimization/MODIFIED_VoxelWorldPreview.cs
+index de24dc4..8274dc5 100644
+--- a/Artifacts/VoxelOptimization/BASELINE_VoxelWorldPreview.cs
++++ b/Artifacts/VoxelOptimization/MODIFIED_VoxelWorldPreview.cs
+@@ -134,27 +134,35 @@ private IEnumerator GenerateOverFrames()
+             GetComponent<MeshRenderer>().enabled = false;
+             chunkRoot = new GameObject("Voxel Chunks XZ16").transform;
+             chunkRoot.SetParent(transform, false);
++
++            // Sample the complete volume before meshing so neighboring chunks have
++            // correct boundary information. The mesh pass uses the same Burst face
++            // visibility path as synchronous generation instead of BuildRegion's
++            // main-thread List-based implementation.
++            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
++            var meshTimer = Stopwatch.StartNew();
++            var meshes = useJobsForMesh
++                ? VoxelMeshBuilder.BuildChunkMeshesWithJobs(volume, voxelSize, 16)
++                : BuildChunkMeshesWithoutJobs(volume);
++            meshTimer.Stop();
++
+             int completed = 0;
+-            int total = ((worldSize.x + 15) / 16) * ((worldSize.z + 15) / 16);
+-            for (int startZ = 0; startZ < worldSize.z; startZ += 16)
+-            for (int startX = 0; startX < worldSize.x; startX += 16)
++            int total = meshes.Count;
++            for (int meshIndex = 0; meshIndex < meshes.Count; meshIndex++)
+             {
+-                int endX = Math.Min(startX + 16, worldSize.x);
+-                int endZ = Math.Min(startZ + 16, worldSize.z);
+-                volume.FillRegion(fields.FinalDensity, startX, endX, startZ, endZ, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
+-                Mesh mesh = VoxelMeshBuilder.BuildRegion(volume, voxelSize, startX, endX, startZ, endZ);
++                Mesh mesh = meshes[meshIndex];
+                 generatedChunkMeshes.Add(mesh);
+                 var child = new GameObject(mesh.name);
+                 child.transform.SetParent(chunkRoot, false);
+                 child.AddComponent<MeshFilter>().sharedMesh = mesh;
+                 child.AddComponent<MeshRenderer>().sharedMaterial = GetMaterial();
+                 completed++;
+-                UnityEngine.Debug.Log($"Voxel chunk {completed}/{total} generated ({startX},{startZ})", this);
+                 if (completed % Math.Max(1, chunksPerFrame) == 0)
+                     yield return null;
+             }
+             generationRoutine = null;
+-            UnityEngine.Debug.Log($"Voxel world generation complete: {worldSize}, chunks={completed}, solid={volume.SolidCount}, elapsed={timer.ElapsedMilliseconds}ms", this);
++            timer.Stop();
++            UnityEngine.Debug.Log($"Voxel world generation complete: {worldSize}, chunks={completed}, solid={volume.SolidCount}, mesh={meshTimer.ElapsedMilliseconds}ms, elapsed={timer.ElapsedMilliseconds}ms", this);
+         }
+ 
+         private System.Collections.Generic.List<Mesh> BuildChunkMeshesWithoutJobs(VoxelVolume volume)
+warning: in the working copy of 'Artifacts/VoxelOptimization/BASELINE_VoxelMeshBuilder.cs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Artifacts/VoxelOptimization/MODIFIED_VoxelMeshBuilder.cs', LF will be replaced by CRLF the next time Git touches it
+diff --git a/Artifacts/VoxelOptimization/BASELINE_VoxelMeshBuilder.cs b/Artifacts/VoxelOptimization/MODIFIED_VoxelMeshBuilder.cs
+index d5a787a..81fe3ac 100644
+--- a/Artifacts/VoxelOptimization/BASELINE_VoxelMeshBuilder.cs
++++ b/Artifacts/VoxelOptimization/MODIFIED_VoxelMeshBuilder.cs
+@@ -1,5 +1,4 @@
+ using System;
+-using System.Collections.Generic;
+ using UnityEngine;
+ using UnityEngine.Rendering;
+ using Unity.Collections;
+@@ -33,9 +32,9 @@ public static Mesh Build(VoxelVolume volume, float voxelSize)
+             if (volume == null) throw new ArgumentNullException(nameof(volume));
+             if (voxelSize <= 0 || float.IsNaN(voxelSize) || float.IsInfinity(voxelSize))
+                 throw new ArgumentOutOfRangeException(nameof(voxelSize));
+-            var vertices = new List<Vector3>();
+-            var normals = new List<Vector3>();
+-            var triangles = new List<int>();
++            var vertices = new List<Vector3>(Math.Min(volume.SolidCount * 24, 1_000_000));
++            var normals = new List<Vector3>(vertices.Capacity);
++            var triangles = new List<int>(Math.Min(volume.SolidCount * 36, 1_500_000));
+ 
+             for (int z = 0; z < volume.Depth; z++)
+             for (int y = 0; y < volume.Height; y++)
+@@ -63,15 +62,17 @@ public static Mesh Build(VoxelVolume volume, float voxelSize)
+             mesh.SetNormals(normals);
+             mesh.SetTriangles(triangles, 0);
+             mesh.RecalculateBounds();
++            mesh.UploadMeshData(true);
+             return mesh;
+         }
+ 
+         /// <summary>无 Job 的区域基线，用于关闭 Jobs 做性能对照。</summary>
+         public static Mesh BuildRegion(VoxelVolume volume, float voxelSize, int startX, int endX, int startZ, int endZ)
+         {
+-            var vertices = new List<Vector3>();
+-            var normals = new List<Vector3>();
+-            var triangles = new List<int>();
++            int voxelCount = Math.Max(0, endX - startX) * volume.Height * Math.Max(0, endZ - startZ);
++            var vertices = new List<Vector3>(Math.Min(voxelCount * 24, 250_000));
++            var normals = new List<Vector3>(vertices.Capacity);
++            var triangles = new List<int>(Math.Min(voxelCount * 36, 375_000));
+             for (int z = startZ; z < endZ; z++) for (int y = 0; y < volume.Height; y++) for (int x = startX; x < endX; x++)
+             {
+                 if (!volume.IsSolid(x, y, z)) continue;
+@@ -86,7 +87,7 @@ public static Mesh BuildRegion(VoxelVolume volume, float voxelSize, int startX,
+                 }
+             }
+             var mesh = new Mesh { name = $"Density Voxel Chunk {startX},{startZ}", indexFormat = IndexFormat.UInt32 };
+-            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds(); return mesh;
++            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds(); mesh.UploadMeshData(true); return mesh;
+         }
+ 
+         /// <summary>
+@@ -143,6 +144,7 @@ public static Mesh BuildWithJobs(VoxelVolume volume, float voxelSize, int batchS
+             mesh.SetNormals(normals);
+             mesh.SetTriangles(triangles, 0);
+             mesh.RecalculateBounds();
++            mesh.UploadMeshData(true);
+             return mesh;
+         }
+ 
+@@ -173,9 +175,10 @@ public static List<Mesh> BuildChunkMeshesWithJobs(VoxelVolume volume, float voxe
+         private static Mesh BuildMeshFromMask(VoxelVolume volume, NativeArray<byte> faceMask, float voxelSize,
+             int startX, int endX, int startZ, int endZ)
+         {
+-            var vertices = new List<Vector3>();
+-            var normals = new List<Vector3>();
+-            var triangles = new List<int>();
++            int voxelCount = Math.Max(0, endX - startX) * volume.Height * Math.Max(0, endZ - startZ);
++            var vertices = new List<Vector3>(Math.Min(voxelCount * 24, 250_000));
++            var normals = new List<Vector3>(vertices.Capacity);
++            var triangles = new List<int>(Math.Min(voxelCount * 36, 375_000));
+             for (int z = startZ; z < endZ; z++)
+             for (int y = 0; y < volume.Height; y++)
+             for (int x = startX; x < endX; x++)
+@@ -199,7 +202,7 @@ private static Mesh BuildMeshFromMask(VoxelVolume volume, NativeArray<byte> face
+                 }
+             }
+             var mesh = new Mesh { name = $"Density Voxel Chunk {startX},{startZ}", indexFormat = IndexFormat.UInt32 };
+-            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds();
++            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds(); mesh.UploadMeshData(true);
+             return mesh;
+         }
+     }

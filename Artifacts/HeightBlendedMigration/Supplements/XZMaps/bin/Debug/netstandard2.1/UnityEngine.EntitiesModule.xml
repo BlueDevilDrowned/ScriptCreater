@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.EntitiesModule</name>
+    </assembly>
+    <member name="T:UnityEngine.EntityId">
+      <summary>
+        <para>A unique identifier for a Unity object.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.EntityId.CompareTo(UnityEngine.EntityId)">
+      <summary>
+        <para>Compares this EntityId to another EntityId.</para>
+      </summary>
+      <param name="other">The EntityId to compare against.</param>
+      <returns>
+        <para>A negative value if this EntityId is less than the other, zero if they are equal, or a positive value if this EntityId is greater.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.Equals(System.Object)">
+      <summary>
+        <para>Determines whether the specified object is equal to this EntityId.</para>
+      </summary>
+      <param name="obj">The object to compare with this EntityId. Non-EntityId values always return false.</param>
+      <returns>
+        <para>True if the object is an EntityId and equals this instance; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.Equals(UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether the specified EntityId is equal to this EntityId.</para>
+      </summary>
+      <param name="other">The EntityId to compare with this EntityId.</param>
+      <returns>
+        <para>True if the EntityIds are equal; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.Equals(System.Int32)">
+      <summary>
+        <para>Determines whether the specified integer value is equal to this EntityId.</para>
+      </summary>
+      <param name="other">The integer value to compare with this EntityId.</param>
+      <returns>
+        <para>True if the integer representation equals this EntityId; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.FromULong(System.UInt64)">
+      <summary>
+        <para>Creates an EntityId from raw ulong data. This should have come from another valid EntityId. (Use at your own risk. And bit arrangement might change.)</para>
+      </summary>
+      <param name="input">A ulong containing EntityId data that was retrieved from EntityId.ToULong.</param>
+      <returns>
+        <para>The EntityId created from the raw ulong data.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.GetHashCode">
+      <summary>
+        <para>Returns a hash code for this EntityId.</para>
+      </summary>
+      <returns>
+        <para>A 32-bit signed integer hash code.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.GetRawData">
+      <summary>
+        <para>Returns the raw internal data of this EntityId.</para>
+      </summary>
+      <returns>
+        <para>The raw representation as a 64-bit unsigned integer.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.implop_EntityId(int)(System.Int32)">
+      <summary>
+        <para>Implicitly converts an integer to an EntityId.</para>
+      </summary>
+      <param name="value">The integer value to convert.</param>
+      <param name="intValue"></param>
+      <returns>
+        <para>An EntityId representing the specified integer value.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.implop_int(EntityId)(UnityEngine.EntityId)">
+      <summary>
+        <para>Implicitly converts an EntityId to an integer.</para>
+      </summary>
+      <param name="entityId">The EntityId to convert.</param>
+      <returns>
+        <para>The integer representation of the EntityId.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.IsValid">
+      <summary>
+        <para>Determines whether this EntityId represents a valid entity.</para>
+      </summary>
+      <returns>
+        <para>True if this EntityId is valid; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="P:UnityEngine.EntityId.None">
+      <summary>
+        <para>Gets an EntityId that represents no valid Object or Entity. Use this to indicate an invalid or unassigned identifier.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.EntityId.op_Equal(UnityEngine.EntityId,UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether two EntityId instances are equal.</para>
+      </summary>
+      <param name="left">The first EntityId to compare.</param>
+      <param name="right">The second EntityId to compare.</param>
+      <returns>
+        <para>True if the EntityIds are equal; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.op_GreaterThan(UnityEngine.EntityId,UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether the first EntityId is greater than the second.</para>
+      </summary>
+      <param name="left">The first EntityId to compare.</param>
+      <param name="right">The second EntityId to compare.</param>
+      <returns>
+        <para>True if the first EntityId is greater than the second; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.op_GreaterThanOrEqual(UnityEngine.EntityId,UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether the first EntityId is greater than or equal to the second.</para>
+      </summary>
+      <param name="left">The first EntityId to compare.</param>
+      <param name="right">The second EntityId to compare.</param>
+      <returns>
+        <para>True if the first EntityId is greater than or equal to the second; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.op_LessThan(UnityEngine.EntityId,UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether the first EntityId is less than the second.</para>
+      </summary>
+      <param name="left">The first EntityId to compare.</param>
+      <param name="right">The second EntityId to compare.</param>
+      <returns>
+        <para>True if the first EntityId is less than the second; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.op_LessThanOrEqual(UnityEngine.EntityId,UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether the first EntityId is less than or equal to the second.</para>
+      </summary>
+      <param name="left">The first EntityId to compare.</param>
+      <param name="right">The second EntityId to compare.</param>
+      <returns>
+        <para>True if the first EntityId is less than or equal to the second; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.EntityId.op_NotEqual(UnityEngine.EntityId,UnityEngine.EntityId)">
+      <summary>
+        <para>Determines whether two EntityId instances are not equal.</para>
+      </summary>
+      <param name="left">The first EntityId to compare.</param>
+      <param name="right">The second EntityId to compare.</param>
+      <returns>
+        <para>True if the EntityIds are not equal; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.ToString">
+      <summary>
+        <para>Returns a string representation of this EntityId.</para>
+      </summary>
+      <returns>
+        <para>A string that represents this EntityId.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.ToString(System.String)">
+      <summary>
+        <para>Returns a formatted string representation of this EntityId.</para>
+      </summary>
+      <param name="format">A format string.</param>
+      <returns>
+        <para>A formatted string that represents this EntityId.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.EntityId.ToULong(UnityEngine.EntityId)">
+      <summary>
+        <para>Gets the raw data of the EntityId. (Use at your own risk. And bit arrangement might change.)</para>
+      </summary>
+      <param name="entityId">EntityId to get as a ulong.</param>
+      <returns>
+        <para>The raw data of the EntityId. (Use at your own risk. And bit arrangement might change.)</para>
+      </returns>
+    </member>
+  </members>
+</doc>

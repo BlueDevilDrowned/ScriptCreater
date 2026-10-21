@@ -1,0 +1,7 @@
+Continents: min=-0.403124, max=0.851190
+Erosion: min=-0.999082, max=0.982844
+Ridges: min=0.000007, max=0.996171
+PeaksAndValleys: min=-0.999979, max=0.999975
+PASS: production-field equality, Y independence, P formula, fixed bounds, deterministic seed, endpoints, degenerate span, overflow, overlapping windows
+EXPORTED: seed=12345 X=[-512,511] Z=[-512,511] resolution=256; 65536 rows
+ALL_MAP_CHECKS_PASSED

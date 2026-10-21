@@ -1,0 +1,119 @@
+MODIFIED_FILE: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Voxels
+EDITOR_FILE: D:\UnityHub\Project\程序化生成\Assets\Editor\VoxelWorldPreviewMenu.cs
+DIFF_FILE: D:\UnityHub\Project\程序化生成\Artifacts\VoxelWorldVisualization\VoxelWorld.patch
+ROLLBACK.sh: D:\UnityHub\Project\程序化生成\Artifacts\VoxelWorldVisualization\ROLLBACK.sh
+Original density sources unchanged. Baseline byte hashes restored on separate copy. Reapplied patch matches all added file hashes.
+
+[
+  {
+    "role": "BASELINE",
+    "command": [
+      "py",
+      "-3",
+      "-X",
+      "utf8",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\verify_state.py",
+      "D:\\UnityHub\\Project\\程序化生成\\Temp\\VoxelBaseline"
+    ],
+    "stdout": "DENSITY_SHA256=8230dd4221e251731cb5bb866ad593436dc731d24c62ed1ad8991671da019e6a\nVOXEL_FEATURE=False\nfinal=33.870700718800066\ntemp=0.5498639742326455\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "MODIFIED",
+    "command": [
+      "py",
+      "-3",
+      "-X",
+      "utf8",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\verify_state.py",
+      "D:\\UnityHub\\Project\\程序化生成"
+    ],
+    "stdout": "DENSITY_SHA256=8230dd4221e251731cb5bb866ad593436dc731d24c62ed1ad8991671da019e6a\nVOXEL_FEATURE=True\nfinal=33.870700718800066\ntemp=0.5498639742326455\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "ROLLBACK_COMMAND",
+    "command": [
+      "C:/Program Files/Git/bin/bash.exe",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\ROLLBACK.sh",
+      "D:\\UnityHub\\Project\\程序化生成\\Temp\\VoxelRollback"
+    ],
+    "stdout": "ROLLBACK: voxel preview additions removed; baseline density sources preserved\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "ROLLBACK",
+    "command": [
+      "py",
+      "-3",
+      "-X",
+      "utf8",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\verify_state.py",
+      "D:\\UnityHub\\Project\\程序化生成\\Temp\\VoxelRollback"
+    ],
+    "stdout": "DENSITY_SHA256=8230dd4221e251731cb5bb866ad593436dc731d24c62ed1ad8991671da019e6a\nVOXEL_FEATURE=False\nfinal=33.870700718800066\ntemp=0.5498639742326455\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "REAPPLY",
+    "command": [
+      "git",
+      "apply",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\VoxelWorld.patch"
+    ],
+    "stdout": "",
+    "stderr": "",
+    "exit_status": 0
+  }
+]
+
+Unity command: Unity.exe -batchmode -nographics -projectPath Temp/VoxelVerificationProject -executeMethod VoxelVerification.Run
+Observed Unity process exit: 0
+PASS: face count=0
+PASS: index count
+PASS: 32 bit indices
+PASS: face count=6
+PASS: index count
+PASS: 32 bit indices
+PASS: single voxel bounds=0.5
+PASS: face count=10
+PASS: index count
+PASS: 32 bit indices
+PASS: face count=24
+PASS: index count
+PASS: 32 bit indices
+PASS: face count=0
+PASS: index count
+PASS: 32 bit indices
+PASS: default volume has solids and air
+PASS: default mesh has vertices
+PASS: default XZ bounds=64
+DEFAULT solid=2069091 vertices=402472 faces=100618 elapsedMs=923
+Voxel world: (128, 128, 128), voxel=0.5, solid=2069091, faces=100618, sample=659ms, total=1061ms
+PASS: component generates mesh
+PASS: component assigns material
+Voxel world: (128, 128, 128), voxel=0.5, solid=2069091, faces=100618, sample=699ms, total=1003ms
+Voxel world: (12, 10, 8), voxel=0.25, solid=960, faces=592, sample=0ms, total=1ms
+PASS: runtime size and seed updated
+PASS: runtime origin and voxel size updated
+PASS: runtime controls auto attached
+PASS: invalid runtime parameters rejected before mutation
+PASS: clear removes mesh and volume
+VOXEL_VERIFICATION_SUCCESS
+
+Limits: headless verification; GUI appearance/click interaction not inspected. Runtime API and auto GUI component attachment verified.
+Corrections: fixture missing imgui produced CS0103/exit 1, fixed manifest and reran exit 0 (runtime-first-attempt.log preserved); Python runner encoding corrected to UTF8; patch reapply isolated from outer repository; added files standardized to LF for byte-exact reconstruction.
+
+SHA256:
+{
+  "Assets/Scripts/WorldGen/Voxels/VoxelVolume.cs": "7a1fcad1dc3582703892bd6e3637472b7c8e5ae66d7d9b683b8de0a70d04cf16",
+  "Assets/Scripts/WorldGen/Voxels/VoxelMeshBuilder.cs": "368844ec6acf6adb389396431c82688dda3974d2249bf82171f38abaaa1c11c5",
+  "Assets/Scripts/WorldGen/Voxels/VoxelWorldPreview.cs": "f62f10df77057d14a03f8c70915f24eab903806cbc9e1447e75506323ec66c01",
+  "Assets/Scripts/WorldGen/Voxels/VoxelWorldControls.cs": "edc0d3664e1ca587f1290bcf26936a7dc391deaa7a551a09c17bae367ef77548",
+  "Assets/Scripts/WorldGen/Voxels/README.md": "1ad1d414d318d39979ab530d9c1e6ee0b42c882e1d7be584e3c5ca3a83867db0",
+  "Assets/Editor/VoxelWorldPreviewMenu.cs": "b842af1634d55296c2e9e8c585da79179b5bb95aac997053f0ab7979fa517872"
+}

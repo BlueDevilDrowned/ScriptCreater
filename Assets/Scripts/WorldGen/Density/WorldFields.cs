@@ -10,6 +10,9 @@ public sealed class WorldFields
         public readonly IDensityFunction Erosion;
         public readonly IDensityFunction Depth;
         public readonly IDensityFunction Ridges;
+        public readonly IDensityFunction Offset;
+        public readonly IDensityFunction Factor;
+        public readonly IDensityFunction Jaggedness;
         public readonly IDensityFunction FinalDensity;
         public readonly IDensityFunction FluidFloodedness;
         public readonly IDensityFunction FluidSpread;
@@ -31,7 +34,10 @@ public sealed class WorldFields
             IDensityFunction lava = null,
             IDensityFunction veinToggle = null,
             IDensityFunction veinRidged = null,
-            IDensityFunction veinGap = null)
+            IDensityFunction veinGap = null,
+            IDensityFunction offset = null,
+            IDensityFunction factor = null,
+            IDensityFunction jaggedness = null)
         {
             Temperature = temperature ?? throw new ArgumentNullException(nameof(temperature));
             Vegetation = vegetation ?? throw new ArgumentNullException(nameof(vegetation));
@@ -39,6 +45,9 @@ public sealed class WorldFields
             Erosion = erosion ?? throw new ArgumentNullException(nameof(erosion));
             Depth = depth ?? throw new ArgumentNullException(nameof(depth));
             Ridges = ridges ?? throw new ArgumentNullException(nameof(ridges));
+            Offset = offset ?? DensityFunctions.Constant(0);
+            Factor = factor ?? DensityFunctions.Constant(1);
+            Jaggedness = jaggedness ?? DensityFunctions.Constant(0);
             FinalDensity = finalDensity ?? throw new ArgumentNullException(nameof(finalDensity));
             FluidFloodedness = fluidFloodedness ?? DensityFunctions.Constant(0);
             FluidSpread = fluidSpread ?? DensityFunctions.Constant(0);
@@ -49,26 +58,68 @@ public sealed class WorldFields
         }
 
         /// <summary>用一个种子生成可运行的学习版世界场集合。</summary>
-        public static WorldFields CreateLearningDefaults(int seed)
+        public static WorldFields CreateLearningDefaults(int seed, WorldGenerationSettings settings = null)
         {
-            IDensityFunction continents = DensityFunctions.Noise(seed + 1, 0.0025, 1.0);
-            IDensityFunction erosion = DensityFunctions.Noise(seed + 2, 0.008, 1.0);
-            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise(seed + 3, 0.012, 1.0));
-            IDensityFunction mountains = DensityFunctions.Multiply(
-                DensityFunctions.Clamp(DensityFunctions.Subtract(continents, DensityFunctions.Constant(0.15)), 0, 1),
-                DensityFunctions.Constant(55));
-            IDensityFunction detail = DensityFunctions.Multiply(DensityFunctions.Noise(seed + 4, 0.035, 1), 8);
-            IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 1.0, -1.0);
-            IDensityFunction finalDensity = DensityFunctions.Add(
-                DensityFunctions.Add(mountains, detail),
-                DensityFunctions.Multiply(vertical, 35));
+            settings = settings ?? new WorldGenerationSettings();
+            settings.Validate();
+            // 地形环境是二维场：同一 XZ 列共享样条参数，不随 Y 漂移。
+            IDensityFunction continents = DensityFunctions.Noise2D(seed + 1, 0.0025, 1.0);
+            IDensityFunction erosion = DensityFunctions.Noise2D(seed + 2, 0.008, 1.0);
+            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise2D(seed + 3, 0.012, 1.0));
+            IDensityFunction lowlandOffset = DensityFunctions.Spline(erosion,
+                new CubicSplinePoint(-1.0, -0.55, 0.0),
+                new CubicSplinePoint(0.0, -0.20, 0.1),
+                new CubicSplinePoint(1.0, 0.05, 0.0));
+            IDensityFunction mountainOffset = DensityFunctions.Spline(erosion,
+                new CubicSplinePoint(-1.0, 0.10, 0.0),
+                new CubicSplinePoint(0.0, 0.35, 0.2),
+                new CubicSplinePoint(1.0, 0.70, 0.0));
+            IDensityFunction offset = DensityFunctions.Spline(continents,
+                new CubicSplinePoint(-1.0, lowlandOffset, 0.15),
+                new CubicSplinePoint(-0.35, lowlandOffset, 0.80),
+                new CubicSplinePoint(0.10, DensityFunctions.Constant(0.05), 0.35),
+                new CubicSplinePoint(0.55, mountainOffset, 0.55),
+                new CubicSplinePoint(1.0, mountainOffset, -0.30));
+            IDensityFunction factor = DensityFunctions.Spline(erosion,
+                new CubicSplinePoint(-1.0, 1.35, 0.0),
+                new CubicSplinePoint(-0.30, 1.10, -0.20),
+                new CubicSplinePoint(0.25, 0.65, -0.35),
+                new CubicSplinePoint(1.0, 0.30, 0.0));
+            IDensityFunction jaggedness = DensityFunctions.Spline(ridges,
+                new CubicSplinePoint(0.0, 0.02, 0.0),
+                new CubicSplinePoint(0.25, 0.12, 0.40),
+                new CubicSplinePoint(0.60, 0.55, 0.80),
+                new CubicSplinePoint(1.0, 1.00, 0.20));
+            // 垂直渐变只提供中尺度趋势；上下边界由 VerticalSlideFunction 处理。
+            IDensityFunction vertical = DensityFunctions.YClampedGradient(settings.GradientFromY, settings.GradientToY, settings.GradientFromValue, settings.GradientToValue);
+            IDensityFunction depth = DensityFunctions.Add(vertical, offset);
+            // 原版 JAGGED 的 Y 采样倍率为 0；Jaggedness 是强度，不是正向密度常量。
+            IDensityFunction jaggedNoise = DensityFunctions.Noise2D(seed + 6, 0.035, 1.0);
+            IDensityFunction jaggedTerm = DensityFunctions.Multiply(
+                jaggedness, DensityFunctions.HalfNegative(jaggedNoise));
+            IDensityFunction baseTerrain = DensityFunctions.NoiseGradientDensity(
+                factor, DensityFunctions.Add(depth, jaggedTerm));
+            IDensityFunction noiseA = DensityFunctions.FractalNoise(unchecked(seed + 4), settings.NoiseXZFrequency, settings.NoiseYFrequency, settings.NoiseOctaves);
+            IDensityFunction noiseB = DensityFunctions.FractalNoise(unchecked(seed + 10004), settings.NoiseXZFrequency, settings.NoiseYFrequency, settings.NoiseOctaves);
+            IDensityFunction selector = DensityFunctions.FractalNoise(unchecked(seed + 20004), settings.SelectorXZFrequency, settings.SelectorYFrequency, settings.NoiseOctaves);
+            IDensityFunction base3DNoise = DensityFunctions.Multiply(
+                DensityFunctions.BlendNoise(noiseA, noiseB, selector), settings.BaseNoiseStrength);
+            IDensityFunction rawDensity = DensityFunctions.Add(baseTerrain, base3DNoise);
+            IDensityFunction finalDensity = DensityFunctions.VerticalSlide(
+                rawDensity,
+                minY: settings.MinY,
+                maxY: settings.MaxYExclusive,
+                bottomSize: settings.BottomSlideSize,
+                bottomTarget: 1.0,
+                topSize: settings.TopSlideSize,
+                topTarget: -1.0);
 
             return new WorldFields(
-                DensityFunctions.Noise(seed + 10, 0.004, 1),
-                DensityFunctions.Noise(seed + 11, 0.004, 1),
+                DensityFunctions.Noise2D(seed + 10, 0.004, 1),
+                DensityFunctions.Noise2D(seed + 11, 0.004, 1),
                 continents,
                 erosion,
-                DensityFunctions.Noise(seed + 5, 0.006, 1),
+                depth,
                 ridges,
                 finalDensity,
                 DensityFunctions.Noise(seed + 20, 0.02, 1),
@@ -76,7 +127,8 @@ public sealed class WorldFields
                 DensityFunctions.Noise(seed + 22, 0.02, 1),
                 DensityFunctions.Noise(seed + 30, 0.04, 1),
                 DensityFunctions.Noise(seed + 31, 0.04, 1),
-                DensityFunctions.Noise(seed + 32, 0.04, 1));
+                DensityFunctions.Noise(seed + 32, 0.04, 1),
+                offset, factor, jaggedness);
         }
     }
 }

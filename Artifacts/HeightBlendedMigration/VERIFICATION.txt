@@ -1,0 +1,479 @@
+BASELINE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\\u7a0b\u5e8f\u5316\u751f\u6210\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\\u7a0b\u5e8f\u5316\u751f\u6210\\Artifacts\\HeightBlendedMigration\\BASELINE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.8002619745835395
+y=80 depth=0.5462496197448974 density=1.6994421502096944
+y=120 depth=0.17124961974489739 density=0.8828376400164261
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+MODIFIED
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+MODIFIED_CHECKS
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Checks.cs"]
+exit: 0
+stdout:
+PASS: exclusive world bounds, independent windows, moved gradient/slides, invalid settings
+PASS: blend clamp/endpoints/midpoint, one-octave identity, 3 seeds x 189 samples, bounds/determinism/Y/seed/XZ columns
+PASS: zero-strength preserves terrain formula; ALL_CHECKS_PASSED
+
+stderr:
+
+UNITY_API_COMPILE
+command: ["dotnet", "build", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\UnityCompile.csproj", "--nologo", "-v:q"]
+exit: 0
+stdout:
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: 发现无法解析的“System.Memory”的不同版本之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: “System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”与“System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     已选择“System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”，因为它是主版本而“System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”不是。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于“System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll]的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于或已统一到“System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[] 的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: 发现无法解析的“System.Buffers”的不同版本之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: “System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”与“System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     已选择“System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”，因为它是主版本而“System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”不是。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于“System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll]的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于或已统一到“System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[] 的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\MODIFIED_FILE\Voxels\VoxelMeshBuilder.cs(7,7): warning CS0105: “System.Collections.Generic”的 using 指令以前在此命名空间中出现过 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+
+已成功生成。
+
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: 发现无法解析的“System.Memory”的不同版本之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: “System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”与“System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     已选择“System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”，因为它是主版本而“System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”不是。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于“System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll]的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于或已统一到“System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[] 的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: 发现无法解析的“System.Buffers”的不同版本之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: “System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”与“System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”之间存在冲突。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     已选择“System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”，因为它是主版本而“System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”不是。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于“System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll]的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     依赖于或已统一到“System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51”[] 的引用。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           导致引用“D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll”的项目文件项 Include 特性。 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\MODIFIED_FILE\Voxels\VoxelMeshBuilder.cs(7,7): warning CS0105: “System.Collections.Generic”的 using 指令以前在此命名空间中出现过 [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\UnityCompile.csproj]
+    3 个警告
+    0 个错误
+
+已用时间 00:00:02.01
+
+stderr:
+
+ROLLBACK_EXECUTION
+command: ["C:/Program Files/Git/bin/bash.exe", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\ROLLBACK.sh", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\ROLLBACK_COPY"]
+exit: 0
+stdout:
+ROLLBACK_RESTORED
+
+stderr:
+
+ROLLBACK
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\ROLLBACK_COPY\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.8002619745835395
+y=80 depth=0.5462496197448974 density=1.6994421502096944
+y=120 depth=0.17124961974489739 density=0.8828376400164261
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+ROLLBACK_HASH_MATCH: all baseline files byte-identical; added files removed
+Changed symbols: WorldGenerationSettings, WorldFields.CreateLearningDefaults, FractalNoise, BlendNoise, VoxelWorldPreview.ValidateWindow
+Density/BlendedNoiseFunction.cs MODIFIED_SHA256 efbde36521578664b8bdcc23d5c040adb9f37796ff10931c9949f749222c4073
+Density/DensityFunctions.cs MODIFIED_SHA256 fb03baf47e5cdeb39a1d785f02c349cab35a63920788da980089e3c8b74a18ad
+Density/OctaveNoiseFunction.cs MODIFIED_SHA256 b8efd402e1028314f7adad859fb9bc2843d40d8af3e7a7d68405d2168b0f8958
+Density/ValueNoiseFunction.cs MODIFIED_SHA256 c658aeeae19297d8dcc45ed70ca9bf1d3c8049221c059182cbac8373593502dd
+Density/WorldFields.cs MODIFIED_SHA256 5b6c395f887da00de26de543890f43951bc7ff4c94879673cd508768c07e953f
+Density/WorldGenerationSettings.cs MODIFIED_SHA256 e236215c3b1043cc8934498e22e438bd438bfd676ac42cabcd542e72a29c7594
+Density/世界生成变更记录.md MODIFIED_SHA256 06fbb007bd0571f6ba39bca5c87657d7c9c8733e49cb334a8e2375598c767ce0
+Voxels/VoxelWorldControls.cs MODIFIED_SHA256 14010828199e5a0df9f486f27c798b4c088d3990ff78502d8aeeb53de8d142ea
+Voxels/VoxelWorldPreview.cs MODIFIED_SHA256 19ac6771284c22ef22456830b29a589fb06c563a506342603ab2895b50aacd12
+Baseline hashes: baseline-hashes.json
+Unity scene visual check: NOT RUN
+PATCH_RECONSTRUCTION
+command: git apply --ignore-space-change DIFF.patch (cwd PATCH_COPY)
+exit: 0
+stdout:
+
+stderr:
+
+PATCH_BYTE_MATCH: True
+Density/WorldGenerationSettings.cs.meta MODIFIED_SHA256 8b2c7b0d9937dcb2f94b0c9859a60f54fadb7d5c5f6e8679a52adde780216666
+FINALIZE_ATTEMPT exit=1: UnicodeDecodeError reading UTF-8 ROLLBACK.sh with default GBK; corrected explicit encoding=utf-8.
+Density/WorldGenerationSettings.cs.meta MODIFIED_SHA256 b66aee5095ae3a45814d5305289e8fdf8368f38b1ef5ca503c46dea18f1738b9
+Density/OctaveNoiseFunction.cs.meta MODIFIED_SHA256 bfa5451d5519d3e67eec503cde41310a0e7358b04b70df7ce2d5dc73d82aeb97
+Density/BlendedNoiseFunction.cs.meta MODIFIED_SHA256 5257ead698b7204f351b17c98c66e54fb6471b7fe7826543964b52437becbd01
+FINAL_PATCH
+command: ['git', 'apply', '--ignore-space-change', 'D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\DIFF.patch']
+exit: 0
+stdout:
+
+stderr:
+
+FINAL_ROLLBACK
+command: ['C:/Program Files/Git/bin/bash.exe', 'D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\ROLLBACK.sh', 'D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\ROLLBACK_FINAL']
+exit: 1
+stdout:
+
+stderr:
+None
+ROLLBACK_REPAIR: regenerated paths from filesystem after encoded path corruption
+command: bash ROLLBACK.sh ROLLBACK_FINAL
+exit: 0
+stdout:
+ROLLBACK_RESTORED
+
+stderr:
+
+FINAL_PATCH_BYTE_MATCH=True; FINAL_ROLLBACK_BYTE_MATCH=True
+
+XZ_MAPS_PRECHANGE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Assets\\Scripts\\WorldGen\\Density", "-p:TestProgram=Program.cs"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+XZ_MAPS_BASELINE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\BASELINE\\Density", "-p:TestProgram=Program.cs"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.8002619745835395
+y=80 depth=0.5462496197448974 density=1.6994421502096944
+y=120 depth=0.17124961974489739 density=0.8828376400164261
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+XZ_MAPS_MODIFIED
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+XZ_MAPS_MAP_CHECKS
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=MapChecks.cs"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+Continents: min=-0.403124, max=0.851190
+Erosion: min=-0.999082, max=0.982844
+Ridges: min=0.000007, max=0.996171
+PeaksAndValleys: min=-0.999979, max=0.999975
+PASS: production-field equality, Y independence, P formula, fixed bounds, deterministic seed, endpoints, degenerate span, overflow, overlapping windows
+EXPORTED: seed=12345 X=[-512,511] Z=[-512,511] resolution=256; 65536 rows
+ALL_MAP_CHECKS_PASSED
+
+stderr:
+
+
+XZ_MAPS_UNITY_API_COMPILE
+command: ["dotnet", "build", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\XZMaps\\UnityCompileMaps.csproj", "--nologo", "-v:q"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: Found conflicts between different versions of "System.Memory" that could not be resolved. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: There was a conflict between "System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" and "System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     "System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was chosen because it was primary and "System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was not. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on "System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" [C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll]. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on or have been unified to "System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" []. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: Found conflicts between different versions of "System.Buffers" that could not be resolved. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: There was a conflict between "System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" and "System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     "System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was chosen because it was primary and "System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was not. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on "System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" [C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll]. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on or have been unified to "System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" []. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\MODIFIED_FILE\Voxels\VoxelMeshBuilder.cs(7,7): warning CS0105: The using directive for 'System.Collections.Generic' appeared previously in this namespace [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+
+Build succeeded.
+
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: Found conflicts between different versions of "System.Memory" that could not be resolved. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: There was a conflict between "System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" and "System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     "System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was chosen because it was primary and "System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was not. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on "System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" [C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll]. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Memory.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on or have been unified to "System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" []. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.CSharp.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.Microsoft.CodeAnalysis.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.Microsoft.CodeAnalysis.CSharp [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: Found conflicts between different versions of "System.Buffers" that could not be resolved. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277: There was a conflict between "System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" and "System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     "System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was chosen because it was primary and "System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" was not. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on "System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" [C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll]. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             C:\Program Files\dotnet\packs\NETStandard.Library.Ref\2.1.0\ref\netstandard2.1\System.Buffers.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:     References which depend on or have been unified to "System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" []. [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Collections.Immutable.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Collections.Immutable [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:         D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:           Project file item includes which caused reference "D:\UnityHub\Project\程序化生成\Library\PackageCache\com.unity.pipeline@62c08c808737\Runtime\Plugins\CodeAnalysis\UnityPipeline.System.Reflection.Metadata.dll". [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+C:\Program Files\dotnet\sdk\10.0.302\Microsoft.Common.CurrentVersion.targets(2453,5): warning MSB3277:             UnityPipeline.System.Reflection.Metadata [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\MODIFIED_FILE\Voxels\VoxelMeshBuilder.cs(7,7): warning CS0105: The using directive for 'System.Collections.Generic' appeared previously in this namespace [D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\UnityCompileMaps.csproj]
+    3 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.14
+
+stderr:
+
+
+XZ_MAPS_PATCH_RECONSTRUCTION
+command: ["git", "apply", "--ignore-space-change", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\DIFF.patch"]
+cwd: D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\PATCH_COPY
+exit: 0
+stdout:
+
+stderr:
+D:/UnityHub/Project/程序化生成/Artifacts/HeightBlendedMigration/DIFF.patch:335: trailing whitespace.
+  userData: 
+D:/UnityHub/Project/程序化生成/Artifacts/HeightBlendedMigration/DIFF.patch:336: trailing whitespace.
+  assetBundleName: 
+D:/UnityHub/Project/程序化生成/Artifacts/HeightBlendedMigration/DIFF.patch:337: trailing whitespace.
+  assetBundleVariant: 
+warning: 3 lines add whitespace errors.
+
+XZ_MAPS_PATCH_ASSERTION exit=1: git apply converted 3 changed files from LF to CRLF under core.autocrlf=true. Retry sets core.autocrlf=false; source bytes remain unchanged.
+
+XZ_MAPS_PATCH_RECONSTRUCTION_LF
+command: ["git", "-c", "core.autocrlf=false", "apply", "--ignore-space-change", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\DIFF.patch"]
+cwd: D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\PATCH_COPY_LF
+exit: 0
+stdout:
+
+stderr:
+
+XZ_MAPS_PATCH_ASSERTION_LF exit=1: explicit text attributes still use native Windows CRLF for added .cs files. Retry also sets core.eol=lf.
+XZ_MAPS_PATCH_ASSERTION exit=1: git apply converted 3 changed files from LF to CRLF under core.autocrlf=true. Retry sets core.autocrlf=false; source bytes remain unchanged.
+
+XZ_MAPS_PATCH_RECONSTRUCTION_LF
+command: ["git", "-c", "core.autocrlf=false", "-c", "core.eol=lf", "apply", "--ignore-space-change", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\DIFF.patch"]
+cwd: D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\PATCH_COPY_FIXED_EOL
+exit: 0
+stdout:
+
+stderr:
+
+XZ_MAPS_PATCH_MIXED_EOL exit=1: old modified-role files use CRLF, newly added files use LF. Canonicalized only changed artifact texts to LF; project runtime source untouched. Retry uses core.autocrlf=false and core.eol=lf.
+XZ_MAPS_PATCH_ASSERTION exit=1: git apply converted 3 changed files from LF to CRLF under core.autocrlf=true. Retry sets core.autocrlf=false; source bytes remain unchanged.
+
+XZ_MAPS_PATCH_RECONSTRUCTION_LF
+command: ["git", "-c", "core.autocrlf=false", "-c", "core.eol=lf", "apply", "--ignore-space-change", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\DIFF.patch"]
+cwd: D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\PATCH_COPY_CANONICAL
+exit: 0
+stdout:
+
+stderr:
+
+
+XZ_MAPS_ROLLBACK_EXECUTION
+command: ["C:/Program Files/Git/bin/bash.exe", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\ROLLBACK.sh", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\XZMaps\\ROLLBACK_COPY"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+ROLLBACK_RESTORED
+
+stderr:
+
+
+XZ_MAPS_ROLLBACK
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\XZMaps\\ROLLBACK_COPY\\Density", "-p:TestProgram=Program.cs"]
+cwd: D:\UnityHub\Project\程序化生成
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.8002619745835395
+y=80 depth=0.5462496197448974 density=1.6994421502096944
+y=120 depth=0.17124961974489739 density=0.8828376400164261
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+XZ_MAPS_PATCH_BYTE_MATCH=True
+XZ_MAPS_ROLLBACK_HASH_MATCH=True
+XZ_MAPS_TERRAIN_PRECHANGE_EQUALS_MODIFIED=True
+Changed symbols: added XZFieldMap and WorldFieldMapWindow; WorldFields unchanged
+Prechange hashes: Supplements/XZMaps/prechange-hashes.json
+Density/XZFieldMap.cs SHA256 dcfdc7c4fa49b70be30bf562a658f4e327e1c1dd7cdc70b501053dc5f648147b
+Density/XZFieldMap.cs.meta SHA256 cd5ce728f326271a40eed20153b3f4d0c08b69f969e133c15ec63c7887a32f04
+Editor/WorldFieldMapWindow.cs SHA256 a4d5a9473b9c1a854b239a2949c78d4900c7f700575bd1383e1f5782c186e152
+Editor/WorldFieldMapWindow.cs.meta SHA256 4ab216e2e5449ea4c78c7fc47eff9b735bea41cb6e1d4ca2124c703f6977fb43
+Editor.meta SHA256 708c65c824d97d4c4d473db0c2b4b2f2b3c858d3eca2fbf8495cb0b53ac62d8b
+Density/世界生成变更记录.md SHA256 f95316c2c796c380afecdcb5a485b15ef4ff3876ddfdb31b2a4bc0cdef582a44
+XZ_MAPS_RENDER: Python Pillow; source Supplements/XZMaps/samples.csv, 65536 C# sampled rows, seed=12345; X/Z [-512,511]; +Z up, +X right; fixed scales C/E/P [-1,1], R [0,1]
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\xz-parameters.png SHA256 0145692adedad8523ca9f8bddd130fac719c7b9247d8429b922c7f892b54142e; image verify=PASS; size=1460x760
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\xz-cep-reference.png SHA256 1b173e35dd9529b90a54e4c12ba68c92863c954a5122d36661d51c95bc840bff; image verify=PASS; size=1460x760
+FINAL_REOPEN: all four roles read; new project files equal modified artifact; WorldFields hash unchanged. Both PNG layouts visually inspected. Unity editor interaction not run.

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.MetalFXModule</name>
+    </assembly>
+    <member name="A:UnityEngine.MetalFXModule">
+      <summary>
+        <para>A module that provides the low-level binding to Apple MetalFX upscaling (spatial and temporal).</para>
+      </summary>
+    </member>
+  </members>
+</doc>

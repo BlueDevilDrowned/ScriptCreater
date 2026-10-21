@@ -7,8 +7,13 @@ internal sealed class ValueNoiseFunction : IDensityFunction
         private readonly int seed;
         private readonly double scale;
         private readonly double amplitude;
+        private readonly double yScale;
         public ValueNoiseFunction(int seed, double scale, double amplitude)
+            : this(seed, scale, scale, amplitude) { }
+        public ValueNoiseFunction(int seed, double scale, double yScale, double amplitude)
         {
+            if (!WorldGenerationSettings.Finite(yScale) || yScale <= 0) throw new ArgumentOutOfRangeException(nameof(yScale));
+            this.yScale = yScale;
             if (scale <= 0) throw new ArgumentOutOfRangeException(nameof(scale));
             this.seed = seed;
             this.scale = scale;
@@ -17,7 +22,7 @@ internal sealed class ValueNoiseFunction : IDensityFunction
         public double Sample(in DensityContext context)
         {
             double x = context.X * scale;
-            double y = context.Y * scale;
+            double y = context.Y * yScale;
             double z = context.Z * scale;
             int x0 = FloorToInt(x), y0 = FloorToInt(y), z0 = FloorToInt(z);
             double tx = Smooth(x - x0), ty = Smooth(y - y0), tz = Smooth(z - z0);

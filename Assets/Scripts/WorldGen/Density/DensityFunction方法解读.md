@@ -338,13 +338,17 @@ operation(left.Sample(context), right.Sample(context))
 为流体和矿脉创建独立噪声场
 ```
 
-其中最终地形密度大致是：
+当前学习版最终地形密度大致是：
 
 ```text
-finalDensity = mountains + detail + verticalGradient * 35
+depth = verticalGradient(y) + terrainOffset(x,z)
+jaggedTerm = terrainJaggedness(x,z) * HalfNegative(jaggedNoise(x,z))
+rawDensity = 4 * QuarterNegative((depth + jaggedTerm) * terrainFactor(x,z))
+           + base3DNoise(x,y,z)
+finalDensity = VerticalSlide(rawDensity)
 ```
 
-它的目的不是复刻 Minecraft 的真实参数，而是展示如何用同一个函数库构造多个可独立读取的世界场。
+`VerticalSlide` 对应 Minecraft 密度函数中的上下边界滑动：底部逐渐趋向固体目标值，顶部逐渐趋向空气目标值，中间区域保留原始密度。它仍然是学习版参数，并不是原版全部 `NoiseRouter` 的精确复刻。
 
 ## 6. 一次采样的完整过程
 
@@ -414,3 +418,37 @@ density <= 0 -> 空气或流体
 - 节点目前没有序列化和资源文件加载。
 - `WorldFields` 的默认参数是教学参数，不保证生成 Minecraft 风格的完整地形。
 - 所有节点返回 `double`，方块写入、Biome 选择和流体决策仍应由上层系统完成。
+
+## 10. 当前加入的 `CubicSplineFunction`
+
+文件：`CubicSplineFunction.cs`、`CubicSplinePoint.cs`
+
+当前默认世界场已经使用第一阶段的 Minecraft 风格样条：
+
+```text
+Continents -> Offset
+Erosion    -> Factor
+Ridges     -> Jaggedness
+```
+
+然后组合为：
+
+```text
+depth = verticalGradient + offset
+baseTerrain = 4 * QuarterNegative((depth + jaggedness * HalfNegative(jaggedNoise)) * factor)
+finalDensity = VerticalSlide(baseTerrain + base3DNoise)
+```
+
+`CubicSplinePoint` 保存三个量：
+
+```csharp
+new CubicSplinePoint(location, value, derivative)
+```
+
+- `location`：输入世界场值位于什么位置；
+- `value`：该位置对应的输出；
+- `derivative`：曲线经过该点时的斜率。
+
+`CubicSplineFunction.Sample` 会先采样 `coordinate`，查找相邻控制点，再执行 Hermite 三次插值。输入超出控制点范围时，使用端点斜率线性外推。
+
+当前已支持控制点的 value 引用另一个函数，包括嵌套样条。大陆性、侵蚀度、山脊度及它们派生的样条参数使用 XZ 二维输入；同一列共享这些参数。最新实现、目的、源码差异与验证记录见同目录《世界生成变更记录.md》。

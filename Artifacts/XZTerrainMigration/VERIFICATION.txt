@@ -1,0 +1,124 @@
+TARGET: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Density
+Changed: Noise2D, ProjectXZ, HalfNegative, QuarterNegative, NoiseGradientDensity, WorldFields.CreateLearningDefaults, Depth
+
+BASELINE hashes:
+{
+  "BinaryFunction.cs": "5ca17f8358ffca721e9b713f925abe10bbc975563f6db91956ccef55f25adda6",
+  "CacheOnceFunction.cs": "3ce282797b8e3b0981c96556d89c4d79e726f2a9e96de54dee234677b856c311",
+  "ClampFunction.cs": "ba0a547fa936281661d5b5ff3237c0e2ae0c3ce7a2f1c95454df6fc6c6e1f7b8",
+  "ConstantFunction.cs": "38b892e2c65a14d1fbc91a8c62ca9be334a4a148be0fa7aa60fd069bbbab21aa",
+  "CubicSplineFunction.cs": "889fa11cced7b69b70452baaf2a738d621197314cfc65c8e445c92a356ea5ba8",
+  "CubicSplinePoint.cs": "abe2a4dc435bc134317501ddef178e26fc8564d3a25b402091939611837f9ccd",
+  "DensityContext.cs": "59d153daab75d68fbdf04d22232dd448ed117087314f10d938d7cc23fc829729",
+  "DensityFunctions.cs": "585b02069994ac08f353dda46a9fcd95aedf77010ab023f807b487617bf7a3a3",
+  "DensityFunction方法解读.md": "fbe841991398028e25c19624e8d2d8b22118a38bec0f8d75df76afd3f72f110e",
+  "IDensityFunction.cs": "c4616e9351d3e835178905616253578041de5eaf9676e025c8fbc7443a950b3e",
+  "RangeChoiceFunction.cs": "8062c02416f9b2d7263ab8f9d904859b3539559529175595592c636bf4c67c0e",
+  "UnaryFunction.cs": "1fd8804cbaa696c2737f656a3aa4976a989e220bb39c578fddd14ab3634deafd",
+  "ValueNoiseFunction.cs": "4c61724d9250e86000e96fd8958a6548c9b891f5c5dac7a9146d49d4de7f5db6",
+  "VerticalSlideFunction.cs": "97c3c8fbfe7ad5e9c48a6b754f3d7438bbe8484e8fcb075d8a8bfadc5064b336",
+  "WorldFields.cs": "f1fcb064fb6b2a377fbad15aa096bbc9b5f2bae44bba8ba5ac338f9884174d67",
+  "YGradientFunction.cs": "10e3ef66c5f71184b5f734561ce292dd4e1426fef4a5e0419147b06d3d5f1547"
+}
+BASELINE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\XZTerrainMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:/UnityHub/Project/程序化生成/Artifacts/XZTerrainMigration/BASELINE", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5508084867244523 y120=0.47906223938086273 same=False
+Erosion: y24=0.4615019829505197 y120=0.2230343252817907 same=False
+Ridges: y24=0.345820931880221 y120=0.3658212976914675 same=False
+Offset: y24=0.5320372673787479 y120=0.37222794980277857 same=False
+Factor: y24=0.5440349725586453 y120=0.6614228118131581 same=False
+Jaggedness: y24=0.2040147240381283 y120=0.2303238163368559 same=False
+y=0 depth=0.5945604657753953 density=1
+y=24 depth=0.5776912293442206 density=0.9469653466630872
+y=80 depth=0.45356881418740586 density=0.7655407522674741
+y=120 depth=0.3519718887784134 density=0.3811114735431056
+y=160 depth=0.29598990947141757 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+MODIFIED
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\XZTerrainMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:/UnityHub/Project/程序化生成/Artifacts/XZTerrainMigration/MODIFIED_FILE", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.8002619745835395
+y=80 depth=0.5462496197448974 density=1.6994421502096944
+y=120 depth=0.17124961974489739 density=0.8828376400164261
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+MODIFIED_CHECKS
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\XZTerrainMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:/UnityHub/Project/程序化生成/Artifacts/XZTerrainMigration/MODIFIED_FILE", "-p:TestProgram=Checks.cs"]
+exit: 0
+stdout:
+PASS: source gradient positive/negative branches
+PASS: 3 seeds x 9 columns; XZ invariance, Depth slope, finite density, boundaries
+PASS: XZ and seed variation; base noise still varies with Y
+CHECKS_SUCCESS
+
+stderr:
+
+ROLLBACK_EXECUTION
+command: ["C:/Program Files/Git/bin/bash.exe", "D:/UnityHub/Project/程序化生成/Artifacts/XZTerrainMigration/ROLLBACK.sh", "D:/UnityHub/Project/程序化生成/Artifacts/XZTerrainMigration/ROLLBACK_COPY"]
+exit: 0
+stdout:
+ROLLBACK_RESTORED
+
+stderr:
+
+ROLLBACK
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\XZTerrainMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:/UnityHub/Project/程序化生成/Artifacts/XZTerrainMigration/ROLLBACK_COPY", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5508084867244523 y120=0.47906223938086273 same=False
+Erosion: y24=0.4615019829505197 y120=0.2230343252817907 same=False
+Ridges: y24=0.345820931880221 y120=0.3658212976914675 same=False
+Offset: y24=0.5320372673787479 y120=0.37222794980277857 same=False
+Factor: y24=0.5440349725586453 y120=0.6614228118131581 same=False
+Jaggedness: y24=0.2040147240381283 y120=0.2303238163368559 same=False
+y=0 depth=0.5945604657753953 density=1
+y=24 depth=0.5776912293442206 density=0.9469653466630872
+y=80 depth=0.45356881418740586 density=0.7655407522674741
+y=120 depth=0.3519718887784134 density=0.3811114735431056
+y=160 depth=0.29598990947141757 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+MODIFIED hashes:
+{
+  "BinaryFunction.cs": "5ca17f8358ffca721e9b713f925abe10bbc975563f6db91956ccef55f25adda6",
+  "CacheOnceFunction.cs": "3ce282797b8e3b0981c96556d89c4d79e726f2a9e96de54dee234677b856c311",
+  "ClampFunction.cs": "ba0a547fa936281661d5b5ff3237c0e2ae0c3ce7a2f1c95454df6fc6c6e1f7b8",
+  "ConstantFunction.cs": "38b892e2c65a14d1fbc91a8c62ca9be334a4a148be0fa7aa60fd069bbbab21aa",
+  "CubicSplineFunction.cs": "889fa11cced7b69b70452baaf2a738d621197314cfc65c8e445c92a356ea5ba8",
+  "CubicSplinePoint.cs": "abe2a4dc435bc134317501ddef178e26fc8564d3a25b402091939611837f9ccd",
+  "DensityContext.cs": "59d153daab75d68fbdf04d22232dd448ed117087314f10d938d7cc23fc829729",
+  "DensityFunctions.cs": "cb443d1728e53b3efe0175cbf6315b9ea957dff36da2aa0985f9ebaf1984d32c",
+  "DensityFunction方法解读.md": "01b49b6e42e677195160ba0b3c2c9f8eb8bee42ff00e6d598f41b622f8d7bd0f",
+  "IDensityFunction.cs": "c4616e9351d3e835178905616253578041de5eaf9676e025c8fbc7443a950b3e",
+  "ProjectedXZFunction.cs": "7993b92d90a93e61fa160eeff783e9d1b7b85ed3dacdd73bbc6a4f1d8d208a0c",
+  "RangeChoiceFunction.cs": "8062c02416f9b2d7263ab8f9d904859b3539559529175595592c636bf4c67c0e",
+  "UnaryFunction.cs": "1fd8804cbaa696c2737f656a3aa4976a989e220bb39c578fddd14ab3634deafd",
+  "ValueNoiseFunction.cs": "4c61724d9250e86000e96fd8958a6548c9b891f5c5dac7a9146d49d4de7f5db6",
+  "VerticalSlideFunction.cs": "97c3c8fbfe7ad5e9c48a6b754f3d7438bbe8484e8fcb075d8a8bfadc5064b336",
+  "WorldFields.cs": "d7a04f9a236313df531d4d942a379ba58b27311b4ecefe199601b2fde961375b",
+  "YGradientFunction.cs": "10e3ef66c5f71184b5f734561ce292dd4e1426fef4a5e0419147b06d3d5f1547",
+  "世界生成变更记录.md": "be533bf89f0001908e065e104fdcd5ba24c66ebac956b3383651f90e84951730"
+}
+ROLLBACK hashes equal BASELINE: True
+ROLLBACK stdout equals BASELINE: True
+Working source equals MODIFIED_FILE: True
+Unity Editor scene/render verification: not run
+VERIFICATION_SUCCESS

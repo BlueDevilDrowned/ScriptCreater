@@ -1,0 +1,183 @@
+diff --git a/Assets/Scripts/WorldGen/Density/DensityFunctions.cs b/Assets/Scripts/WorldGen/Density/DensityFunctions.cs
+index c417a38..ab80279 100644
+--- a/Assets/Scripts/WorldGen/Density/DensityFunctions.cs
++++ b/Assets/Scripts/WorldGen/Density/DensityFunctions.cs
+@@ -23,6 +23,15 @@ public static IDensityFunction RangeChoice(
+         public static IDensityFunction YClampedGradient(
+             int fromY, int toY, double fromValue, double toValue)
+             => new YGradientFunction(fromY, toY, fromValue, toValue);
++        public static IDensityFunction VerticalSlide(
++            IDensityFunction input,
++            int minY, int maxY,
++            int bottomSize, double bottomTarget,
++            int topSize, double topTarget)
++            => new VerticalSlideFunction(input, minY, maxY,
++                bottomSize, bottomTarget, topSize, topTarget);
++        public static IDensityFunction Spline(IDensityFunction coordinate, params CubicSplinePoint[] points)
++            => new CubicSplineFunction(coordinate, points);
+ 
+         /// <summary>以一次采样结果为常量的简单缓存，适合固定坐标的重复读取。</summary>
+         public static IDensityFunction CacheOnce(IDensityFunction input) => new CacheOnceFunction(input);
+diff --git a/Assets/Scripts/WorldGen/Density/DensityFunction方法解读.md b/Assets/Scripts/WorldGen/Density/DensityFunction方法解读.md
+index 7d377a0..c649346 100644
+--- a/Assets/Scripts/WorldGen/Density/DensityFunction方法解读.md
++++ b/Assets/Scripts/WorldGen/Density/DensityFunction方法解读.md
+@@ -338,13 +338,16 @@ operation(left.Sample(context), right.Sample(context))
+ 为流体和矿脉创建独立噪声场
+ ```
+ 
+-其中最终地形密度大致是：
++当前学习版最终地形密度大致是：
+ 
+ ```text
+-finalDensity = mountains + detail + verticalGradient * 35
++rawDensity = (verticalGradient + terrainOffset) * terrainFactor
++           + terrainJaggedness
++           + base3DNoise
++finalDensity = VerticalSlide(rawDensity)
+ ```
+ 
+-它的目的不是复刻 Minecraft 的真实参数，而是展示如何用同一个函数库构造多个可独立读取的世界场。
++`VerticalSlide` 对应 Minecraft 密度函数中的上下边界滑动：底部逐渐趋向固体目标值，顶部逐渐趋向空气目标值，中间区域保留原始密度。它仍然是学习版参数，并不是原版全部 `NoiseRouter` 的精确复刻。
+ 
+ ## 6. 一次采样的完整过程
+ 
+@@ -414,3 +417,37 @@ density <= 0 -> 空气或流体
+ - 节点目前没有序列化和资源文件加载。
+ - `WorldFields` 的默认参数是教学参数，不保证生成 Minecraft 风格的完整地形。
+ - 所有节点返回 `double`，方块写入、Biome 选择和流体决策仍应由上层系统完成。
++
++## 10. 当前加入的 `CubicSplineFunction`
++
++文件：`CubicSplineFunction.cs`、`CubicSplinePoint.cs`
++
++当前默认世界场已经使用第一阶段的 Minecraft 风格样条：
++
++```text
++Continents -> Offset
++Erosion    -> Factor
++Ridges     -> Jaggedness
++```
++
++然后组合为：
++
++```text
++depth = verticalGradient + offset
++baseTerrain = depth * factor
++finalDensity = baseTerrain + jaggedness + base3DNoise
++```
++
++`CubicSplinePoint` 保存三个量：
++
++```csharp
++new CubicSplinePoint(location, value, derivative)
++```
++
++- `location`：输入世界场值位于什么位置；
++- `value`：该位置对应的输出；
++- `derivative`：曲线经过该点时的斜率。
++
++`CubicSplineFunction.Sample` 会先采样 `coordinate`，查找相邻控制点，再执行 Hermite 三次插值。输入超出控制点范围时，使用端点斜率线性外推。
++
++当前实现是 Minecraft `CubicSpline.Multipoint` 的一维简化版。它还没有实现“控制点的 value 继续引用另一个样条”的嵌套结构；嵌套样条是下一阶段，用于更接近 `TerrainProvider.overworldOffset`、`overworldFactor` 和 `overworldJaggedness` 的真实多维地形映射。
+diff --git a/Assets/Scripts/WorldGen/Density/WorldFields.cs b/Assets/Scripts/WorldGen/Density/WorldFields.cs
+index f8495ee..b89fc9b 100644
+--- a/Assets/Scripts/WorldGen/Density/WorldFields.cs
++++ b/Assets/Scripts/WorldGen/Density/WorldFields.cs
+@@ -10,6 +10,9 @@ public sealed class WorldFields
+         public readonly IDensityFunction Erosion;
+         public readonly IDensityFunction Depth;
+         public readonly IDensityFunction Ridges;
++        public readonly IDensityFunction Offset;
++        public readonly IDensityFunction Factor;
++        public readonly IDensityFunction Jaggedness;
+         public readonly IDensityFunction FinalDensity;
+         public readonly IDensityFunction FluidFloodedness;
+         public readonly IDensityFunction FluidSpread;
+@@ -31,7 +34,10 @@ public WorldFields(
+             IDensityFunction lava = null,
+             IDensityFunction veinToggle = null,
+             IDensityFunction veinRidged = null,
+-            IDensityFunction veinGap = null)
++            IDensityFunction veinGap = null,
++            IDensityFunction offset = null,
++            IDensityFunction factor = null,
++            IDensityFunction jaggedness = null)
+         {
+             Temperature = temperature ?? throw new ArgumentNullException(nameof(temperature));
+             Vegetation = vegetation ?? throw new ArgumentNullException(nameof(vegetation));
+@@ -39,6 +45,9 @@ public WorldFields(
+             Erosion = erosion ?? throw new ArgumentNullException(nameof(erosion));
+             Depth = depth ?? throw new ArgumentNullException(nameof(depth));
+             Ridges = ridges ?? throw new ArgumentNullException(nameof(ridges));
++            Offset = offset ?? DensityFunctions.Constant(0);
++            Factor = factor ?? DensityFunctions.Constant(1);
++            Jaggedness = jaggedness ?? DensityFunctions.Constant(0);
+             FinalDensity = finalDensity ?? throw new ArgumentNullException(nameof(finalDensity));
+             FluidFloodedness = fluidFloodedness ?? DensityFunctions.Constant(0);
+             FluidSpread = fluidSpread ?? DensityFunctions.Constant(0);
+@@ -54,14 +63,46 @@ public static WorldFields CreateLearningDefaults(int seed)
+             IDensityFunction continents = DensityFunctions.Noise(seed + 1, 0.0025, 1.0);
+             IDensityFunction erosion = DensityFunctions.Noise(seed + 2, 0.008, 1.0);
+             IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise(seed + 3, 0.012, 1.0));
+-            IDensityFunction mountains = DensityFunctions.Multiply(
+-                DensityFunctions.Clamp(DensityFunctions.Subtract(continents, DensityFunctions.Constant(0.15)), 0, 1),
+-                DensityFunctions.Constant(55));
+-            IDensityFunction detail = DensityFunctions.Multiply(DensityFunctions.Noise(seed + 4, 0.035, 1), 8);
+-            IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 1.0, -1.0);
+-            IDensityFunction finalDensity = DensityFunctions.Add(
+-                DensityFunctions.Add(mountains, detail),
+-                DensityFunctions.Multiply(vertical, 35));
++            IDensityFunction lowlandOffset = DensityFunctions.Spline(erosion,
++                new CubicSplinePoint(-1.0, -0.55, 0.0),
++                new CubicSplinePoint(0.0, -0.20, 0.1),
++                new CubicSplinePoint(1.0, 0.05, 0.0));
++            IDensityFunction mountainOffset = DensityFunctions.Spline(erosion,
++                new CubicSplinePoint(-1.0, 0.10, 0.0),
++                new CubicSplinePoint(0.0, 0.35, 0.2),
++                new CubicSplinePoint(1.0, 0.70, 0.0));
++            IDensityFunction offset = DensityFunctions.Spline(continents,
++                new CubicSplinePoint(-1.0, lowlandOffset, 0.15),
++                new CubicSplinePoint(-0.35, lowlandOffset, 0.80),
++                new CubicSplinePoint(0.10, DensityFunctions.Constant(0.05), 0.35),
++                new CubicSplinePoint(0.55, mountainOffset, 0.55),
++                new CubicSplinePoint(1.0, mountainOffset, -0.30));
++            IDensityFunction factor = DensityFunctions.Spline(erosion,
++                new CubicSplinePoint(-1.0, 1.35, 0.0),
++                new CubicSplinePoint(-0.30, 1.10, -0.20),
++                new CubicSplinePoint(0.25, 0.65, -0.35),
++                new CubicSplinePoint(1.0, 0.30, 0.0));
++            IDensityFunction jaggedness = DensityFunctions.Spline(ridges,
++                new CubicSplinePoint(0.0, 0.02, 0.0),
++                new CubicSplinePoint(0.25, 0.12, 0.40),
++                new CubicSplinePoint(0.60, 0.55, 0.80),
++                new CubicSplinePoint(1.0, 1.00, 0.20));
++            // 垂直渐变只提供中尺度趋势；上下边界由 VerticalSlideFunction 处理。
++            IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 0.75, -0.75);
++            IDensityFunction depth = DensityFunctions.Add(vertical, offset);
++            IDensityFunction baseTerrain = DensityFunctions.Multiply(depth, factor);
++            IDensityFunction base3DNoise = DensityFunctions.Multiply(
++                DensityFunctions.Noise(seed + 4, 0.02, 1.0), 0.35);
++            IDensityFunction rawDensity = DensityFunctions.Add(
++                DensityFunctions.Add(baseTerrain, jaggedness), base3DNoise);
++            IDensityFunction finalDensity = DensityFunctions.VerticalSlide(
++                rawDensity,
++                minY: 0,
++                maxY: 160,
++                bottomSize: 24,
++                bottomTarget: 1.0,
++                topSize: 24,
++                topTarget: -1.0);
+ 
+             return new WorldFields(
+                 DensityFunctions.Noise(seed + 10, 0.004, 1),
+@@ -76,7 +117,8 @@ public static WorldFields CreateLearningDefaults(int seed)
+                 DensityFunctions.Noise(seed + 22, 0.02, 1),
+                 DensityFunctions.Noise(seed + 30, 0.04, 1),
+                 DensityFunctions.Noise(seed + 31, 0.04, 1),
+-                DensityFunctions.Noise(seed + 32, 0.04, 1));
++                DensityFunctions.Noise(seed + 32, 0.04, 1),
++                offset, factor, jaggedness);
+         }
+     }
+ }

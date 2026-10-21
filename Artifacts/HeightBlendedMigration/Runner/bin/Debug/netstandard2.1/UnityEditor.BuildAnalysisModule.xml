@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEditor.BuildAnalysisModule</name>
+    </assembly>
+    <member name="T:UnityEditor.Build.Analysis.BuildAnalysisUtility">
+      <summary>
+        <para>Opens the Build Analysis window from script.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Build.Analysis.BuildAnalysisUtility.OpenWindow(UnityEngine.GUID)">
+      <summary>
+        <para>Opens the Build Analysis window and selects a build from the build history.</para>
+      </summary>
+      <param name="buildSessionGuid">The build session GUID of the build to select, for example
+ Build.Reporting.BuildSummary._buildSessionGuid or a GUID returned by Build.BuildHistory.GetAllBuilds. Passing an empty GUID throws an ArgumentException.</param>
+    </member>
+    <member name="T:UnityEditor.Build.Analysis.ExternalBuildDrawer">
+      <summary>
+        <para>Draws the report for builds made outside the Unity build pipeline, in the Build Analysis window.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Build.Analysis.ExternalBuildDrawer.CreateContent">
+      <summary>
+        <para>Creates the content that fills the window while this drawer's builds are selected.</para>
+      </summary>
+      <returns>
+        <para>The root of the content. Must not be null.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEditor.Build.Analysis.ExternalBuildDrawer.OnBuildDeselected">
+      <summary>
+        <para>Called when the selection moves to a build this drawer doesn't draw.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Build.Analysis.ExternalBuildDrawer.OnBuildSelected(UnityEditor.Build.BuildReportSummary)">
+      <summary>
+        <para>Called when the user selects a build this drawer draws.</para>
+      </summary>
+      <param name="summary">The summary of the selected build.</param>
+    </member>
+    <member name="T:UnityEditor.Build.Analysis.ExternalBuildDrawerAttribute">
+      <summary>
+        <para>Declares the package whose builds an Build.Analysis.ExternalBuildDrawer draws.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEditor.Build.Analysis.ExternalBuildDrawerAttribute.#ctor(System.String)">
+      <summary>
+        <para></para>
+      </summary>
+      <param name="producerPackage">The package name, for example com.unity.addressables. The window draws a
+ build with this drawer when the build's Build.BuildReportSummary.ProducerPackage matches.</param>
+    </member>
+    <member name="P:UnityEditor.Build.Analysis.ExternalBuildDrawerAttribute.ProducerPackage">
+      <summary>
+        <para>The package whose builds the drawer draws.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEditor.LocalizationRuntimeModule</name>
+    </assembly>
+    <member name="T:Unity.Localization.Editor.AssetEntryEditorAttribute">
+      <summary>
+        <para>
+ Associates an asset entry editor with the asset entry type it edits.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetEntryEditorAttribute.#ctor(System.Type)">
+      <summary>
+        <para>
+ Associates the editor with an asset entry type.
+ </para>
+      </summary>
+      <param name="entryType">The concrete asset entry type the editor renders.</param>
+    </member>
+    <member name="P:Unity.Localization.Editor.AssetEntryEditorAttribute.EntryType">
+      <summary>
+        <para>
+ The asset entry type this editor serves.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Editor.AssetProviderEditor">
+      <summary>
+        <para>
+ Defines the editor-side companion to a runtime asset provider.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.ClaimsPath(System.String)">
+      <summary>
+        <para>
+ Returns whether this provider should serve a collection saved at a given path.
+ </para>
+      </summary>
+      <param name="assetPath">The collection asset path.</param>
+      <returns>
+        <para>true when the provider claims the path; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.ClearRegistrations(Unity.Localization.Providers.IAssetProvider)">
+      <summary>
+        <para>
+ Drops every table registration the provider holds.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.CreateReference(Unity.Localization.Editor.ResourceTableCollection)">
+      <summary>
+        <para>
+ Creates the table reference to store when a collection is assigned to a localized reference.
+ </para>
+      </summary>
+      <param name="collection">The collection being referenced.</param>
+      <returns>
+        <para>The reference to persist for the collection.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.EnumerateCollections(Unity.Localization.Providers.IAssetProvider)">
+      <summary>
+        <para>
+ Returns the collections assigned to a provider.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+      <returns>
+        <para>The collections the provider serves.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.GuidTableAddress(Unity.Localization.Editor.ResourceTableCollection,Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Returns the address a per-locale table is served under, keyed by the collection guid.
+ </para>
+      </summary>
+      <param name="collection">The collection the table belongs to.</param>
+      <param name="table">The per-locale table.</param>
+      <returns>
+        <para>The address the table is served under, or an empty string when the collection has no guid.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.RegisterCollection(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Editor.ResourceTableCollection)">
+      <summary>
+        <para>
+ Registers every per-locale table in a collection with a provider.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+      <param name="collection">The collection whose tables to register.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.RegisterTable(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Editor.ResourceTableCollection,Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Registers a single per-locale table with the provider.
+ </para>
+      </summary>
+      <param name="provider">The provider instance.</param>
+      <param name="collection">The owning collection.</param>
+      <param name="table">The per-locale table to register.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.SetLocaleEnabled(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Locale,System.Boolean)">
+      <summary>
+        <para>
+ Adds or removes a locale's tables across the provider's collections when the locale is toggled.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+      <param name="locale">The locale being toggled.</param>
+      <param name="enabled">Whether the locale is now enabled.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.TableAddress(Unity.Localization.Editor.ResourceTableCollection,Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Returns the address a per-locale table is served under, keyed by collection name.
+ </para>
+      </summary>
+      <param name="collection">The collection the table belongs to.</param>
+      <param name="table">The per-locale table.</param>
+      <returns>
+        <para>The address the table is served under.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.UnregisterCollection(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Editor.ResourceTableCollection)">
+      <summary>
+        <para>
+ Removes every per-locale table in a collection from a provider.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+      <param name="collection">The collection whose tables to remove.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditor.UnregisterTable(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Editor.ResourceTableCollection,Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Removes a single per-locale table from the provider.
+ </para>
+      </summary>
+      <param name="provider">The provider instance.</param>
+      <param name="collection">The owning collection.</param>
+      <param name="table">The per-locale table to remove.</param>
+    </member>
+    <member name="T:Unity.Localization.Editor.AssetProviderEditorAttribute">
+      <summary>
+        <para>
+ Associates an asset provider editor with the provider type it serves.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.AssetProviderEditorAttribute.#ctor(System.Type)">
+      <summary>
+        <para>
+ Initializes a new instance of the Unity.Localization.Editor.AssetProviderEditorAttribute class.
+ </para>
+      </summary>
+      <param name="providerType">The asset provider type this editor serves.</param>
+    </member>
+    <member name="P:Unity.Localization.Editor.AssetProviderEditorAttribute.ProviderType">
+      <summary>
+        <para>
+ Gets the provider type this editor serves.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Editor.FileTableProviderEditor">
+      <summary>
+        <para>
+ The editor half of a file-backed content source, supplying the writer that generates its table files.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.FileTableProviderEditor.ClearRegistrations(Unity.Localization.Providers.IAssetProvider)">
+      <summary>
+        <para>
+ Drops every collection the provider records.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.FileTableProviderEditor.RegisterCollection(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Editor.ResourceTableCollection)">
+      <summary>
+        <para>
+ Records a collection so the provider serves its table files at runtime.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+      <param name="collection">The collection to record.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.FileTableProviderEditor.UnregisterCollection(Unity.Localization.Providers.IAssetProvider,Unity.Localization.Editor.ResourceTableCollection)">
+      <summary>
+        <para>
+ Drops a collection so the provider stops serving its table files.
+ </para>
+      </summary>
+      <param name="provider">The provider instance from the settings chain.</param>
+      <param name="collection">The collection to drop.</param>
+    </member>
+    <member name="P:Unity.Localization.Editor.FileTableProviderEditor.Writer">
+      <summary>
+        <para>
+ The writer that turns a table snapshot into the provider's file format.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.Editor.IAssetEntryEditor">
+      <summary>
+        <para>
+ Edits one kind of localized asset entry in the Resource Tables window.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.IAssetEntryEditor.AssetType">
+      <summary>
+        <para>
+ The object type the field accepts.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.IAssetEntryEditor.CreateDefaultField(Unity.Localization.IAssetEntry,Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Builds the field that edits the entry's default value.
+ </para>
+      </summary>
+      <param name="entry">The asset entry to edit.</param>
+      <param name="table">The table that owns the entry, used for undo and dirtying.</param>
+      <returns>
+        <para>The visual element that edits the default value.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.IAssetEntryEditor.CreateVariantField(Unity.Localization.IAssetEntry,System.String,Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Builds the field that edits one variant value of the entry.
+ </para>
+      </summary>
+      <param name="entry">The asset entry to edit.</param>
+      <param name="variantKey">The variant key the field edits.</param>
+      <param name="table">The table that owns the entry, used for undo and dirtying.</param>
+      <returns>
+        <para>The visual element that edits the variant value.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Editor.IAssetEntryEditor.KindLabel">
+      <summary>
+        <para>
+ A short label for the storage kind, shown as a row indicator and in the Add Entry menu.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.IAssetEntryEditor.KindTooltip">
+      <summary>
+        <para>
+ A one-line explanation of how the kind stores and loads its asset, shown as the row indicator's tooltip.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.Editor.IResourceCollectionExtension">
+      <summary>
+        <para>
+ Marks a serializable class that attaches tool-specific data to a Unity.Localization.Editor.ResourceTableCollection.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.Localization.Editor.ITableFileWriter">
+      <summary>
+        <para>
+ Writes a table snapshot to a file, so a file-backed provider can ship its tables as data instead of assets.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.ITableFileWriter.Write(Unity.Localization.Providers.FileTables.ResourceTableData,System.IO.Stream)">
+      <summary>
+        <para>
+ Writes a table snapshot to a stream.
+ </para>
+      </summary>
+      <param name="data">The snapshot to write.</param>
+      <param name="stream">The destination stream to write to.</param>
+    </member>
+    <member name="T:Unity.Localization.Editor.LocalizationEditorSettings">
+      <summary>
+        <para>
+ Provides editor access to the active localization settings for the project.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.LocalizationEditorSettings.AddTable(Unity.Localization.Editor.ResourceTableCollection,Unity.Localization.Locale)">
+      <summary>
+        <para>
+ Adds a table for a locale to a collection, or returns the collection's existing table for that locale.
+ </para>
+      </summary>
+      <param name="collection">The collection to add the table to.</param>
+      <param name="locale">The locale the table targets.</param>
+      <returns>
+        <para>
+ The new or existing Unity.Localization.ResourceTable, or null when the collection or locale is
+ null, or the collection has no shared data.
+ </para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.Editor.LocalizationEditorSettings.CollectionsChanged(System.Action)">
+      <summary>
+        <para>
+ Occurs when the project's table collections change.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="M:Unity.Localization.Editor.LocalizationEditorSettings.CreateStringEntry(Unity.Localization.Editor.ResourceTableCollection,System.String)">
+      <summary>
+        <para>
+ Adds a string key to a collection across every one of its locale tables.
+ </para>
+      </summary>
+      <param name="collection">The collection to add the key to.</param>
+      <param name="key">The key text.</param>
+      <returns>
+        <para>The new key's stable id, or zero when the collection has no shared data or the key is empty.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.Localization.Editor.LocalizationEditorSettings.LocalesChanged(System.Action)">
+      <summary>
+        <para>
+ Occurs when the set of available locales in the project changes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:Unity.Localization.Editor.ResourceEntryContext">
+      <summary>
+        <para>
+ Carries the state and callbacks a Unity.Localization.Editor.ResourceEntryDrawer needs while it builds a value cell.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceEntryContext.EntryProperty">
+      <summary>
+        <para>
+ The serialized array element for this entry, for binding, or null when it is unavailable.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceEntryContext.MarkDirty">
+      <summary>
+        <para>
+ Marks the table dirty after a value change made outside a serialized-property binding.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceEntryContext.Rebuild">
+      <summary>
+        <para>
+ Rebuilds the tree after a change to the entry's structure.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceEntryContext.Table">
+      <summary>
+        <para>
+ The table whose locale value this cell edits.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Editor.ResourceEntryDrawer">
+      <summary>
+        <para>
+ Renders the value cell for one Unity.Localization.IResourceEntry kind within a locale column.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceEntryDrawer.CreateCell(Unity.Localization.IResourceEntry,Unity.Localization.Editor.ResourceEntryContext)">
+      <summary>
+        <para>
+ Builds the visual element that edits the entry's value.
+ </para>
+      </summary>
+      <param name="entry">The entry to edit.</param>
+      <param name="context">The table, serialized property, and callbacks for this cell.</param>
+      <returns>
+        <para>The visual element that edits the value.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.Localization.Editor.ResourceEntryDrawerAttribute">
+      <summary>
+        <para>
+ Associates a Unity.Localization.Editor.ResourceEntryDrawer with the entry type it renders.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceEntryDrawerAttribute.#ctor(System.Type)">
+      <summary>
+        <para>
+ Associates the drawer with an entry type.
+ </para>
+      </summary>
+      <param name="entryType">The concrete entry type the drawer renders.</param>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceEntryDrawerAttribute.EntryType">
+      <summary>
+        <para>
+ The entry type this drawer renders.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.Localization.Editor.ResourceTableCollection">
+      <summary>
+        <para>
+ Represents the source asset for a set of localized tables: shared key data plus one table per locale.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceTableCollection.AddExtension(Unity.Localization.Editor.IResourceCollectionExtension)">
+      <summary>
+        <para>
+ Attaches an extension to this collection.
+ </para>
+      </summary>
+      <param name="extension">The extension to attach. Ignored when null or already attached.</param>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceTableCollection.AddTable(Unity.Localization.ResourceTable)">
+      <summary>
+        <para>
+ Adds a per-locale table to the collection.
+ </para>
+      </summary>
+      <param name="table">
+ The table to add. Ignored when null, already present, built against different shared data, owned by another
+ collection, or another table for its locale is already in the collection.
+ </param>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceTableCollection.Extensions">
+      <summary>
+        <para>
+ Gets the extensions attached to this collection.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceTableCollection.GetExtension">
+      <summary>
+        <para>
+ Returns the first attached extension of a type.
+ </para>
+      </summary>
+      <returns>
+        <para>The extension, or null when none is attached.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceTableCollection.GetTable(Unity.Localization.LocaleIdentifier)">
+      <summary>
+        <para>
+ Returns the table for a locale.
+ </para>
+      </summary>
+      <param name="locale">The locale to find.</param>
+      <returns>
+        <para>The matching Unity.Localization.ResourceTable, or null when none exists.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceTableCollection.ProviderId">
+      <summary>
+        <para>
+ Gets or sets the identifier of the asset provider this collection registers its tables and assets with.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.Localization.Editor.ResourceTableCollection.RemoveExtension(Unity.Localization.Editor.IResourceCollectionExtension)">
+      <summary>
+        <para>
+ Removes an extension from this collection.
+ </para>
+      </summary>
+      <param name="extension">The extension to remove.</param>
+      <returns>
+        <para>true when the extension was attached; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceTableCollection.SharedData">
+      <summary>
+        <para>
+ Gets or sets the shared key data for the collection.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceTableCollection.TableCollectionName">
+      <summary>
+        <para>
+ Gets the collection name.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.Localization.Editor.ResourceTableCollection.Tables">
+      <summary>
+        <para>
+ Gets the per-locale tables in this collection.
+ </para>
+      </summary>
+    </member>
+  </members>
+</doc>

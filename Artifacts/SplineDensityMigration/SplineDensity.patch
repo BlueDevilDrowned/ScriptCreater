@@ -1,0 +1,244 @@
+diff --git a/Assets/Scripts/WorldGen/Density/CubicSplinePoint.cs b/Assets/Scripts/WorldGen/Density/CubicSplinePoint.cs
+new file mode 100644
+index 0000000..ad15304
+--- /dev/null
++++ b/Assets/Scripts/WorldGen/Density/CubicSplinePoint.cs
+@@ -0,0 +1,17 @@
++namespace ProceduralGeneration.WorldGen.Density
++{
++    /// <summary>一维三次样条控制点：输入位置、输出值，以及对输入坐标的斜率。</summary>
++    public readonly struct CubicSplinePoint
++    {
++        public readonly double Location;
++        public readonly double Value;
++        public readonly double Derivative;
++
++        public CubicSplinePoint(double location, double value, double derivative = 0.0)
++        {
++            Location = location;
++            Value = value;
++            Derivative = derivative;
++        }
++    }
++}
+diff --git a/Assets/Scripts/WorldGen/Density/CubicSplineFunction.cs b/Assets/Scripts/WorldGen/Density/CubicSplineFunction.cs
+new file mode 100644
+index 0000000..e2dc69e
+--- /dev/null
++++ b/Assets/Scripts/WorldGen/Density/CubicSplineFunction.cs
+@@ -0,0 +1,64 @@
++using System;
++
++namespace ProceduralGeneration.WorldGen.Density
++{
++    /// <summary>
++    /// Minecraft CubicSpline.Multipoint 的学习版：使用 Hermite 三次插值，
++    /// 将一个 DensityFunction 的输出映射到另一套地形控制值。
++    /// </summary>
++    internal sealed class CubicSplineFunction : IDensityFunction
++    {
++        private readonly IDensityFunction coordinate;
++        private readonly CubicSplinePoint[] points;
++
++        public CubicSplineFunction(IDensityFunction coordinate, CubicSplinePoint[] points)
++        {
++            this.coordinate = coordinate ?? throw new ArgumentNullException(nameof(coordinate));
++            if (points == null || points.Length == 0) throw new ArgumentException("Spline needs at least one point.");
++            for (int i = 1; i < points.Length; i++)
++                if (points[i].Location <= points[i - 1].Location)
++                    throw new ArgumentException("Spline locations must be strictly ascending.");
++            this.points = (CubicSplinePoint[])points.Clone();
++        }
++
++        public double Sample(in DensityContext context)
++        {
++            double input = coordinate.Sample(context);
++            int last = points.Length - 1;
++            if (input < points[0].Location)
++                return LinearExtend(points[0], input);
++            if (input >= points[last].Location)
++                return LinearExtend(points[last], input);
++
++            int index = FindSegment(input);
++            CubicSplinePoint left = points[index];
++            CubicSplinePoint right = points[index + 1];
++            double length = right.Location - left.Location;
++            double t = (input - left.Location) / length;
++            double delta = right.Value - left.Value;
++            double p = left.Derivative * length - delta;
++            double q = delta - right.Derivative * length;
++            return Lerp(left.Value, right.Value, t)
++                + t * (1.0 - t) * Lerp(p, q, t);
++        }
++
++        private int FindSegment(double input)
++        {
++            int low = 0;
++            int high = points.Length - 1;
++            while (low + 1 < high)
++            {
++                int middle = (low + high) / 2;
++                if (input < points[middle].Location) high = middle;
++                else low = middle;
++            }
++            return low;
++        }
++
++        private static double LinearExtend(CubicSplinePoint point, double input)
++            => point.Value + point.Derivative * (input - point.Location);
++
++        private static double Lerp(double a, double b, double t)
++            => a + (b - a) * t;
++    }
++}
+diff --git a/Assets/Scripts/WorldGen/Density/DensityFunctions.cs b/Assets/Scripts/WorldGen/Density/DensityFunctions.cs
+new file mode 100644
+index 0000000..b465003
+--- /dev/null
++++ b/Assets/Scripts/WorldGen/Density/DensityFunctions.cs
+@@ -0,0 +1,32 @@
++using System;
++
++namespace ProceduralGeneration.WorldGen.Density
++{
++public static class DensityFunctions
++    {
++        public static IDensityFunction Constant(double value) => new ConstantFunction(value);
++        public static IDensityFunction Noise(int seed, double scale = 0.01, double amplitude = 1.0)
++            => new ValueNoiseFunction(seed, scale, amplitude);
++        public static IDensityFunction Add(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x + y);
++        public static IDensityFunction Subtract(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x - y);
++        public static IDensityFunction Multiply(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, (x, y) => x * y);
++        public static IDensityFunction Multiply(IDensityFunction a, double b) => Multiply(a, Constant(b));
++        public static IDensityFunction Min(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, Math.Min);
++        public static IDensityFunction Max(IDensityFunction a, IDensityFunction b) => new BinaryFunction(a, b, Math.Max);
++        public static IDensityFunction Abs(IDensityFunction input) => new UnaryFunction(input, Math.Abs);
++        public static IDensityFunction Clamp(IDensityFunction input, double min, double max)
++            => new ClampFunction(input, min, max);
++        public static IDensityFunction RangeChoice(
++            IDensityFunction input, double minInclusive, double maxExclusive,
++            IDensityFunction inRange, IDensityFunction outOfRange)
++            => new RangeChoiceFunction(input, minInclusive, maxExclusive, inRange, outOfRange);
++        public static IDensityFunction YClampedGradient(
++            int fromY, int toY, double fromValue, double toValue)
++            => new YGradientFunction(fromY, toY, fromValue, toValue);
++        public static IDensityFunction Spline(IDensityFunction coordinate, params CubicSplinePoint[] points)
++            => new CubicSplineFunction(coordinate, points);
++
++        /// <summary>以一次采样结果为常量的简单缓存，适合固定坐标的重复读取。</summary>
++        public static IDensityFunction CacheOnce(IDensityFunction input) => new CacheOnceFunction(input);
++    }
++}
+diff --git a/Assets/Scripts/WorldGen/Density/WorldFields.cs b/Assets/Scripts/WorldGen/Density/WorldFields.cs
+new file mode 100644
+index 0000000..a33df53
+--- /dev/null
++++ b/Assets/Scripts/WorldGen/Density/WorldFields.cs
+@@ -0,0 +1,107 @@
++using System;
++
++namespace ProceduralGeneration.WorldGen.Density
++{
++public sealed class WorldFields
++    {
++        public readonly IDensityFunction Temperature;
++        public readonly IDensityFunction Vegetation;
++        public readonly IDensityFunction Continents;
++        public readonly IDensityFunction Erosion;
++        public readonly IDensityFunction Depth;
++        public readonly IDensityFunction Ridges;
++        public readonly IDensityFunction Offset;
++        public readonly IDensityFunction Factor;
++        public readonly IDensityFunction Jaggedness;
++        public readonly IDensityFunction FinalDensity;
++        public readonly IDensityFunction FluidFloodedness;
++        public readonly IDensityFunction FluidSpread;
++        public readonly IDensityFunction Lava;
++        public readonly IDensityFunction VeinToggle;
++        public readonly IDensityFunction VeinRidged;
++        public readonly IDensityFunction VeinGap;
++
++        public WorldFields(
++            IDensityFunction temperature,
++            IDensityFunction vegetation,
++            IDensityFunction continents,
++            IDensityFunction erosion,
++            IDensityFunction depth,
++            IDensityFunction ridges,
++            IDensityFunction finalDensity,
++            IDensityFunction fluidFloodedness = null,
++            IDensityFunction fluidSpread = null,
++            IDensityFunction lava = null,
++            IDensityFunction veinToggle = null,
++            IDensityFunction veinRidged = null,
++            IDensityFunction veinGap = null,
++            IDensityFunction offset = null,
++            IDensityFunction factor = null,
++            IDensityFunction jaggedness = null)
++        {
++            Temperature = temperature ?? throw new ArgumentNullException(nameof(temperature));
++            Vegetation = vegetation ?? throw new ArgumentNullException(nameof(vegetation));
++            Continents = continents ?? throw new ArgumentNullException(nameof(continents));
++            Erosion = erosion ?? throw new ArgumentNullException(nameof(erosion));
++            Depth = depth ?? throw new ArgumentNullException(nameof(depth));
++            Ridges = ridges ?? throw new ArgumentNullException(nameof(ridges));
++            Offset = offset ?? DensityFunctions.Constant(0);
++            Factor = factor ?? DensityFunctions.Constant(1);
++            Jaggedness = jaggedness ?? DensityFunctions.Constant(0);
++            FinalDensity = finalDensity ?? throw new ArgumentNullException(nameof(finalDensity));
++            FluidFloodedness = fluidFloodedness ?? DensityFunctions.Constant(0);
++            FluidSpread = fluidSpread ?? DensityFunctions.Constant(0);
++            Lava = lava ?? DensityFunctions.Constant(0);
++            VeinToggle = veinToggle ?? DensityFunctions.Constant(0);
++            VeinRidged = veinRidged ?? DensityFunctions.Constant(0);
++            VeinGap = veinGap ?? DensityFunctions.Constant(0);
++        }
++
++        /// <summary>用一个种子生成可运行的学习版世界场集合。</summary>
++        public static WorldFields CreateLearningDefaults(int seed)
++        {
++            IDensityFunction continents = DensityFunctions.Noise(seed + 1, 0.0025, 1.0);
++            IDensityFunction erosion = DensityFunctions.Noise(seed + 2, 0.008, 1.0);
++            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise(seed + 3, 0.012, 1.0));
++            IDensityFunction offset = DensityFunctions.Spline(continents,
++                new CubicSplinePoint(-1.0, -0.65, 0.15),
++                new CubicSplinePoint(-0.35, -0.25, 0.80),
++                new CubicSplinePoint(0.10, 0.05, 0.35),
++                new CubicSplinePoint(0.55, 0.50, 0.55),
++                new CubicSplinePoint(1.0, 0.25, -0.30));
++            IDensityFunction factor = DensityFunctions.Spline(erosion,
++                new CubicSplinePoint(-1.0, 1.35, 0.0),
++                new CubicSplinePoint(-0.30, 1.10, -0.20),
++                new CubicSplinePoint(0.25, 0.65, -0.35),
++                new CubicSplinePoint(1.0, 0.30, 0.0));
++            IDensityFunction jaggedness = DensityFunctions.Spline(ridges,
++                new CubicSplinePoint(0.0, 0.02, 0.0),
++                new CubicSplinePoint(0.25, 0.12, 0.40),
++                new CubicSplinePoint(0.60, 0.55, 0.80),
++                new CubicSplinePoint(1.0, 1.00, 0.20));
++            IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 1.5, -1.5);
++            IDensityFunction depth = DensityFunctions.Add(vertical, offset);
++            IDensityFunction baseTerrain = DensityFunctions.Multiply(depth, factor);
++            IDensityFunction base3DNoise = DensityFunctions.Multiply(
++                DensityFunctions.Noise(seed + 4, 0.02, 1.0), 0.35);
++            IDensityFunction finalDensity = DensityFunctions.Add(
++                DensityFunctions.Add(baseTerrain, jaggedness), base3DNoise);
++
++            return new WorldFields(
++                DensityFunctions.Noise(seed + 10, 0.004, 1),
++                DensityFunctions.Noise(seed + 11, 0.004, 1),
++                continents,
++                erosion,
++                DensityFunctions.Noise(seed + 5, 0.006, 1),
++                ridges,
++                finalDensity,
++                DensityFunctions.Noise(seed + 20, 0.02, 1),
++                DensityFunctions.Noise(seed + 21, 0.01, 1),
++                DensityFunctions.Noise(seed + 22, 0.02, 1),
++                DensityFunctions.Noise(seed + 30, 0.04, 1),
++                DensityFunctions.Noise(seed + 31, 0.04, 1),
++                DensityFunctions.Noise(seed + 32, 0.04, 1),
++                offset, factor, jaggedness);
++        }
++    }
++}

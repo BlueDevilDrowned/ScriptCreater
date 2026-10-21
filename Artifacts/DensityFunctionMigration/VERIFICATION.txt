@@ -12,3 +12,5 @@ solid=True
 MODIFIED exit: 0
 MODIFIED behavior: same API and deterministic output, compiled from separate files.
 ROLLBACK behavior: prior single-file source snapshot remains recoverable through the patch artifact; no runtime behavior changes.
+
+Runtime voxel visualization supplement: D:\UnityHub\Project\程序化生成\Artifacts\VoxelWorldVisualization\VERIFICATION.txt

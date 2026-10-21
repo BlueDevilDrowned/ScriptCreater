@@ -1,0 +1,32 @@
+TARGET: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Density
+MODIFIED_FILE: CubicSplinePoint.cs, CubicSplineFunction.cs, DensityFunctions.cs, WorldFields.cs
+DIFF_FILE: D:\UnityHub\Project\程序化生成\Artifacts\SplineDensityMigration\SplineDensity.patch
+ROLLBACK.sh: D:\UnityHub\Project\程序化生成\Artifacts\SplineDensityMigration\ROLLBACK.sh
+
+Standalone smoke command: dotnet run --project Temp/DensitySmoke/DensitySmoke.csproj --no-restore
+Observed stdout:
+splineEndpoint=3
+final=0.8697945912911395
+offset=0.5137372854697418
+factor=0.9295750042099195
+jaggedness=0.06568354574830043
+Exit: 0
+
+Unity command: Unity.exe -batchmode -nographics -projectPath Temp/VoxelVerificationProject -executeMethod VoxelVerification.Run
+Unity exit: 0
+PASS: default solids and air
+PASS: job mesh vertices
+DEFAULT solid=1862232 vertices=417704 faces=104426
+PASS: runtime size
+PASS: runtime seed and origin
+PASS: runtime voxel size and chunk mesh
+PASS: runtime controls
+VOXEL_JOB_VERIFICATION_SUCCESS
+
+SHA256:
+{
+  "Assets/Scripts/WorldGen/Density/CubicSplinePoint.cs": "e98651a262ed026fdd6dbb1aa8c8edd6f0501b9ec53822e81635697c45c2e104",
+  "Assets/Scripts/WorldGen/Density/CubicSplineFunction.cs": "26329b7931b0d556aea91aff670b11643eb54ade26e565f56fd5ceeaf936458e",
+  "Assets/Scripts/WorldGen/Density/DensityFunctions.cs": "5abcbe33b18c5fc904af1439bd0c5efab79523a5dacb6d48aa7c0b38b8585a47",
+  "Assets/Scripts/WorldGen/Density/WorldFields.cs": "f7500b280d3b6bab3fdfe763696b1b64d2cf50b4b7fc5bb39aeaf942f12eb1b4"
+}

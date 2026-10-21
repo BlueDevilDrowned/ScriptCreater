@@ -1,0 +1,3525 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.SmartStringsModule</name>
+    </assembly>
+    <member name="T:Unity.SmartStrings.AdditionalFormatData">
+      <summary>
+        <para>
+ Provides additional information to the smart formatter for sources and formatters to use during formatting.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.AdditionalFormatData.LocalVariables">
+      <summary>
+        <para>
+ Storage for local variables that may be used during formatting by the Unity.SmartStrings.Extensions.PersistentVariablesSource.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.AdditionalFormatData.VariableTriggers">
+      <summary>
+        <para>
+ Any Unity.SmartStrings.PersistentVariables.IVariableValueChanged that may have been used during formatting.
+ This can then be used to subscribe to update events in order to trigger a regeneration of the string.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Extensions.FormatterBase">
+      <summary>
+        <para>
+ Base class that implements common Unity.SmartStrings.Core.Extensions.IFormatter functionality.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.FormatterBase.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of the formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.FormatterBase.DefaultName">
+      <summary>
+        <para>
+ Default name to use when Unity.SmartStrings.Core.Extensions.FormatterBase.Name is null.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.IFormatter">
+      <summary>
+        <para> Converts an object to a string. </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormatter.CanAutoDetect">
+      <summary>
+        <para>
+ Any extensions marked as Unity.SmartStrings.Core.Extensions.IFormatter.CanAutoDetect will be called implicitly
+ (when no formatter name is specified in the input format string).
+ For example, "{0:N2}" will implicitly call extensions marked as Unity.SmartStrings.Core.Extensions.IFormatter.CanAutoDetect.
+ Implicit formatter invocations should not throw exceptions.
+ With Unity.SmartStrings.Core.Extensions.IFormatter.CanAutoDetect == false, the formatter can only be
+ called by its name in the input format string.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormatter.Name">
+      <summary>
+        <para>
+ An extension can be explicitly called by using its name.
+ For example, "{0:list:N2}" will explicitly call the "list" extension.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IFormatter.TryEvaluateFormat(Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes the current value to the output using the specified format.
+ </para>
+      </summary>
+      <param name="formattingInfo">Formatting details, including the current value and the target output.</param>
+      <returns>
+        <para>true if this formatter wrote the value; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.IFormatterLiteralExtractor">
+      <summary>
+        <para>
+ Extracts the literal characters from a Format string
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IFormatterLiteralExtractor.WriteAllLiterals(Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Ignores the format arguments and writes every possible literal value.
+ This is used to extract all possible values so that we can determine the distinct characters for font generation etc.
+ </para>
+      </summary>
+      <param name="formattingInfo">Formatting details, including the format and the target output.</param>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.IFormattingExtensionsToggle">
+      <summary>
+        <para>
+ Lets a source stop formatter extensions from running for the placeholder it resolved.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingExtensionsToggle.DisableFormattingExtensions">
+      <summary>
+        <para>
+ Gets or sets whether formatter extensions are skipped for the current placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.IFormattingInfo">
+      <summary>
+        <para>
+ Contains all necessary info for formatting a value
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingInfo.Alignment">
+      <summary>
+        <para>
+ Alignment inserts spaces into the output to ensure consistent length.
+ Positive numbers insert spaces to the left, to right-align the text.
+ Negative numbers insert spaces to the right, to left-align the text.
+ This should only work with the Default Formatter, but is optional with custom formatters.
+ This is primarily for compatibility with String.Format.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingInfo.CurrentValue">
+      <summary>
+        <para>
+ The current value that is to be formatted.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingInfo.Format">
+      <summary>
+        <para>
+ This format specifies how to output the Unity.SmartStrings.Core.Extensions.IFormattingInfo.CurrentValue.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IFormattingInfo.FormatAsChild(Unity.SmartStrings.Core.Parsing.Format,System.Object)">
+      <summary>
+        <para>
+ Creates a child Unity.SmartStrings.Core.Extensions.IFormattingInfo from the current Unity.SmartStrings.Core.Extensions.IFormattingInfo instance
+ and invokes formatting with Unity.SmartStrings.SmartFormatter with the child as parameter.
+ </para>
+      </summary>
+      <param name="format"></param>
+      <param name="value"></param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingInfo.FormatDetails">
+      <summary>
+        <para>
+ Infrequently used details, often used for debugging
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingInfo.FormatterOptions">
+      <summary>
+        <para>
+ When a named formatter is used, this will hold the options.
+ For example, in "{0:choose(1,2,3):one|two|three}", FormatterOptions is "1,2,3".
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IFormattingInfo.FormattingException(System.String,Unity.SmartStrings.Core.Parsing.FormatItem,System.Int32)">
+      <summary>
+        <para>
+ Creates a Unity.SmartStrings.Core.Extensions.IFormattingInfo.FormattingException associated with the Unity.SmartStrings.Core.Extensions.IFormattingInfo.Format.
+ </para>
+      </summary>
+      <param name="issue"></param>
+      <param name="problemItem"></param>
+      <param name="startIndex"></param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.IFormattingInfo.Placeholder">
+      <summary>
+        <para>
+ Contains all the details about the current placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IFormattingInfo.Write(System.String)">
+      <summary>
+        <para>
+ Writes a string to the output.
+ </para>
+      </summary>
+      <param name="text"></param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IFormattingInfo.Write(System.ReadOnlySpan`1&lt;System.Char&gt;)">
+      <summary>
+        <para>
+ Writes a ReadOnlySpan_1 text to the output.
+ </para>
+      </summary>
+      <param name="text"></param>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.IInitializer">
+      <summary>
+        <para>
+ Initializes an Unity.SmartStrings.Core.Extensions.ISource or Unity.SmartStrings.Core.Extensions.IFormatter.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.IInitializer.Initialize(Unity.SmartStrings.SmartFormatter)">
+      <summary>
+        <para>
+ Initializes an Unity.SmartStrings.Core.Extensions.ISource or Unity.SmartStrings.Core.Extensions.IFormatter.
+ The method gets called when adding an extension to a Unity.SmartStrings.SmartFormatter instance.
+ </para>
+      </summary>
+      <param name="smartFormatter">Formatter that the extension is being added to.</param>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.ISelectorInfo">
+      <summary>
+        <para>
+ Contains all the necessary information for evaluating a selector.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.CurrentValue">
+      <summary>
+        <para>
+ The current value to evaluate.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.FormatDetails">
+      <summary>
+        <para>
+ Infrequently used details, often used for debugging
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.Placeholder">
+      <summary>
+        <para>
+ Contains all the details about the current placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.Result">
+      <summary>
+        <para>
+ The result of evaluating the selector.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.SelectorIndex">
+      <summary>
+        <para>
+ The index of the selector in a multi-part selector.
+ Example: {Person.Birthday.Year} has 3 selectors,
+ and Year has a SelectorIndex of 2.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.SelectorOperator">
+      <summary>
+        <para>
+ The operator that came before the selector; typically "."
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Extensions.ISelectorInfo.SelectorText">
+      <summary>
+        <para>
+ The selector to evaluate
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Extensions.ISource">
+      <summary>
+        <para>
+ Evaluates a selector.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.ISource.TryEvaluateSelector(Unity.SmartStrings.Core.Extensions.ISelectorInfo)">
+      <summary>
+        <para>
+ Evaluates the Unity.SmartStrings.Core.Parsing.Selector based on the Unity.SmartStrings.Core.Extensions.ISelectorInfo.CurrentValue.
+ </para>
+      </summary>
+      <param name="selectorInfo">Selector to evaluate, along with its current value and result.</param>
+      <returns>
+        <para>true if the Unity.SmartStrings.Core.Parsing.Selector was evaluated and Unity.SmartStrings.Core.Extensions.ISelectorInfo.Result was set; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Extensions.Source">
+      <summary>
+        <para>
+ The base class for Unity.SmartStrings.Core.Extensions.ISource extension classes.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Extensions.Source.TrySetResultForNullableOperator(Unity.SmartStrings.Core.Extensions.ISelectorInfo)">
+      <summary>
+        <para>
+ If any of the Unity.SmartStrings.Core.Parsing.Placeholder's Unity.SmartStrings.Core.Parsing.Placeholder.Selectors has
+ nullable ? as their first operator, and Unity.SmartStrings.Core.Extensions.ISelectorInfo.CurrentValue
+ is null, Unity.SmartStrings.Core.Extensions.ISelectorInfo.Result will be set to null.
+ </para>
+      </summary>
+      <param name="selectorInfo">Selector to evaluate for a nullable operator.</param>
+      <returns>
+        <para>true, if any of the Unity.SmartStrings.Core.Parsing.Placeholder's
+ Unity.SmartStrings.Core.Parsing.Placeholder.Selectors has  nullable ? as their first
+ operator, and Unity.SmartStrings.Core.Extensions.ISelectorInfo.CurrentValue is null.
+ </para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Formatting.FormatDetails">
+      <summary>
+        <para>
+ Contains extra information about the item currently being formatted.
+ These objects are not often used, so they are all wrapped up here.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.Formatter">
+      <summary>
+        <para>
+ The original formatter responsible for formatting this item.
+ It can be used for evaluating nested formats.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.FormattingException">
+      <summary>
+        <para>
+ If ErrorAction is set to OutputErrorsInResult, this will
+ contain the exception that caused the formatting error.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormatDetails.Initialize(Unity.SmartStrings.SmartFormatter,Unity.SmartStrings.Core.Parsing.Format,System.Collections.Generic.IList`1&lt;System.Object&gt;,System.IFormatProvider,Unity.SmartStrings.Core.Output.IOutput)">
+      <summary>
+        <para>
+ Initializes the Unity.SmartStrings.Core.Formatting.FormatDetails instance.
+ </para>
+      </summary>
+      <param name="formatter">Formatter responsible for the formatting operation.</param>
+      <param name="originalFormat">Parsed format produced by the parser.</param>
+      <param name="originalArgs">Arguments referenced by the format string.</param>
+      <param name="provider">Format provider used for culture-specific formatting.</param>
+      <param name="output">Destination that receives the formatted result.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Formatting.FormatDetails instance.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.OriginalArgs">
+      <summary>
+        <para>
+ The original set of arguments passed to the format method.
+ These provide global-access to the original arguments.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.OriginalFormat">
+      <summary>
+        <para>
+ The original parsed Unity.SmartStrings.Core.Parsing.Format produced by the Unity.SmartStrings.Core.Parsing.Parser.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.Output">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Output.IOutput where the formatting result is written.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.Provider">
+      <summary>
+        <para>
+ The IFormatProvider that can be used to determine how to
+ format items such as numbers, dates, and anything else that
+ might be culture-specific.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormatDetails.Settings">
+      <summary>
+        <para>
+ Contains case-sensitivity and other settings.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Formatting.FormattingException">
+      <summary>
+        <para>
+ An exception caused while attempting to output the format.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingException.#ctor(Unity.SmartStrings.Core.Parsing.FormatItem,System.Exception,System.Int32)">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Formatting.FormattingException.
+ </para>
+      </summary>
+      <param name="errorItem">The Unity.SmartStrings.Core.Parsing.FormatItem which caused the Exception.</param>
+      <param name="formatException">The Exception that was caused by the Unity.SmartStrings.Core.Parsing.FormatItem.</param>
+      <param name="index">The index inside the format string, where the error occurred.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingException.#ctor(Unity.SmartStrings.Core.Parsing.FormatItem,System.String,System.Int32)">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Formatting.FormattingException.
+ </para>
+      </summary>
+      <param name="errorItem">The Unity.SmartStrings.Core.Parsing.FormatItem which caused the Exception.</param>
+      <param name="issue">The description of the error.</param>
+      <param name="index">The index inside the format string, where the error occurred.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingException.#ctor">
+      <summary>
+        <para></para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingException.ErrorItem">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Parsing.FormatItem that caused the Exception.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingException.Format">
+      <summary>
+        <para>
+ The base format string of the Unity.SmartStrings.Core.Parsing.FormatItem that caused the Exception.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingException.Index">
+      <summary>
+        <para>
+ The index inside the format string, where the error occurred.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingException.Issue">
+      <summary>
+        <para>
+ Description of the formatting error.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingException.Message">
+      <summary>
+        <para>
+ Error message that indicates the position within the format string where the error occurred.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Formatting.FormattingInfo">
+      <summary>
+        <para>
+ The class contains the fields and methods which are necessary for formatting.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.Alignment">
+      <summary>
+        <para>
+ The alignment of the current Unity.SmartStrings.Core.Parsing.Placeholder, or, if that is
+ null, the alignment inherited from the nearest parent
+ Unity.SmartStrings.Core.Extensions.IFormattingInfo whose alignment is not zero.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.CreateChild(Unity.SmartStrings.Core.Parsing.Placeholder)">
+      <summary>
+        <para>
+ Creates a child Unity.SmartStrings.Core.Extensions.IFormattingInfo from the current Unity.SmartStrings.Core.Extensions.IFormattingInfo instance for a Unity.SmartStrings.Core.Formatting.FormattingInfo.Placeholder.
+ </para>
+      </summary>
+      <param name="placeholder">The Unity.SmartStrings.Core.Formatting.FormattingInfo.Placeholder used for creating a child Unity.SmartStrings.Core.Extensions.IFormattingInfo.</param>
+      <returns>
+        <para>The child Unity.SmartStrings.Core.Extensions.IFormattingInfo.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.CurrentValue">
+      <summary>
+        <para>
+ The current value being formatted.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.Format">
+      <summary>
+        <para>
+ The parsed format that specifies how to output the current value.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.FormatAsChild(Unity.SmartStrings.Core.Parsing.Format,System.Object)">
+      <summary>
+        <para>
+ Creates a child Unity.SmartStrings.Core.Extensions.IFormattingInfo from the current Unity.SmartStrings.Core.Extensions.IFormattingInfo instance
+ and invokes formatting with Unity.SmartStrings.SmartFormatter and with the child as parameter.
+ </para>
+      </summary>
+      <param name="format">The Unity.SmartStrings.Core.Formatting.FormattingInfo.Format to use.</param>
+      <param name="value">The value for the item in the format.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.FormatDetails">
+      <summary>
+        <para>
+ Extra details shared across the current formatting operation.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.FormatterOptions">
+      <summary>
+        <para>
+ The formatter options of the current Unity.SmartStrings.Core.Parsing.Placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.FormattingException(System.String,Unity.SmartStrings.Core.Parsing.FormatItem,System.Int32)">
+      <summary>
+        <para>
+ Creates a new Unity.SmartStrings.Core.Formatting.FormattingInfo.FormattingException.
+ </para>
+      </summary>
+      <param name="issue">The text which goes to the Exception.Message.</param>
+      <param name="problemItem">The Unity.SmartStrings.Core.Parsing.FormatItem which caused the problem.</param>
+      <param name="startIndex">The start index in the input format string.</param>
+      <returns>
+        <para>A new Unity.SmartStrings.Core.Formatting.FormattingInfo.FormattingException that describes the formatting issue.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.Initialize(Unity.SmartStrings.Core.Formatting.FormatDetails,Unity.SmartStrings.Core.Parsing.Format,System.Object)">
+      <summary>
+        <para>
+ Initializes this formatting info with the details required for formatting.
+ </para>
+      </summary>
+      <param name="formatDetails">Shared details for the current formatting operation.</param>
+      <param name="format">Parsed format to evaluate.</param>
+      <param name="currentValue">Value to format.</param>
+      <returns>
+        <para>This same instance, initialized and ready for formatting.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.Initialize(Unity.SmartStrings.Core.Formatting.FormattingInfo,Unity.SmartStrings.Core.Formatting.FormatDetails,Unity.SmartStrings.Core.Parsing.Format,System.Object)">
+      <summary>
+        <para>
+ Initializes this formatting info as a child of the specified parent.
+ </para>
+      </summary>
+      <param name="parent">Parent formatting info to inherit alignment from.</param>
+      <param name="formatDetails">Shared details for the current formatting operation.</param>
+      <param name="format">Parsed format to evaluate.</param>
+      <param name="currentValue">Value to format.</param>
+      <returns>
+        <para>This same instance, initialized and ready for formatting.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.Initialize(Unity.SmartStrings.Core.Formatting.FormattingInfo,Unity.SmartStrings.Core.Formatting.FormatDetails,Unity.SmartStrings.Core.Parsing.Placeholder,System.Object)">
+      <summary>
+        <para>
+ Initializes this formatting info from the specified placeholder.
+ </para>
+      </summary>
+      <param name="parent">Parent formatting info to inherit alignment from.</param>
+      <param name="formatDetails">Shared details for the current formatting operation.</param>
+      <param name="placeholder">Placeholder that supplies the format and alignment.</param>
+      <param name="currentValue">Value to format.</param>
+      <returns>
+        <para>This same instance, initialized and ready for formatting.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.Parent">
+      <summary>
+        <para>
+ The parent Unity.SmartStrings.Core.Formatting.FormattingInfo that created this instance.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.Placeholder">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Parsing.Placeholder currently being formatted.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.Result">
+      <summary>
+        <para>
+ The result after an Unity.SmartStrings.Core.Extensions.ISource has assigned a value.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.ReturnToPool">
+      <summary>
+        <para>
+ Returns this instance and its Unity.SmartStrings.Core.Formatting.FormattingInfo children to the object pool.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.FormattingInfoPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.Selector">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Parsing.Selector currently being evaluated.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.SelectorIndex">
+      <summary>
+        <para>
+ The index of the current Unity.SmartStrings.Core.Parsing.Selector in the selector list.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.SelectorOperator">
+      <summary>
+        <para>
+ The operator string of the current Unity.SmartStrings.Core.Parsing.Selector, for example a comma or dot.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Formatting.FormattingInfo.SelectorText">
+      <summary>
+        <para>
+ The raw text of the current Unity.SmartStrings.Core.Parsing.Selector.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.Write(System.String)">
+      <summary>
+        <para>
+ Writes the string parameter to the Unity.SmartStrings.Core.Output.IOutput
+ and takes care of alignment.
+ </para>
+      </summary>
+      <param name="text">The string to write to the Unity.SmartStrings.Core.Output.IOutput</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Formatting.FormattingInfo.Write(System.ReadOnlySpan`1&lt;System.Char&gt;)">
+      <summary>
+        <para>
+ Writes the ReadOnlySpan_1 text parameter to the Unity.SmartStrings.Core.Output.IOutput
+ and takes care of alignment.
+ </para>
+      </summary>
+      <param name="text">The string to write to the Unity.SmartStrings.Core.Output.IOutput</param>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Output.IOutput">
+      <summary>
+        <para>
+ Represents a destination for formatted text.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.IOutput.Write(System.String,Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes a string to the output.
+ </para>
+      </summary>
+      <param name="text">Text to write.</param>
+      <param name="formattingInfo">Formatting context for the write operation.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.IOutput.Write(System.ReadOnlySpan`1&lt;System.Char&gt;,Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes a ReadOnlySpan_1 of characters to the output.
+ </para>
+      </summary>
+      <param name="text">Characters to write.</param>
+      <param name="formattingInfo">Formatting context for the write operation.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.IOutput.Write(System.Char,System.Int32,Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes a char repeated count times to the output.
+ </para>
+      </summary>
+      <param name="value">Character to write.</param>
+      <param name="count">Number of times to write value.</param>
+      <param name="formattingInfo">Formatting context for the write operation.</param>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Output.StringOutput">
+      <summary>
+        <para>
+ Wraps a Text.StringBuilder so it can be used for output.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.Clear">
+      <summary>
+        <para>
+ Clears the Text.StringBuilder used to create the output.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.StringOutputPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Output.StringOutput.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.#ctor(System.Int32)">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Output.StringOutput with the given capacity.
+ </para>
+      </summary>
+      <param name="capacity">The estimated capacity for the result string. Essential for performance and GC pressure.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Output.StringOutput using the given Text.StringBuilder.
+ </para>
+      </summary>
+      <param name="output">Existing Text.StringBuilder to append output to.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.ToString">
+      <summary>
+        <para>
+ Returns the results of the Text.StringBuilder.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.Write(System.String,Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes text to the Text.StringBuilder object.
+ </para>
+      </summary>
+      <param name="text">Text to write.</param>
+      <param name="formattingInfo">This parameter from Unity.SmartStrings.Core.Output.IOutput will not be used here.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.Write(System.ReadOnlySpan`1&lt;System.Char&gt;,Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes text to the Text.StringBuilder object.
+ </para>
+      </summary>
+      <param name="text">Characters to write.</param>
+      <param name="formattingInfo">This parameter from Unity.SmartStrings.Core.Output.IOutput will not be used here.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.StringOutput.Write(System.Char,System.Int32,Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes a character repeated count times to the Text.StringBuilder object.
+ </para>
+      </summary>
+      <param name="value">Character to write.</param>
+      <param name="count">Number of times to write value.</param>
+      <param name="formattingInfo">This parameter from Unity.SmartStrings.Core.Output.IOutput will not be used here.</param>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Output.TextWriterOutput">
+      <summary>
+        <para>
+ Wraps a IO.TextWriter so that it can be used for output.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Output.TextWriterOutput.#ctor(System.IO.TextWriter)">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Output.TextWriterOutput.
+ </para>
+      </summary>
+      <param name="output">IO.TextWriter to use for output.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Output.TextWriterOutput.Output">
+      <summary>
+        <para>IO.TextWriter that receives the formatted text.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.Format">
+      <summary>
+        <para>
+ Represents a parsed format string.
+ Contains a list of Unity.SmartStrings.Core.Parsing.FormatItems,
+ including Unity.SmartStrings.Core.Parsing.LiteralTexts and Unity.SmartStrings.Core.Parsing.Placeholders.
+ Note: Unity.SmartStrings.Core.Parsing.Format is IDisposable.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Format.AdditionalData">
+      <summary>
+        <para>
+ Used to pass and return additional information during formatting.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Dispose">
+      <summary>
+        <para>
+ Returns this instance to the object pool, which also clears all objects it owns.
+ Do not use this instance after calling Unity.SmartStrings.Core.Parsing.Format.Dispose</para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.GetLiteralText">
+      <summary>
+        <para>
+ Retrieves the literal text contained in this format.
+ Excludes escaped chars, and does not include the text
+ of placeholders.
+ </para>
+      </summary>
+      <returns>
+        <para>The literal text of this format, excluding escaped characters and placeholder text.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Format.HasNested">
+      <summary>
+        <para>
+ Returns true, if the Unity.SmartStrings.Core.Parsing.Format is nested.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.IndexOf(System.Char)">
+      <summary>
+        <para>
+ Searches the literal text for the search char.
+ Does not search in nested placeholders.
+ </para>
+      </summary>
+      <param name="search">Character to locate.</param>
+      <returns>
+        <para>The zero-based index of the first occurrence of the character in the literal text, or -1 if the character is not found.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.IndexOf(System.Char,System.Int32)">
+      <summary>
+        <para>
+ Searches the literal text for the search char.
+ Does not search in nested placeholders.
+ </para>
+      </summary>
+      <param name="search">Character to locate.</param>
+      <param name="start">Index to start the search from.</param>
+      <returns>
+        <para>The zero-based index of the first occurrence of the character in the literal text, or -1 if the character is not found.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,System.String)">
+      <summary>
+        <para>
+ Initializes the Unity.SmartStrings.Core.Parsing.Format instance.
+ </para>
+      </summary>
+      <param name="smartSettings">Formatter and parser settings.</param>
+      <param name="baseString">Base format string.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.Format instance.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,Unity.SmartStrings.Core.Parsing.Placeholder,System.Int32)">
+      <summary>
+        <para>
+ Initializes the instance of Unity.SmartStrings.Core.Parsing.Format.
+ </para>
+      </summary>
+      <param name="smartSettings">Formatter and parser settings.</param>
+      <param name="parent">Parent Unity.SmartStrings.Core.Parsing.Placeholder.</param>
+      <param name="startIndex">Start index within the format base string.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.Format instance.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,System.String,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Initializes the instance of Unity.SmartStrings.Core.Parsing.Format.
+ </para>
+      </summary>
+      <param name="smartSettings">Formatter and parser settings.</param>
+      <param name="baseString">Base format string.</param>
+      <param name="startIndex">Start index within the format base string.</param>
+      <param name="endIndex">End index within the format base string.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.Format instance.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,System.String,System.Int32,System.Int32,System.Boolean)">
+      <summary>
+        <para>
+ Initializes the instance of Unity.SmartStrings.Core.Parsing.Format.
+ </para>
+      </summary>
+      <param name="smartSettings">Formatter and parser settings.</param>
+      <param name="baseString">Base format string.</param>
+      <param name="startIndex">Start index within the format base string.</param>
+      <param name="endIndex">End index within the format base string.</param>
+      <param name="hasNested">true if the nested formats exist.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.Format instance.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Format.Items">
+      <summary>
+        <para>
+ Gets the Collections.Generic.List_1 of Unity.SmartStrings.Core.Parsing.FormatItems.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Format.ParentPlaceholder">
+      <summary>
+        <para>
+ Gets the parent Unity.SmartStrings.Core.Parsing.Placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.ReturnToPool">
+      <summary>
+        <para>
+ Return items we own to the object pools.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.FormatPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Split(System.Char)">
+      <summary>
+        <para>
+ Splits the Unity.SmartStrings.Core.Parsing.Format items by the given search character.
+ </para>
+      </summary>
+      <param name="search">Character used to split.</param>
+      <returns>
+        <para>The list of Unity.SmartStrings.Core.Parsing.Format segments produced by splitting on the character.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Split(System.Char,System.Int32)">
+      <summary>
+        <para>
+ Splits the Unity.SmartStrings.Core.Parsing.Format items by the given search character.
+ </para>
+      </summary>
+      <param name="search">Character used to split.</param>
+      <param name="maxCount">Maximum number of segments to return.</param>
+      <returns>
+        <para>The list of Unity.SmartStrings.Core.Parsing.Format segments produced by splitting on the character.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Substring(System.Int32)">
+      <summary>
+        <para>
+ Gets a substring of the current Unity.SmartStrings.Core.Parsing.Format.
+ </para>
+      </summary>
+      <param name="start">Start index of the substring.</param>
+      <returns>
+        <para>The substring of the current Unity.SmartStrings.Core.Parsing.Format.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.Substring(System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Gets a substring of the current Unity.SmartStrings.Core.Parsing.Format.
+ </para>
+      </summary>
+      <param name="start">Start index of the substring.</param>
+      <param name="length">Number of characters in the substring.</param>
+      <returns>
+        <para>The substring of the current Unity.SmartStrings.Core.Parsing.Format.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Format.ToString">
+      <summary>
+        <para>
+ Reconstructs the format string, but doesn't include escaped chars
+ and tries to reconstruct placeholders.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.FormatItem">
+      <summary>
+        <para>
+ Base class that represents a substring
+ of text from a parsed format string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.FormatItem.AsSpan">
+      <summary>
+        <para>
+ Gets the ReadOnlySpan_1 representation of this Unity.SmartStrings.Core.Parsing.FormatItem.
+ </para>
+      </summary>
+      <returns>
+        <para>The ReadOnlySpan_1 representation of this Unity.SmartStrings.Core.Parsing.FormatItem</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.BaseString">
+      <summary>
+        <para>
+ Gets the base format string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.FormatItem.Clear">
+      <summary>
+        <para>
+ Clears the Unity.SmartStrings.Core.Parsing.FormatItem or the derived class.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.EndIndex">
+      <summary>
+        <para>
+ The end index is pointing to ONE POSITION AFTER the last character of item.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.FormatItem.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,Unity.SmartStrings.Core.Parsing.FormatItem,System.String,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Initializes the Unity.SmartStrings.Core.Parsing.FormatItem or the derived class.
+ </para>
+      </summary>
+      <param name="smartSettings">Formatter and parser settings.</param>
+      <param name="parent">Parent Unity.SmartStrings.Core.Parsing.FormatItem, or null.</param>
+      <param name="baseString">Base format string.</param>
+      <param name="startIndex">Start index of the Unity.SmartStrings.Core.Parsing.FormatItem within the base format string.</param>
+      <param name="endIndex">End index of the Unity.SmartStrings.Core.Parsing.FormatItem within the base format string.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.Length">
+      <summary>
+        <para>
+ Gets the result of Unity.SmartStrings.Core.Parsing.FormatItem.EndIndex minus Unity.SmartStrings.Core.Parsing.FormatItem.StartIndex.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.ParentFormatItem">
+      <summary>
+        <para>
+ The parent Unity.SmartStrings.Core.Parsing.FormatItem of this instance, null if no parent exists.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.RawText">
+      <summary>
+        <para>
+ Retrieves the raw text that this item represents.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.SmartSettings">
+      <summary>
+        <para>
+ The settings for formatter and parser.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.FormatItem.StartIndex">
+      <summary>
+        <para>
+ The start index is pointing to the first character of item.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.FormatItem.ToString">
+      <summary>
+        <para>
+ Gets the string representation of this Unity.SmartStrings.Core.Parsing.FormatItem.
+ </para>
+      </summary>
+      <returns>
+        <para>The string representation of this Unity.SmartStrings.Core.Parsing.FormatItem</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.LiteralText">
+      <summary>
+        <para>
+ Represents the literal text that is found
+ in a parsed format string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.LiteralText.AsSpan">
+      <summary>
+        <para>
+ Gets the character span for the Unity.SmartStrings.Core.Parsing.LiteralText, with escaped characters converted.
+ Note: The Unity.SmartStrings.Core.Parsing.Parser puts each escaped character of an input string
+ into its own Unity.SmartStrings.Core.Parsing.LiteralText item.
+ </para>
+      </summary>
+      <returns>
+        <para>The character span for the Unity.SmartStrings.Core.Parsing.LiteralText, with escaped characters converted.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.LiteralText.Clear">
+      <summary>
+        <para>
+ Clears the Unity.SmartStrings.Core.Parsing.LiteralText item.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.LiteralTextPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.LiteralText.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,Unity.SmartStrings.Core.Parsing.FormatItem,System.String,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Initializes the Unity.SmartStrings.Core.Parsing.LiteralText instance, representing the literal text that is found in a parsed format string.
+ </para>
+      </summary>
+      <param name="smartSettings">Formatter and parser settings.</param>
+      <param name="parent">Parent Unity.SmartStrings.Core.Parsing.FormatItem.</param>
+      <param name="baseString">Reference to the parsed format string.</param>
+      <param name="startIndex">Start index of the Unity.SmartStrings.Core.Parsing.LiteralText in the format string.</param>
+      <param name="endIndex">End index of the Unity.SmartStrings.Core.Parsing.LiteralText in the format string.</param>
+      <returns>
+        <para>The Unity.SmartStrings.Core.Parsing.LiteralText instance, representing the literal text that is found in a parsed format string.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.LiteralText.ToString">
+      <summary>
+        <para>
+ Get the string representation of the Unity.SmartStrings.Core.Parsing.LiteralText, with escaped characters converted.
+ Note: The Unity.SmartStrings.Core.Parsing.Parser puts each escaped character of an input string
+ into its own Unity.SmartStrings.Core.Parsing.LiteralText item.
+ </para>
+      </summary>
+      <returns>
+        <para>The string representation of the Unity.SmartStrings.Core.Parsing.LiteralText, with escaped characters converted.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.Parser">
+      <summary>
+        <para>
+ Parses a format string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Parser.#ctor(Unity.SmartStrings.Core.Settings.SmartSettings)">
+      <summary>
+        <para>
+ Creates a new instance of a Unity.SmartStrings.Core.Parsing.Parser.
+ </para>
+      </summary>
+      <param name="smartSettings">
+ The Unity.SmartStrings.Core.Settings.SmartSettings to use, or null for default settings.
+ Any changes after passing settings as a parameter may not have effect.
+ </param>
+    </member>
+    <member name="?:Unity.SmartStrings.Core.Parsing.Parser.OnParsingFailure(System.EventHandler`1&lt;Unity.SmartStrings.Core.Parsing.ParsingErrorEventArgs&gt;)">
+      <summary>
+        <para>
+ Raised when an error occurs during parsing.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Parser.ParseFormat(System.String)">
+      <summary>
+        <para>
+ Parses a format string.
+ </para>
+      </summary>
+      <param name="inputFormat">Format string to parse.</param>
+      <returns>
+        <para>The Unity.SmartStrings.Core.Parsing.Format for the parsed string.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.Parser.ParsingError">
+      <summary>
+        <para>
+ Errors that can occur while parsing a format string.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Parsing.Parser.ParsingError.InvalidCharactersInSelector">
+      <summary>
+        <para>
+ Invalid characters in the selector.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Parsing.Parser.ParsingError.MissingClosingBrace">
+      <summary>
+        <para>
+ Missing closing brace.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Parsing.Parser.ParsingError.TooManyClosingBraces">
+      <summary>
+        <para>
+ Too many closing braces.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Parsing.Parser.ParsingError.TrailingOperatorsInSelector">
+      <summary>
+        <para>
+ Trailing operators in the selector.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.Parser.ParsingErrorText">
+      <summary>
+        <para>
+ Supplies error text for the Unity.SmartStrings.Core.Parsing.Parser.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Parser.ParsingErrorText.this">
+      <summary>
+        <para>
+ Gets the string representation of the ParsingError enum.
+ </para>
+      </summary>
+      <param name="parsingErrorKey">Error whose message text to retrieve.</param>
+      <returns>
+        <para>The string representation of the ParsingError enum</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Parser.Settings">
+      <summary>
+        <para>
+ Gets the Unity.SmartStrings.Core.Settings.SmartSettings for Smart.Format.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.ParsingErrorEventArgs">
+      <summary>
+        <para>
+ Supplies information about parsing errors.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrorEventArgs.Errors">
+      <summary>
+        <para>
+ All parsing errors which occurred during parsing.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrorEventArgs.ThrowsException">
+      <summary>
+        <para>
+ If true, errors will throw an exception.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.ParsingErrors">
+      <summary>
+        <para>
+ Represents parsing errors in a format string.
+ This exception only gets thrown when Parser.ErrorAction is set to ThrowError.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.ParsingErrors.AddIssue(Unity.SmartStrings.Core.Parsing.Format,System.String,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Adds a new Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.
+ </para>
+      </summary>
+      <param name="parent">Unity.SmartStrings.Core.Parsing.Format that contains the issue.</param>
+      <param name="issue">Description of the issue.</param>
+      <param name="startIndex">Start index of the issue within the format string.</param>
+      <param name="endIndex">End index of the issue within the format string.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.ParsingErrors.Clear">
+      <summary>
+        <para>
+ Clears the Unity.SmartStrings.Core.Parsing.ParsingErrors.Issues list.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.ParsingErrorsPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.ParsingErrors.#ctor">
+      <summary>
+        <para>
+ Creates a new instance for object pooling.
+ Immediately after creating the instance, an overload of 'Initialize' must be called.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.ParsingErrors.#ctor">
+      <summary>
+        <para></para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.HasIssues">
+      <summary>
+        <para>
+ Returns true if the Collections.Generic.IList_1 of Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssues contains elements.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.ParsingErrors.Initialize(Unity.SmartStrings.Core.Parsing.Format)">
+      <summary>
+        <para>
+ Initializes the instance of Unity.SmartStrings.Core.Parsing.ParsingErrors.
+ </para>
+      </summary>
+      <param name="result">Unity.SmartStrings.Core.Parsing.Format that caused the error.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.ParsingErrors instance.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.Issues">
+      <summary>
+        <para>
+ Gets an Collections.Generic.IList_1 of Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssues.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.Message">
+      <summary>
+        <para>
+ Gets the long version of an error message.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.MessageShort">
+      <summary>
+        <para>
+ Gets the short version of an error message.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue">
+      <summary>
+        <para>
+ Represents a single parsing issue in a format string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.#ctor(System.String,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Creates a new instance of Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.
+ </para>
+      </summary>
+      <param name="issue">Description of the issue.</param>
+      <param name="index">Index within the format string where the issue occurred.</param>
+      <param name="length">Number of characters affected, starting from the index.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.Index">
+      <summary>
+        <para>
+ Gets the index within the format string, where an error occurred.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.Issue">
+      <summary>
+        <para>
+ Gets the description of an error issue.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.Length">
+      <summary>
+        <para>
+ Gets the length starting from the Unity.SmartStrings.Core.Parsing.ParsingErrors.ParsingIssue.Index which has errors.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.Placeholder">
+      <summary>
+        <para>
+ A placeholder is the part of a format string between the {braces}.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.Alignment">
+      <summary>
+        <para>
+ Gets or sets the Unity.SmartStrings.Core.Parsing.Placeholder.Alignment of the result string,
+ used like with string.Format("{0,-10}"), where -10 is the alignment.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.Format">
+      <summary>
+        <para>
+ Gets or sets the Unity.SmartStrings.Core.Parsing.Placeholder.Format of the Unity.SmartStrings.Core.Parsing.Placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.FormatterName">
+      <summary>
+        <para>
+ Gets the name of the formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.FormatterOptions">
+      <summary>
+        <para>
+ Gets the formatter option string unescaped.
+ To get the raw formatter option string, Unity.SmartStrings.Core.Parsing.Placeholder.FormatterOptionsRaw.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.FormatterOptionsRaw">
+      <summary>
+        <para>
+ Gets the raw formatter option string as in the input format string (unescaped).
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Placeholder.GetSelectors">
+      <summary>
+        <para>
+ Gets an Collections.Generic.IReadOnlyList_1 of all Unity.SmartStrings.Core.Parsing.Selectors within the Unity.SmartStrings.Core.Parsing.Placeholder.
+ </para>
+      </summary>
+      <returns>
+        <para>A read-only list of the Unity.SmartStrings.Core.Parsing.Selectors within the Unity.SmartStrings.Core.Parsing.Placeholder.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Placeholder.Initialize(Unity.SmartStrings.Core.Parsing.Format,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Initializes the instance of Unity.SmartStrings.Core.Parsing.Placeholder.
+ </para>
+      </summary>
+      <param name="parent">Parent Unity.SmartStrings.Core.Parsing.Placeholder.Format of the placeholder.</param>
+      <param name="startIndex">Index inside the input string where the placeholder starts.</param>
+      <param name="nestedDepth">Nesting level of this placeholder.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.Placeholder instance.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.NestedDepth">
+      <summary>
+        <para>
+ Gets or sets the nesting level of the Unity.SmartStrings.Core.Parsing.Placeholder.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Placeholder.Parent">
+      <summary>
+        <para>
+ Gets the parent Unity.SmartStrings.Core.Parsing.Format.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Placeholder.ReturnToPool">
+      <summary>
+        <para>
+ Return items we own to the object pools.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.LiteralTextPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Placeholder.ToString">
+      <summary>
+        <para>
+ Gets the string representation of the Unity.SmartStrings.Core.Parsing.Placeholder with all parsed components.
+ </para>
+      </summary>
+      <returns>
+        <para>The string representation of the Unity.SmartStrings.Core.Parsing.Placeholder with all parsed components.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Parsing.Selector">
+      <summary>
+        <para>
+ Represents a single selector in a Unity.SmartStrings.Core.Parsing.Placeholder.
+ E.g.: {selector0.selector1?.selector2}, while "." and "?." and "?[]" are operators.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Selector.Clear">
+      <summary>
+        <para>
+ Clears the Unity.SmartStrings.Core.Parsing.Selector.
+ This method gets called by Unity.SmartStrings.Pooling.SmartPools.SelectorPool when it releases an instance.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Parsing.Selector.Initialize(Unity.SmartStrings.Core.Settings.SmartSettings,Unity.SmartStrings.Core.Parsing.FormatItem,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+        <para>
+ Initializes this Unity.SmartStrings.Core.Parsing.Selector instance.
+ </para>
+      </summary>
+      <param name="settings">Formatter and parser settings.</param>
+      <param name="parent">Parent Unity.SmartStrings.Core.Parsing.FormatItem.</param>
+      <param name="baseString">Input format string.</param>
+      <param name="startIndex">Start index of the selector inside the Unity.SmartStrings.Core.Parsing.FormatItem.BaseString.</param>
+      <param name="endIndex">End index of the selector inside the Unity.SmartStrings.Core.Parsing.FormatItem.BaseString.</param>
+      <param name="operatorStartIndex">Start index of the operator that precedes the selector.</param>
+      <param name="selectorIndex">Index of the selector within its Unity.SmartStrings.Core.Parsing.Placeholder.</param>
+      <returns>
+        <para>This Unity.SmartStrings.Core.Parsing.Selector instance.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Selector.Operator">
+      <summary>
+        <para>
+ Gets the operator characters.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Parsing.Selector.SelectorIndex">
+      <summary>
+        <para>
+ The index of the selector in a multi-part selector.
+ Example: {Person.Birthday.Year} has 3 selectors,
+ and Year has a SelectorIndex of 2.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.CaseSensitivityType">
+      <summary>
+        <para>
+ Options for whether strings are processed case-sensitively.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.CaseSensitivityType.CaseInsensitive">
+      <summary>
+        <para>
+ Ignores differences between uppercase and lowercase characters.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.CaseSensitivityType.CaseSensitive">
+      <summary>
+        <para>
+ Distinguishes between uppercase and lowercase characters.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.FormatErrorAction">
+      <summary>
+        <para>
+ Determines how format errors are handled.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.FormatErrorAction.Ignore">
+      <summary>
+        <para>Ignores errors and tries to output the data anyway.</para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.FormatErrorAction.MaintainTokens">
+      <summary>
+        <para>Leaves invalid tokens unmodified in the text.</para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.FormatErrorAction.OutputErrorInResult">
+      <summary>
+        <para>Includes an issue message in the output.</para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.FormatErrorAction.ThrowError">
+      <summary>
+        <para>Throws an exception. This is only recommended for debugging, so that formatting errors can be easily found.</para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.FormatterSettings">
+      <summary>
+        <para>
+ Class for Unity.SmartStrings.SmartFormatter settings.
+ Properties should be considered as 'init-only' like implemented in C# 9.
+ Any changes after passing settings as argument to CTORs may not have effect.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.FormatterSettings.AlignmentFillCharacter">
+      <summary>
+        <para>
+ Character used to pre-align or post-align items, for example {Placeholder,10} for an alignment width of 10.
+ The default is the space character (0x20).
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.FormatterSettings.ErrorAction">
+      <summary>
+        <para>
+ Behavior that the Unity.SmartStrings.SmartFormatter applies when a formatting error occurs.
+ The default is Unity.SmartStrings.Core.Settings.FormatErrorAction.ThrowError.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.ParseErrorAction">
+      <summary>
+        <para>
+ Determines how parsing errors are handled.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.ParseErrorAction.Ignore">
+      <summary>
+        <para>
+ Ignores errors and tries to output the data anyway.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.ParseErrorAction.MaintainTokens">
+      <summary>
+        <para>
+ Leaves invalid tokens unmodified in the text.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.ParseErrorAction.OutputErrorInResult">
+      <summary>
+        <para>
+ Includes an issue message in the output.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.ParseErrorAction.ThrowError">
+      <summary>
+        <para>
+ Throws an Exception, if an error occurs.
+ This is only recommended for debugging, so that formatting errors can be easily found.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.ParserSettings">
+      <summary>
+        <para>
+ Class for Unity.SmartStrings.Core.Parsing.Parser settings.
+ Properties should be considered as 'init-only' like implemented in C# 9.
+ Any changes after passing settings as argument to CTORs may not have effect.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Settings.ParserSettings.AddCustomOperatorChars(System.Collections.Generic.IList`1&lt;System.Char&gt;)">
+      <summary>
+        <para>
+ Adds a list of allowable operator characters on top of the standard Unity.SmartStrings.Core.Settings.ParserSettings.OperatorChars setting.
+ Operator chars and selector chars must be different.
+ </para>
+      </summary>
+      <param name="characters">Operator characters to allow in addition to the standard set.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Settings.ParserSettings.AddCustomSelectorChars(System.Collections.Generic.IList`1&lt;System.Char&gt;)">
+      <summary>
+        <para>
+ Adds a list of allowable selector characters on top of the Unity.SmartStrings.Core.Settings.ParserSettings.SelectorChars setting.
+ This can be useful to support additional selector syntax such as math.
+ Characters in Unity.SmartStrings.Core.Settings.ParserSettings.DisallowedSelectorChars cannot be added.
+ Operator chars and selector chars must be different.
+ </para>
+      </summary>
+      <param name="characters">Selector characters to allow in addition to the standard set.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.ParserSettings.ConvertCharacterStringLiterals">
+      <summary>
+        <para>
+ This setting is relevant for the Unity.SmartStrings.Core.Parsing.LiteralText.
+ If true (the default), character string literals are treated like in "normal" string.Format:
+ string.Format("\t")   will return a "TAB" character
+ If false, character string literals are not converted, just like with this string.Format:
+ string.Format(@"\t")  will return the 2 characters "\" and "t"
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.ParserSettings.ErrorAction">
+      <summary>
+        <para>
+ Behavior that the Unity.SmartStrings.Core.Parsing.Parser applies when a parsing error occurs.
+ The default is Unity.SmartStrings.Core.Settings.ParseErrorAction.ThrowError.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.ParserSettings.SelectorCharFilter">
+      <summary>
+        <para>
+ Gets or sets which characters a selector can contain.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.SelectorFilterType">
+      <summary>
+        <para>
+ Sets which characters a selector can contain.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.SelectorFilterType.Alphanumeric">
+      <summary>
+        <para>
+ Allows letters a to z in either case, digits, underscores and hyphens.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Core.Settings.SelectorFilterType.VisualUnicodeChars">
+      <summary>
+        <para>
+ Allows Unicode characters from any script.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Core.Settings.SmartSettings">
+      <summary>
+        <para>Unity.SmartStrings.Smart settings to be applied for parsing and formatting.
+ Unity.SmartStrings.Core.Settings.SmartSettings are used to initialize instances.
+ Properties should be considered as 'init-only' like implemented in C# 9.
+ Any changes after passing settings as argument to CTORs may not have effect,
+ unless explicitly mentioned.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.SmartSettings.CaseSensitivity">
+      <summary>
+        <para>
+ Determines whether placeholders are case-sensitive or not.
+ The default is Unity.SmartStrings.Core.Settings.CaseSensitivityType.CaseSensitive.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.SmartSettings.Formatter">
+      <summary>
+        <para>
+ Settings that configure formatting.
+ Set only during initialization.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Settings.SmartSettings.GetCaseSensitivityComparer">
+      <summary>
+        <para>
+ Gets the StringComparer that belongs to the Unity.SmartStrings.Core.Settings.SmartSettings.CaseSensitivity setting.
+ </para>
+      </summary>
+      <returns>
+        <para>The StringComparer that belongs to the Unity.SmartStrings.Core.Settings.SmartSettings.CaseSensitivity setting.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Core.Settings.SmartSettings.GetCaseSensitivityComparison">
+      <summary>
+        <para>
+ Gets the StringComparison that belongs to the Unity.SmartStrings.Core.Settings.SmartSettings.CaseSensitivity setting.
+ </para>
+      </summary>
+      <returns>
+        <para>The StringComparison that belongs to the Unity.SmartStrings.Core.Settings.SmartSettings.CaseSensitivity setting.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Core.Settings.SmartSettings.Parser">
+      <summary>
+        <para>
+ Settings that configure parsing.
+ Set only during initialization.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.ChooseFormatter">
+      <summary>
+        <para>
+ Outputs one of several literal options, selected according to the input value.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.ChooseFormatter.CaseSensitivity">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Settings.CaseSensitivityType for option strings.
+ Defaults to Unity.SmartStrings.Core.Settings.CaseSensitivityType.CaseSensitive.
+ Comparison of option strings is culture-aware.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.ChooseFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.ConditionalFormatter">
+      <summary>
+        <para>
+ Formats primitive types by matching them against condition patterns.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.ConditionalFormatter.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of the formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.ConditionalFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.CustomPluralRuleProvider">
+      <summary>
+        <para>
+ Provides custom plural rules to Smart.Format.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.CustomPluralRuleProvider.#ctor">
+      <summary>
+        <para>
+ Creates a new custom plural rule provider.
+ </para>
+      </summary>
+      <param name="pluralRule">Delegate that provides the plural rule.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.CustomPluralRuleProvider.GetFormat(System.Type)">
+      <summary>
+        <para>
+ Gets the format Object for a Unity.SmartStrings.Extensions.CustomPluralRuleProvider.
+ </para>
+      </summary>
+      <param name="formatType">Type of formatting object to return.</param>
+      <returns>
+        <para>The format Object for a Unity.SmartStrings.Extensions.CustomPluralRuleProvider or null.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.CustomPluralRuleProvider.GetPluralRule">
+      <summary>
+        <para>
+ Gets the Unity.SmartStrings.Utilities.PluralRules.PluralRuleDelegate of the current Unity.SmartStrings.Extensions.CustomPluralRuleProvider instance.
+ </para>
+      </summary>
+      <returns>
+        <para>Unity.SmartStrings.Utilities.PluralRules.PluralRuleDelegate that this provider was created with.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.DefaultFormatter">
+      <summary>
+        <para>
+ Performs default formatting, using the same logic as string.Format.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.DefaultFormatter.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of the formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.DefaultSource">
+      <summary>
+        <para>
+ Evaluates an index-based Unity.SmartStrings.Core.Parsing.Selector.
+ Include this source, if an indexed source shall be used just the way string.Format does.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.DictionarySource">
+      <summary>
+        <para>
+ Evaluates sources of types Collections.IDictionary,
+ generic Collections.Generic.IDictionary_2 and dynamic Dynamic.ExpandoObject.
+ Include this source, if any of these types shall be used.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.IsMatchFormatter">
+      <summary>
+        <para>
+ Formats values by matching them against a regular expression, and can output matching group values.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.IsMatchFormatter.PlaceholderNameForMatches">
+      <summary>
+        <para>
+ The name of the placeholder used to output RegEx matching group values.
+ 
+ Example:
+ {value:ismatch(regex):First match in '{}'
+: {m[1]}|No match}
+ "m" is the PlaceholderNameForMatches
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.IsMatchFormatter.RegexOptions">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Extensions.IsMatchFormatter.RegexOptions for the Text.RegularExpressions.Regex expression.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.IsMatchFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.KeyValuePairSource">
+      <summary>
+        <para>
+ Evaluates a Unity.SmartStrings.Core.Parsing.Selector with a Collections.Generic.KeyValuePair_2.
+ The key must be string, the value must be an Object.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.ListFormatter">
+      <summary>
+        <para>
+ Formats each item individually when the source value is an array (or supports ICollection).
+ Syntax:
+ #1: "format|spacer"
+ #2: "format|spacer|last spacer"
+ #3: "format|spacer|last spacer|two spacer"
+ The format will be used for each item in the collection, the spacer will be between all items, and the last spacer
+ will replace the spacer for the last item only.
+ Example:
+ CustomFormat("{Dates:D|; |; and }", {#112000#, #12312999#, #999999#}) = "January 1, 2000; December 31, 2999;
+ and September 9, 9999"
+ In this example, format = "D", spacer = "; ", and last spacer = "; and "
+ Advanced:
+ Composite Formatting is allowed in the format by using nested braces.
+ If a nested item is detected, Composite formatting will be used.
+ Example:
+ CustomFormat("{Sizes:{Width}x{Height}|, }", {new Size(4,3), new Size(16,9)}) = "4x3, 16x9"
+ In this example, format = "{Width}x{Height}".  Notice the nested braces.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.ListFormatter.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of the formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.ListFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.ListFormatter.TryEvaluateFormat(Unity.SmartStrings.Core.Extensions.IFormattingInfo)">
+      <summary>
+        <para>
+ Writes the given Unity.SmartStrings.Core.Extensions.IFormattingInfo to the Unity.SmartStrings.Core.Output.IOutput
+ if it can be processed by the formatter.
+ </para>
+      </summary>
+      <param name="formattingInfo">Unity.SmartStrings.Core.Extensions.IFormattingInfo to process.</param>
+      <returns>
+        <para>Returns true if processing was possible, else false.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.ListFormatter.TryEvaluateSelector(Unity.SmartStrings.Core.Extensions.ISelectorInfo)">
+      <summary>
+        <para>
+ Allows an integer to be used as a selector to index an array (or list).
+ This is better described using an example:
+ CustomFormat("{Dates.2.Year}", {#112000#, #12312999#, #999999#}) = "9999"
+ The ".2" selector is used to reference Dates[2].
+ </para>
+      </summary>
+      <param name="selectorInfo"></param>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.NullFormatter">
+      <summary>
+        <para>
+ Formats null values.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.NullFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.PersistentVariablesSource">
+      <summary>
+        <para>
+ Provides global or local values that do not need to be passed in as arguments when formatting a string.
+ The smart string should take the format {groupName.variableName}. e.g {global.player-score}.
+ Note: The group name and variable names must not contain any spaces.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.Add(System.String,Unity.SmartStrings.PersistentVariables.VariablesGroupAsset)">
+      <summary>
+        <para>
+ Adds a global variable group to the source.
+ </para>
+      </summary>
+      <param name="name">The name of the group to add.</param>
+      <param name="group">The group to add.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.Add(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.VariablesGroupAsset&gt;)">
+      <summary>
+        <para></para>
+      </summary>
+      <param name="item"></param>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.BeginUpdating">
+      <summary>
+        <para>
+ Indicates that multiple Unity.SmartStrings.PersistentVariables.IVariable will be changed and localized string should wait for Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdate before updating.
+ See Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating and Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdate.
+ Note: Unity.SmartStrings.Extensions.PersistentVariablesSource.BeginUpdating and Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating can be nested, Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdate will only be called after the last Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.Clear">
+      <summary>
+        <para>
+ Removes all global variables.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.ContainsKey(System.String)">
+      <summary>
+        <para>
+ Returns true if a global variable group is found with the same name.
+ </para>
+      </summary>
+      <param name="name">The name of the global variable group to check for.</param>
+      <returns>
+        <para>true if a group with the name is found or false if one is not.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.CopyTo(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.VariablesGroupAsset&gt;[],System.Int32)">
+      <summary>
+        <para>
+ Copies all global variable groups into the provided array starting at arrayIndex.
+ </para>
+      </summary>
+      <param name="array">The array to copy the global variables into.</param>
+      <param name="arrayIndex">The index to start copying into.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PersistentVariablesSource.Count">
+      <summary>
+        <para>
+ The number of Unity.SmartStrings.PersistentVariables.VariablesGroupAsset that are used for global variables.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdate(System.Action)">
+      <summary>
+        <para>
+ Raised after the final Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating call.
+ This can be used when you wish to respond to value change events but wish to do a
+ single update at the end instead of 1 per change.
+ For example, if you wanted to change the value of multiple global variables
+ that a smart string was using then changing each value would result in a new string
+ being generated, by using begin and end  the string generation can be deferred until the
+ final change so that only 1 update is performed.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating">
+      <summary>
+        <para>
+ Indicates that updates to Unity.SmartStrings.PersistentVariables.IVariable have finished and sends the Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdate event.
+ Note: Unity.SmartStrings.Extensions.PersistentVariablesSource.BeginUpdating and Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating can be nested, Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdate will only be called after the last Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.GetEnumerator">
+      <summary>
+        <para>
+ Returns an enumerator for all the global variables in the source.
+ </para>
+      </summary>
+      <returns>
+        <para>An enumerator over the global variable groups in the source.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PersistentVariablesSource.IsReadOnly">
+      <summary>
+        <para>
+ Implemented as part of IDictionary but not used. Always returns false.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PersistentVariablesSource.IsUpdating">
+      <summary>
+        <para>
+ Whether Unity.SmartStrings.Extensions.PersistentVariablesSource.BeginUpdating has been called without a matching Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating.
+ This can be used when updating the value of multiple Unity.SmartStrings.PersistentVariables.IVariable in order to do
+ a single update after the updates instead of 1 per change.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PersistentVariablesSource.Keys">
+      <summary>
+        <para>
+ The global variable group names.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.Remove(System.String)">
+      <summary>
+        <para>
+ Removes the group with the matching name.
+ </para>
+      </summary>
+      <param name="name">The name of the group to remove.</param>
+      <returns>
+        <para>true if a group with a matching name was found and removed, or false if one was not.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.Remove(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.VariablesGroupAsset&gt;)">
+      <summary>
+        <para></para>
+      </summary>
+      <param name="item"></param>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.PersistentVariablesSource.ScopedUpdate">
+      <summary>
+        <para>
+ Encapsulates a Unity.SmartStrings.Extensions.PersistentVariablesSource.BeginUpdating and Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating call.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.ScopedUpdate.Dispose">
+      <summary>
+        <para>
+ Calls Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PersistentVariablesSource.this">
+      <summary>
+        <para>
+ The global variable group that matches name.
+ </para>
+      </summary>
+      <param name="name">The name of the group to return.</param>
+      <returns>
+        <para>The global variable group registered under the specified name.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.TryGetValue(System.String,Unity.SmartStrings.PersistentVariables.VariablesGroupAsset&amp;)">
+      <summary>
+        <para>
+ Returns true if a global variable group could be found with a matching name, or false if one could not.
+ </para>
+      </summary>
+      <param name="name">The name of the global variable group to find.</param>
+      <param name="value">The found global variable group or null if one could not be found with a matching name.</param>
+      <returns>
+        <para>true if a group could be found or false if one could not.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PersistentVariablesSource.UpdateScope">
+      <summary>
+        <para>
+ Creates a Unity.SmartStrings.Extensions.PersistentVariablesSource.BeginUpdating and Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating scope.
+ </para>
+      </summary>
+      <returns>
+        <para>A scope that calls Unity.SmartStrings.Extensions.PersistentVariablesSource.EndUpdating when it is disposed.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PersistentVariablesSource.Values">
+      <summary>
+        <para>
+ The global variable groups in this source.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.PluralLocalizationFormatter">
+      <summary>
+        <para>
+ Formats values according to culture-specific pluralization rules.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.PluralLocalizationFormatter.#ctor">
+      <summary>
+        <para>
+ Creates a new instance of the formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.PluralLocalizationFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.PropertiesSource">
+      <summary>
+        <para>
+ Evaluates a selector by reading the member of the same name through the Unity.Properties data model.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.StringSource">
+      <summary>
+        <para>
+ Evaluates a Unity.SmartStrings.Core.Parsing.Selector with a string as Unity.SmartStrings.Core.Extensions.ISelectorInfo.CurrentValue.
+ Include this source for handling string and its extension methods.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.StringSource.SelectorMethods">
+      <summary>
+        <para>
+ A Collections.Generic.Dictionary_2 of methods that can be used as selectors.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.StringSource.UseInvariantCulture">
+      <summary>
+        <para>
+ When true, uses Globalization.CultureInfo.InvariantCulture when performing string operations, otherwise uses the Locale .
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.SubStringFormatter">
+      <summary>
+        <para>
+ Outputs part of an input string.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.SubStringFormatter.NullDisplayString">
+      <summary>
+        <para>
+ The string to display for NULL values, defaults to (null).
+ 
+ It will not be used, if a format option is provided to the formatter.
+ In this case, the child formatter must handle the NULL result.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.SubStringFormatter.OutOfRangeBehavior">
+      <summary>
+        <para>
+ The behavior when start index and/or length are too big, defaults to Unity.SmartStrings.Extensions.SubStringFormatter.SubStringOutOfRangeBehavior.ReturnEmptyString.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.SubStringFormatter.SplitChar">
+      <summary>
+        <para>
+ The character used to split the option text literals.
+ Valid characters are: | (pipe) , (comma)  ~ (tilde)
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.SubStringFormatter.SubStringOutOfRangeBehavior">
+      <summary>
+        <para>
+ Specifies behavior when start index and/or length is out of range.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.SubStringFormatter.SubStringOutOfRangeBehavior.ReturnEmptyString">
+      <summary>
+        <para>
+ Returns an empty string.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.SubStringFormatter.SubStringOutOfRangeBehavior.ReturnStartIndexToEndOfString">
+      <summary>
+        <para>
+ Returns the remainder of the string, starting at StartIndex
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.SubStringFormatter.SubStringOutOfRangeBehavior.ThrowException">
+      <summary>
+        <para>
+ Throws Unity.SmartStrings.Core.Formatting.FormattingException</para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.TemplateFormatter">
+      <summary>
+        <para>
+ Registers reusable templates and applies them by name.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.TemplateFormatter.Clear">
+      <summary>
+        <para>
+ Removes all registered templates.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.TemplateFormatter.Register(System.String,System.String)">
+      <summary>
+        <para>
+ Registers a new template.
+ </para>
+      </summary>
+      <param name="templateName">Unique name for the template that is not already registered.</param>
+      <param name="template">String to use as the template.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.TemplateFormatter.Remove(System.String)">
+      <summary>
+        <para>
+ Removes a template by name.
+ </para>
+      </summary>
+      <param name="templateName">Name of the template to remove.</param>
+      <returns>
+        <para>true if the template was found and removed; otherwise, false.</para>
+      </returns>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions">
+      <summary>
+        <para>
+ Determines all options for time formatting.
+ This one value actually contains 4 settings:
+ Abbreviate  AbbreviateOffLessThan  LessThanOffTruncate   Auto  Shortest  Fill  FullRange   MilliSeconds  Seconds  Minutes  Hours  Days 
+     Weeks (Min / Max)
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.Abbreviate">
+      <summary>
+        <para>
+ Abbreviates units.
+ Example: "1d 2h 3m 4s 5ms"
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.AbbreviateOff">
+      <summary>
+        <para>
+ Does not abbreviate units.
+ Example: "1 day 2 hours 3 minutes 4 seconds 5 milliseconds"
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.LessThan">
+      <summary>
+        <para>
+ Displays "less than 1 (unit)" when the TimeSpan is smaller than the minimum range.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.LessThanOff">
+      <summary>
+        <para>
+ Displays "0 (units)" when the TimeSpan is smaller than the minimum range.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.None">
+      <summary>
+        <para>
+ Specifies that all timeSpanFormatOptions should be inherited from
+ TimeSpanUtility.DefaultTimeFormatOptions.
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.RangeDays">
+      <summary>
+        <para>
+ Determines the range of units to display.
+ You may combine two values to form the minimum and maximum for the range.
+ 
+     Example: (RangeMinutes) defines a range of Minutes only; (RangeHours | RangeSeconds) defines a range of Hours
+     to Seconds.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.RangeHours">
+      <summary>
+        <para>
+ Determines the range of units to display.
+ You may combine two values to form the minimum and maximum for the range.
+ 
+     Example: (RangeMinutes) defines a range of Minutes only; (RangeHours | RangeSeconds) defines a range of Hours
+     to Seconds.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.RangeMilliSeconds">
+      <summary>
+        <para>
+ Determines the range of units to display.
+ You may combine two values to form the minimum and maximum for the range.
+ 
+     Example: (RangeMinutes) defines a range of Minutes only; (RangeHours | RangeSeconds) defines a range of Hours
+     to Seconds.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.RangeMinutes">
+      <summary>
+        <para>
+ Determines the range of units to display.
+ You may combine two values to form the minimum and maximum for the range.
+ 
+     Example: (RangeMinutes) defines a range of Minutes only; (RangeHours | RangeSeconds) defines a range of Hours
+     to Seconds.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.RangeSeconds">
+      <summary>
+        <para>
+ Determines the range of units to display.
+ You may combine two values to form the minimum and maximum for the range.
+ 
+     Example: (RangeMinutes) defines a range of Minutes only; (RangeHours | RangeSeconds) defines a range of Hours
+     to Seconds.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.RangeWeeks">
+      <summary>
+        <para>
+ Determines the range of units to display.
+ You may combine two values to form the minimum and maximum for the range.
+ 
+     Example: (RangeMinutes) defines a range of Minutes only; (RangeHours | RangeSeconds) defines a range of Hours
+     to Seconds.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.TruncateAuto">
+      <summary>
+        <para>
+ Displays all non-zero values within the range.
+ Example: "00.23:00:59.000" = "23 hours 59 minutes"
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.TruncateFill">
+      <summary>
+        <para>
+ Displays the highest non-zero value and all lesser values within the range.
+ Example: "00.23:00:59.000" = "23 hours 0 minutes 59 seconds 0 milliseconds"
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.TruncateFull">
+      <summary>
+        <para>
+ Displays all values within the range.
+ Example: "00.23:00:59.000" = "0 days 23 hours 0 minutes 59 seconds 0 milliseconds"
+ </para>
+      </summary>
+    </member>
+    <member name="F:Unity.SmartStrings.Extensions.Time.Utilities.TimeSpanFormatOptions.TruncateShortest">
+      <summary>
+        <para>
+ Displays the highest non-zero value within the range.
+ Example: "00.23:00:59.000" = "23 hours"
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Extensions.TimeFormatter">
+      <summary>
+        <para>
+ Formats time spans as human-readable text, such as 1 day 2 hours.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Extensions.TimeFormatter.#ctor">
+      <summary>
+        <para>
+ Initializes the extension with a default Unity.SmartStrings.Extensions.Time.Utilities.TimeTextInfo.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.TimeFormatter.DefaultFormatOptions">
+      <summary>
+        <para>
+ The options that control how time values are formatted.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Extensions.TimeFormatter.FallbackLanguage">
+      <summary>
+        <para>
+ The fallback language used when no supported language is found.
+ Default is "en". If no fallback language shall be used, set it to String.Empty.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.FormattingErrorEventArgs">
+      <summary>
+        <para>
+ Supplies information about formatting errors.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.FormattingErrorEventArgs.ErrorIndex">
+      <summary>
+        <para>
+ Character index in the format string where the error occurred.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.FormattingErrorEventArgs.IgnoreError">
+      <summary>
+        <para>
+ Whether the error is ignored instead of raising an exception.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.FormattingErrorEventArgs.Placeholder">
+      <summary>
+        <para>
+ Raw text of the format item that caused the error.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.BoolVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single bool value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.ByteVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single byte value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.DoubleVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single double value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.FloatVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single float value.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.PersistentVariables.IMetadataVariable">
+      <summary>
+        <para>
+ Adds support for querying the Metadata in a Smart String.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.IMetadataVariable.VariableName">
+      <summary>
+        <para>
+ The named placeholder that will match this metadata when querying a localized string as a local or global variable.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.IntVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single integer value.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.PersistentVariables.IVariable">
+      <summary>
+        <para>
+ Represents a variable that can be provided through a global Unity.SmartStrings.PersistentVariables.VariablesGroupAsset or as a local
+ variable through localized string instead of as a string format argument.
+ A variable can be a single variable, in which case the value should be returned in Unity.SmartStrings.PersistentVariables.IVariable.GetSourceValue or a
+ class with multiple variables which can then be further extracted with additional string format arguments.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.IVariable.GetSourceValue(Unity.SmartStrings.Core.Extensions.ISelectorInfo)">
+      <summary>
+        <para>
+ Returns the value to use when the smart string matches this variable.
+ </para>
+      </summary>
+      <param name="selector">The details about the current format operation.</param>
+      <returns>
+        <para>The value that additional sources or formatters can process further.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.SmartStrings.PersistentVariables.IVariableGroup">
+      <summary>
+        <para>
+ Provides access to a collection of named Unity.SmartStrings.PersistentVariables.IVariable values.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.IVariableGroup.TryGetValue(System.String,Unity.SmartStrings.PersistentVariables.IVariable&amp;)">
+      <summary>
+        <para>
+ Gets the variable with the matching key if one exists.
+ </para>
+      </summary>
+      <param name="key">The variable key or name to match.</param>
+      <param name="value">The found variable or null if one could not be found.</param>
+      <returns>
+        <para>true if a variable could be found or false if one could not.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.SmartStrings.PersistentVariables.IVariableValueChanged">
+      <summary>
+        <para>
+ Provides the ability to trigger an automatic update of a localized string when Unity.SmartStrings.PersistentVariables.IVariableValueChanged.ValueChanged is invoked.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.PersistentVariables.IVariableValueChanged.ValueChanged(System.Action`1&lt;Unity.SmartStrings.PersistentVariables.IVariable&gt;)">
+      <summary>
+        <para>
+ Raised when the variable's value changes, or when it otherwise needs to trigger an update to any localized string currently using it.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.LongVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single long value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.NestedVariablesGroup">
+      <summary>
+        <para>
+ Provides a reference to a Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.ObjectVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that can reference an Object instance.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.SByteVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single signed byte value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.ShortVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single short value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.StringVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single string value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.UIntVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single unsigned integer value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.ULongVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single unsigned long value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.UShortVariable">
+      <summary>
+        <para>
+ A Unity.SmartStrings.PersistentVariables.IVariable that holds a single unsigned short value.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.Variable`1">
+      <summary>
+        <para>
+ Base class for all single source variables.
+ Inherit from this class for storage for a single serialized source value that will send a value changed event when Unity.SmartStrings.PersistentVariables.Variable_1.Value is changed.
+ This will trigger any localized string that is currently using the variable to update.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.Variable_1.ToString">
+      <summary>
+        <para>
+ Returns the string representation of this variable's value.
+ </para>
+      </summary>
+      <returns>
+        <para>The variable's value converted to a string.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.Variable_1.Value">
+      <summary>
+        <para>
+ The value for this variable.
+ Changing this will trigger the Unity.SmartStrings.PersistentVariables.Variable_1.ValueChanged event.
+ </para>
+      </summary>
+    </member>
+    <member name="?:Unity.SmartStrings.PersistentVariables.Variable_1.ValueChanged(System.Action`1&lt;Unity.SmartStrings.PersistentVariables.IVariable&gt;)">
+      <summary>
+        <para>
+ Raised when Unity.SmartStrings.PersistentVariables.Variable_1.Value changes.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="T:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset">
+      <summary>
+        <para>
+ Collection of Unity.SmartStrings.PersistentVariables.IVariable that can be used during formatting of a localized string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Add(System.String,Unity.SmartStrings.PersistentVariables.IVariable)">
+      <summary>
+        <para>
+ Adds a new Global Variable to use during formatting.
+ </para>
+      </summary>
+      <param name="name">The name of the variable, must be unique. Note the name should not contain any whitespace, if any is found then it will be replaced with with '-'.</param>
+      <param name="variable">The variable to use when formatting. See also Unity.SmartStrings.PersistentVariables.BoolVariable, Unity.SmartStrings.PersistentVariables.FloatVariable, Unity.SmartStrings.PersistentVariables.IntVariable, Unity.SmartStrings.PersistentVariables.StringVariable, Unity.SmartStrings.PersistentVariables.ObjectVariable.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Add(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.IVariable&gt;)">
+      <summary>
+        <para></para>
+      </summary>
+      <param name="item">Name and variable pair to add.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Clear">
+      <summary>
+        <para>
+ Removes all variables in the group.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Contains(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.IVariable&gt;)">
+      <summary>
+        <para></para>
+      </summary>
+      <param name="item">The item to check for. Both the Key and Value must match.</param>
+      <returns>
+        <para>true if a matching variable could be found or false if one could not.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.ContainsKey(System.String)">
+      <summary>
+        <para>
+ Returns true if a variable with the specified name exists.
+ </para>
+      </summary>
+      <param name="name">The variable name to check for.</param>
+      <returns>
+        <para>true if a matching variable could be found or false if one could not.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.CopyTo(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.IVariable&gt;[],System.Int32)">
+      <summary>
+        <para>
+ Copies the variables into an array starting at arrayIndex.
+ </para>
+      </summary>
+      <param name="array">The array to copy the variables into.</param>
+      <param name="arrayIndex">The index to start copying the items into.</param>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Count">
+      <summary>
+        <para>
+ The number of variables in the group.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.GetEnumerator">
+      <summary>
+        <para>
+ Returns an enumerator for all variables in this group.
+ </para>
+      </summary>
+      <returns>
+        <para>The enumerator that can be used to iterate through all the variables.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.IsReadOnly">
+      <summary>
+        <para>
+ Implemented as part of IDictionary but not used. Always returns false.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Keys">
+      <summary>
+        <para>
+ A collection of all the unique variable names.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Remove(System.String)">
+      <summary>
+        <para>
+ Removes a variable with the specified name.
+ </para>
+      </summary>
+      <param name="name">Name of the variable to remove.</param>
+      <returns>
+        <para>true if a variable with the specified name was removed, false if one was not.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Remove(System.Collections.Generic.KeyValuePair`2&lt;System.String,Unity.SmartStrings.PersistentVariables.IVariable&gt;)">
+      <summary>
+        <para>
+ Removes a variable with the specified key.
+ </para>
+      </summary>
+      <param name="item">The item to be removed, only the Key field will be considered.</param>
+      <returns>
+        <para>true if a variable with the specified name was removed, false if one was not.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.this">
+      <summary>
+        <para>
+ The Unity.SmartStrings.PersistentVariables.IVariable associated with the specified name.
+ </para>
+      </summary>
+      <param name="name">The name of the variable.</param>
+      <returns>
+        <para>The found variable.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.TryGetValue(System.String,Unity.SmartStrings.PersistentVariables.IVariable&amp;)">
+      <summary>
+        <para>
+ Gets the Unity.SmartStrings.PersistentVariables.IVariable with the specified name.
+ </para>
+      </summary>
+      <param name="name">The name of the variable.</param>
+      <param name="value">The variable that was found or default.</param>
+      <returns>
+        <para>true if a variable was found and false if one could not.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.PersistentVariables.VariablesGroupAsset.Values">
+      <summary>
+        <para>
+ All the variables in this group.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Pooling.PoolingException">
+      <summary>
+        <para>
+ Represents an Exception thrown by the pooling subsystem.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Pooling.PoolingException.#ctor(System.String,System.Type)">
+      <summary>
+        <para>
+ Creates a instance of a Unity.SmartStrings.Pooling.PoolingException.
+ </para>
+      </summary>
+      <param name="message"></param>
+      <param name="poolType"></param>
+    </member>
+    <member name="M:Unity.SmartStrings.Pooling.PoolingException.#ctor">
+      <summary>
+        <para></para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.Pooling.PoolingException.PoolType">
+      <summary>
+        <para>
+ Gets the type of pool, which threw the exception.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Smart">
+      <summary>
+        <para>
+ This class holds a Unity.SmartStrings.Smart.Default instance of a Unity.SmartStrings.SmartFormatter.
+ The default instance has all extensions registered.
+ For optimized performance, create a Unity.SmartStrings.SmartFormatter instance and register the
+ particular extensions that are needed.
+ Unity.SmartStrings.Smart methods are not thread safe.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.CreateDefaultSmartFormat">
+      <summary>
+        <para></para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.CreateDefaultSmartFormat(Unity.SmartStrings.Core.Settings.SmartSettings)">
+      <summary>
+        <para>
+ Creates a new Unity.SmartStrings.SmartFormatter instance with core extensions registered.
+ For optimized performance, create a Unity.SmartStrings.SmartFormatter instance and register the
+ particular extensions that are really needed.
+ 
+ See Unity.SmartStrings.Extensions.WellKnownExtensionTypes.Formatters and Unity.SmartStrings.Extensions.WellKnownExtensionTypes.Sources
+ for a complete list of well-known types.
+ 
+ </para>
+      </summary>
+      <param name="settings">The Unity.SmartStrings.Core.Settings.SmartSettings to use, or null for default settings.</param>
+      <returns>
+        <para>A Unity.SmartStrings.SmartFormatter with core extensions registered:
+ 
+ Unity.SmartStrings.Core.Extensions.ISources:
+ Unity.SmartStrings.Extensions.StringSource, Unity.SmartStrings.Extensions.ListFormatter, Unity.SmartStrings.Extensions.DictionarySource,
+ Unity.SmartStrings.Extensions.PropertiesSource, Unity.SmartStrings.Extensions.DefaultSource, Unity.SmartStrings.Extensions.KeyValuePairSourceUnity.SmartStrings.Core.Extensions.IFormatters:
+ Unity.SmartStrings.Extensions.ListFormatter, Unity.SmartStrings.Extensions.PluralLocalizationFormatter,
+ Unity.SmartStrings.Extensions.ConditionalFormatter, Unity.SmartStrings.Extensions.IsMatchFormatter, Unity.SmartStrings.Extensions.NullFormatter,
+ Unity.SmartStrings.Extensions.ChooseFormatter, Unity.SmartStrings.Extensions.SubStringFormatter, Unity.SmartStrings.Extensions.DefaultFormatter.
+ 
+ </para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Smart.Default">
+      <summary>
+        <para>
+ The default Unity.SmartStrings.SmartFormatter used by the static Unity.SmartStrings.Smart formatting methods.
+ If not set, a formatter from Unity.SmartStrings.Smart.CreateDefaultSmartFormat is used.
+ 
+ Using the ThreadStaticAttribute, Unity.SmartStrings.Smart.Default returns isolated instances of the Unity.SmartStrings.SmartFormatter in each thread.
+ As Unity.SmartStrings.Smart.Default is thread-static, customizations must be applied on each thread.
+ 
+ 
+ Note that the internal object pools are shared across all threads and are not thread safe,
+ so formatting from multiple threads concurrently is not supported.
+ 
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.Format(System.String,System.Object[])">
+      <summary>
+        <para>
+ Replaces the format items in the specified format string with the string representation or the corresponding object.
+ </para>
+      </summary>
+      <param name="format">A composite format string.</param>
+      <param name="args">The objects to format.</param>
+      <returns>
+        <para>The format items in the specified format string replaced with the string representation or the corresponding object.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.Format(System.IFormatProvider,System.String,System.Object[])">
+      <summary>
+        <para>
+ Replaces the format items in the specified format string with the string representation or the corresponding object.
+ </para>
+      </summary>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="format">A composite format string.</param>
+      <param name="args">The objects to format.</param>
+      <returns>
+        <para>The format items in the specified format string replaced with the string representation or the corresponding object.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.Format(System.String,System.Object,System.Object,System.Object)">
+      <summary>
+        <para>
+ Replaces the format items in the specified format string with the string representation or the corresponding object.
+ </para>
+      </summary>
+      <param name="format">A composite format string.</param>
+      <param name="arg0">The first object to format.</param>
+      <param name="arg1">The second object to format.</param>
+      <param name="arg2">The third object to format.</param>
+      <returns>
+        <para>The format items in the specified format string replaced with the string representation or the corresponding object.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.Format(System.String,System.Object,System.Object)">
+      <summary>
+        <para>
+ Replaces the format items in the specified format string with the string representation or the corresponding object.
+ </para>
+      </summary>
+      <param name="format">A composite format string.</param>
+      <param name="arg0">The first object to format.</param>
+      <param name="arg1">The second object to format.</param>
+      <returns>
+        <para>The format items in the specified format string replaced with the string representation or the corresponding object.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Smart.Format(System.String,System.Object)">
+      <summary>
+        <para>
+ Replaces the format items in the specified format string with the string representation or the corresponding object.
+ </para>
+      </summary>
+      <param name="format">A composite format string.</param>
+      <param name="arg0">The object to format.</param>
+      <returns>
+        <para>The format items in the specified format string replaced with the string representation or the corresponding object.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Smart.Project">
+      <summary>
+        <para>
+ The Unity.SmartStrings.SmartFormatter from the active project Unity.SmartStrings.SmartStringsSettings,
+ or null if no Unity.SmartStrings.SmartStringsSettings is active.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.SmartExtensions">
+      <summary>
+        <para>
+ Provides extension methods that apply Smart String formatting to Text.StringBuilder, IO.TextWriter, and string.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartExtensions.AppendLineSmart(System.Text.StringBuilder,System.String,System.Object[])">
+      <summary>
+        <para> Appends a formatted string followed by a line terminator, using the same semantics as Unity.SmartStrings.Smart.Format. </para>
+      </summary>
+      <param name="sb">Target Text.StringBuilder for the formatted output.</param>
+      <param name="format">Composite format string that defines how the arguments are formatted.</param>
+      <param name="args">Arguments to insert into the formatted output.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartExtensions.AppendSmart(System.Text.StringBuilder,System.String,System.Object[])">
+      <summary>
+        <para> Appends a formatted string, using the same semantics as Unity.SmartStrings.Smart.Format. </para>
+      </summary>
+      <param name="sb">Target Text.StringBuilder for the formatted output.</param>
+      <param name="format">Composite format string that defines how the arguments are formatted.</param>
+      <param name="args">Arguments to insert into the formatted output.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartExtensions.FormatSmart(System.String,System.Object[])">
+      <summary>
+        <para> Formats the specified arguments, using this string as the composite format string. </para>
+      </summary>
+      <param name="format">Composite format string that defines how the arguments are formatted.</param>
+      <param name="args">Arguments to insert into the formatted output.</param>
+      <returns>
+        <para>A new string with the format items replaced by the formatted arguments.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartExtensions.WriteLineSmart(System.IO.TextWriter,System.String,System.Object[])">
+      <summary>
+        <para> Writes a formatted string followed by a line terminator, using the same semantics as Unity.SmartStrings.Smart.Format. </para>
+      </summary>
+      <param name="writer">Target IO.TextWriter for the formatted output.</param>
+      <param name="format">Composite format string that defines how the arguments are formatted.</param>
+      <param name="args">Arguments to insert into the formatted output.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartExtensions.WriteSmart(System.IO.TextWriter,System.String,System.Object[])">
+      <summary>
+        <para> Writes a formatted string, using the same semantics as Unity.SmartStrings.Smart.Format. </para>
+      </summary>
+      <param name="writer">Target IO.TextWriter for the formatted output.</param>
+      <param name="format">Composite format string that defines how the arguments are formatted.</param>
+      <param name="args">Arguments to insert into the formatted output.</param>
+    </member>
+    <member name="T:Unity.SmartStrings.SmartFormatter">
+      <summary>
+        <para>
+ Constructs formatted strings by invoking each registered source and formatter extension.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.AddExtensions(Unity.SmartStrings.Core.Extensions.ISource[])">
+      <summary>
+        <para>
+ Adds Unity.SmartStrings.Core.Extensions.ISource extensions to the Unity.SmartStrings.SmartFormatter.GetSourceExtensions list of this formatter,
+ if the Type has not been added before. Unity.SmartStrings.Extensions.WellKnownExtensionTypes.Sources are inserted
+ at the recommended position, all others are added at the end of the list.
+ 
+ If the extension implements Unity.SmartStrings.Core.Extensions.IInitializer, Unity.SmartStrings.Core.Extensions.IInitializer.Initialize will be invoked.
+ 
+ 
+ Extensions implementing Unity.SmartStrings.Core.Extensions.ISourceandUnity.SmartStrings.Core.Extensions.IFormatter
+ will be auto-registered for both.
+ 
+ </para>
+      </summary>
+      <param name="sourceExtensions">Unity.SmartStrings.Core.Extensions.ISource extensions in an arbitrary order.</param>
+      <returns>
+        <para>This Unity.SmartStrings.SmartFormatter instance.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.AddExtensions(Unity.SmartStrings.Core.Extensions.IFormatter[])">
+      <summary>
+        <para>
+ Adds Unity.SmartStrings.Core.Extensions.IFormatter extensions to the Unity.SmartStrings.SmartFormatter.GetFormatterExtensions list of this formatter,
+ if the Type has not been added before. Unity.SmartStrings.Extensions.WellKnownExtensionTypes.Formatters are inserted
+ at the recommended position, all others are added at the end of the list.
+ 
+ If the extension implements Unity.SmartStrings.Core.Extensions.IInitializer, Unity.SmartStrings.Core.Extensions.IInitializer.Initialize will be invoked.
+ 
+ 
+ Extensions implementing Unity.SmartStrings.Core.Extensions.ISourceandUnity.SmartStrings.Core.Extensions.IFormatter
+ will be auto-registered for both.
+ 
+ </para>
+      </summary>
+      <param name="formatterExtensions">Unity.SmartStrings.Core.Extensions.IFormatter extensions in an arbitrary order.</param>
+      <returns>
+        <para>This Unity.SmartStrings.SmartFormatter instance.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.#ctor(Unity.SmartStrings.Core.Settings.SmartSettings)">
+      <summary>
+        <para>
+ Creates a formatter that uses the specified settings.
+ </para>
+      </summary>
+      <param name="settings">
+ The Unity.SmartStrings.Core.Settings.SmartSettings to use, or null for default settings.
+ Any changes after passing settings as a parameter may not have effect.
+ </param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(System.String,System.Object[])">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="format">A composite format string.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(System.String,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="format">A composite format string.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(System.IFormatProvider,System.String,System.Object[])">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="format">A composite format string.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(System.IFormatProvider,System.String,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="format">A composite format string.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(Unity.SmartStrings.Core.Parsing.Format,System.Object[])">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="formatParsed">An instance of Unity.SmartStrings.Core.Parsing.Format that was returned by Unity.SmartStrings.Core.Parsing.Parser.ParseFormat.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(Unity.SmartStrings.Core.Parsing.Format,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="formatParsed">An instance of Unity.SmartStrings.Core.Parsing.Format that was returned by Unity.SmartStrings.Core.Parsing.Parser.ParseFormat.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(System.IFormatProvider,Unity.SmartStrings.Core.Parsing.Format,System.Object[])">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="formatParsed">An instance of Unity.SmartStrings.Core.Parsing.Format that was returned by Unity.SmartStrings.Core.Parsing.Parser.ParseFormat.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(System.IFormatProvider,Unity.SmartStrings.Core.Parsing.Format,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Replaces one or more format items in a specified string with the string representation of a specific object.
+ </para>
+      </summary>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="formatParsed">An instance of Unity.SmartStrings.Core.Parsing.Format that was returned by Unity.SmartStrings.Core.Parsing.Parser.ParseFormat.</param>
+      <param name="args">The object to format.</param>
+      <returns>
+        <para>Returns the formatted input with items replaced with their string representation.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.Format(Unity.SmartStrings.Core.Formatting.FormattingInfo)">
+      <summary>
+        <para>
+ Formats the specified Unity.SmartStrings.Core.Formatting.FormattingInfo.
+ </para>
+      </summary>
+      <param name="formattingInfo">Formatting context to process.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.FormatInto(Unity.SmartStrings.Core.Output.IOutput,System.String,System.Object[])">
+      <summary>
+        <para>
+ Writes the formatting result into an Unity.SmartStrings.Core.Output.IOutput instance.
+ </para>
+      </summary>
+      <param name="output">The Unity.SmartStrings.Core.Output.IOutput where the result is written to.</param>
+      <param name="format">The format string.</param>
+      <param name="args">The objects to format.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.FormatInto(Unity.SmartStrings.Core.Output.IOutput,System.String,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Writes the formatting result into an Unity.SmartStrings.Core.Output.IOutput instance.
+ </para>
+      </summary>
+      <param name="output">The Unity.SmartStrings.Core.Output.IOutput where the result is written to.</param>
+      <param name="format">The format string.</param>
+      <param name="args">The objects to format.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.FormatInto(Unity.SmartStrings.Core.Output.IOutput,System.IFormatProvider,System.String,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Writes the formatting result into an Unity.SmartStrings.Core.Output.IOutput instance.
+ </para>
+      </summary>
+      <param name="output">The Unity.SmartStrings.Core.Output.IOutput where the result is written to.</param>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="format">The format string.</param>
+      <param name="args">The objects to format.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.FormatInto(Unity.SmartStrings.Core.Output.IOutput,System.IFormatProvider,Unity.SmartStrings.Core.Parsing.Format,System.Object[])">
+      <summary>
+        <para>
+ Writes the formatting result into an Unity.SmartStrings.Core.Output.IOutput instance.
+ </para>
+      </summary>
+      <param name="output">The Unity.SmartStrings.Core.Output.IOutput where the result is written to.</param>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="format">An instance of Unity.SmartStrings.Core.Parsing.Format that was returned by Unity.SmartStrings.Core.Parsing.Parser.ParseFormat.</param>
+      <param name="args">The objects to format.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.FormatInto(Unity.SmartStrings.Core.Output.IOutput,System.IFormatProvider,Unity.SmartStrings.Core.Parsing.Format,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
+      <summary>
+        <para>
+ Writes the formatting result into an Unity.SmartStrings.Core.Output.IOutput instance.
+ </para>
+      </summary>
+      <param name="output">The Unity.SmartStrings.Core.Output.IOutput where the result is written to.</param>
+      <param name="provider">The IFormatProvider to use.</param>
+      <param name="formatParsed">An instance of Unity.SmartStrings.Core.Parsing.Format that was returned by Unity.SmartStrings.Core.Parsing.Parser.ParseFormat.</param>
+      <param name="args">The objects to format.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.GetFormatterExtension">
+      <summary>
+        <para>
+ Searches for a Formatter Extension of the given type, and returns it.
+ Returns null if the type cannot be found.
+ </para>
+      </summary>
+      <returns>
+        <para>The class implementing Unity.SmartStrings.Core.Extensions.IFormatter if found, else null.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.GetFormatterExtensions">
+      <summary>
+        <para>
+ Gets the Unity.SmartStrings.Core.Extensions.IFormatter formatter extensions registered with this formatter.
+ </para>
+      </summary>
+      <returns>
+        <para>A read-only list of the registered Unity.SmartStrings.Core.Extensions.IFormatter extensions.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.GetSourceExtension">
+      <summary>
+        <para>
+ Searches for a Source Extension of the given type, and returns it.
+ Returns null if the type cannot be found.
+ </para>
+      </summary>
+      <returns>
+        <para>The class implementing Unity.SmartStrings.Core.Extensions.ISource if found, else null.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.GetSourceExtensions">
+      <summary>
+        <para>
+ Gets the Unity.SmartStrings.Core.Extensions.ISource source extensions registered with this formatter.
+ </para>
+      </summary>
+      <returns>
+        <para>A read-only list of the registered Unity.SmartStrings.Core.Extensions.ISource extensions.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.InsertExtension(System.Int32,Unity.SmartStrings.Core.Extensions.ISource)">
+      <summary>
+        <para>
+ Adds the Unity.SmartStrings.Core.Extensions.ISource extensions at the position of the Unity.SmartStrings.SmartFormatter.GetSourceExtensions list of this formatter,
+ if the Type has not been added before.
+ If the extension implements Unity.SmartStrings.Core.Extensions.IInitializer, Unity.SmartStrings.Core.Extensions.IInitializer.Initialize will be invoked.
+ </para>
+      </summary>
+      <param name="position">The position in the Unity.SmartStrings.SmartFormatter.SourceExtensions list where new extensions will be added.</param>
+      <param name="sourceExtension">Source extension to insert.</param>
+      <returns>
+        <para>This Unity.SmartStrings.SmartFormatter instance.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.InsertExtension(System.Int32,Unity.SmartStrings.Core.Extensions.IFormatter)">
+      <summary>
+        <para>
+ Adds the Unity.SmartStrings.Core.Extensions.IFormatter extension at the position of the Unity.SmartStrings.SmartFormatter.GetFormatterExtensions list of this formatter,
+ if the Type has not been added before.
+ If the extension implements Unity.SmartStrings.Core.Extensions.IInitializer, Unity.SmartStrings.Core.Extensions.IInitializer.Initialize will be invoked.
+ </para>
+      </summary>
+      <param name="position">The position in the formatter extensions list where the new extension is added.</param>
+      <param name="formatterExtension">Formatter extension to insert.</param>
+      <returns>
+        <para>This Unity.SmartStrings.SmartFormatter instance.</para>
+      </returns>
+    </member>
+    <member name="?:Unity.SmartStrings.SmartFormatter.OnFormattingFailure(System.EventHandler`1&lt;Unity.SmartStrings.FormattingErrorEventArgs&gt;)">
+      <summary>
+        <para>
+ Raised when an error occurs during formatting.
+ </para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="P:Unity.SmartStrings.SmartFormatter.Parser">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Parsing.Parser this formatter uses to parse format strings.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.RemoveFormatterExtension">
+      <summary>
+        <para>
+ Removes the Formatter Extension of the given type.
+ </para>
+      </summary>
+      <returns>
+        <para>true, if the extension was found and could be removed.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.SmartFormatter.RemoveSourceExtension">
+      <summary>
+        <para>
+ Removes Source Extension of the given type.
+ </para>
+      </summary>
+      <returns>
+        <para>true, if the extension was found and could be removed.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.SmartFormatter.Settings">
+      <summary>
+        <para>
+ The Unity.SmartStrings.Core.Settings.SmartSettings that control parsing and formatting for this formatter.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.SmartStringsSettings">
+      <summary>
+        <para>
+ Project-wide Smart Strings settings. The active instance is included in player builds as a
+ preloaded asset and exposes the default Unity.SmartStrings.SmartStringsSettings.SmartFormatter used to format Smart Strings.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.SmartStringsSettings.HasSettings">
+      <summary>
+        <para>true if an active Unity.SmartStrings.SmartStringsSettings instance is available.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.SmartStringsSettings.Instance">
+      <summary>
+        <para>
+ The active Unity.SmartStrings.SmartStringsSettings for the project, or null if none is set.
+ </para>
+      </summary>
+    </member>
+    <member name="P:Unity.SmartStrings.SmartStringsSettings.SmartFormatter">
+      <summary>
+        <para>
+ The default Unity.SmartStrings.SmartStringsSettings.SmartFormatter used to format Smart Strings in this project.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Utilities.FormatDelegate">
+      <summary>
+        <para>
+ Wraps a delegate so that it can be used as a parameter
+ to any string-formatting method (such as String.Format).
+ For example:
+ 
+ var textWithLink = string.Format("Please click on {0:this link}.", new FormatDelegate((text) =&gt; Html.ActionLink(text, "SomeAction"));
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Utilities.FormatDelegate.#ctor(System.Func`2&lt;System.String,System.String&gt;)">
+      <summary>
+        <para>
+ Creates a format delegate that wraps a function taking the format string.
+ </para>
+      </summary>
+      <param name="getFormat">Function that returns the formatted output for a given format string.</param>
+    </member>
+    <member name="M:Unity.SmartStrings.Utilities.FormatDelegate.#ctor(System.Func`3&lt;System.String,System.IFormatProvider,System.String&gt;)">
+      <summary>
+        <para>
+ Creates a format delegate that wraps a function taking the format string and a format provider.
+ </para>
+      </summary>
+      <param name="getFormat">Function that returns the formatted output for a given format string and format provider.</param>
+    </member>
+    <member name="T:Unity.SmartStrings.Utilities.PluralRules">
+      <summary>
+        <para>
+ Maps two-letter ISO language codes to their pluralization rules.
+ Unity.SmartStrings.Utilities.PluralRules are used by extensions like TimeFormatter and PluralLocalizationFormatter.
+ </para>
+      </summary>
+    </member>
+    <member name="M:Unity.SmartStrings.Utilities.PluralRules.GetPluralRule(System.String)">
+      <summary>
+        <para>Gets the pluralization rule for the specified language code.</para>
+      </summary>
+      <param name="twoLetterIsoLanguageName">The language code in two-letter ISO-639 format.</param>
+      <returns>
+        <para>The Unity.SmartStrings.Utilities.PluralRules.PluralRuleDelegate that selects the plural form for the specified language.</para>
+      </returns>
+    </member>
+    <member name="P:Unity.SmartStrings.Utilities.PluralRules.IsoLangToDelegate">
+      <summary>
+        <para>
+ Mapping of each two-letter ISO language code to its Unity.SmartStrings.Utilities.PluralRules.PluralRuleDelegate.
+ </para>
+      </summary>
+    </member>
+    <member name="T:Unity.SmartStrings.Utilities.PluralRules.PluralRuleDelegate">
+      <summary>
+        <para>
+ Determines which singular or plural word to use for a given quantity.
+ This allows each language to define its own behavior for singular or plural words.
+ </para>
+      </summary>
+      <param name="value">The value referenced by the singular or plural words.</param>
+      <param name="pluralWordsCount">The number of plural words available.</param>
+      <returns>
+        <para>The zero-based index of the plural word to use.</para>
+      </returns>
+    </member>
+    <member name="M:Unity.SmartStrings.Utilities.PluralRules.RestoreDefault">
+      <summary>
+        <para>
+ Restores the built-in pluralization rule for every language.
+ </para>
+      </summary>
+    </member>
+    <member name="A:UnityEngine.SmartStringsModule">
+      <summary>
+        <para>The Smart Strings module provides string formatting with named placeholders, pluralization, and conditional text, based on SmartFormat.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

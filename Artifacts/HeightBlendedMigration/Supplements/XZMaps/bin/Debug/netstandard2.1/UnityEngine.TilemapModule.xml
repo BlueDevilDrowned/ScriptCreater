@@ -1,0 +1,1825 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.TilemapModule</name>
+    </assembly>
+    <member name="T:UnityEngine.CustomGridBrushAttribute">
+      <summary>
+        <para>Attribute to define the class as a grid brush and to make it available in the palette window.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.CustomGridBrushAttribute.defaultBrush">
+      <summary>
+        <para>If set to true, brush will replace Unity built-in brush as the default brush in palette window.
+
+Only one class at any one time should set defaultBrush to true.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.CustomGridBrushAttribute.defaultName">
+      <summary>
+        <para>Name of the default instance of this brush.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.CustomGridBrushAttribute.hideAssetInstances">
+      <summary>
+        <para>Hide all asset instances of this brush in the tile palette window.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.CustomGridBrushAttribute.hideDefaultInstance">
+      <summary>
+        <para>Hide the default instance of brush in the tile palette window.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.CustomGridBrushAttribute.#ctor">
+      <summary>
+        <para>Attribute to define the class as a grid brush and to make it available in the palette window.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.CustomGridBrushAttribute.#ctor(System.Boolean,System.Boolean,System.Boolean,System.String)">
+      <summary>
+        <para>Attribute to define the class as a grid brush and to make it available in the palette window.</para>
+      </summary>
+      <param name="defaultBrush">If set to true, brush will replace Unity built-in brush as the default brush in palette window.</param>
+      <param name="defaultName">Name of the default instance of this brush.</param>
+      <param name="hideAssetInstances">Hide all asset instances of this brush in the tile palette window.</param>
+      <param name="hideDefaultInstance">Hide the default instance of brush in the tile palette window.</param>
+    </member>
+    <member name="T:UnityEngine.GridBrushBase">
+      <summary>
+        <para>Base class for authoring data on a grid with grid painting tools like paint, erase, pick, select and fill.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.BoxErase(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt)">
+      <summary>
+        <para>Erases data on a grid within the given bounds.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of the erase operation. By default the currently selected GameObject.</param>
+      <param name="position">The bounds to erase data from.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.BoxFill(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt)">
+      <summary>
+        <para>Box fills tiles and GameObjects into given bounds within the selected layers.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of box fill operation. By default the currently selected GameObject.</param>
+      <param name="position">The bounds to box fill data to.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.ChangeZPosition(System.Int32)">
+      <summary>
+        <para>Changes the Z position of the GridBrushBase.</para>
+      </summary>
+      <param name="change">Modify the Z position of GridBrushBase by this value.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Erase(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Erases data on a grid within the given bounds.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of the erase operation. By default the currently selected GameObject.</param>
+      <param name="position">The coordinates of the cell to erase data from.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Flip(UnityEngine.GridBrushBase/FlipAxis,UnityEngine.GridLayout/CellLayout)">
+      <summary>
+        <para>Flips the grid brush in the given GridBrushBase.FlipAxis.</para>
+      </summary>
+      <param name="flip">Axis to flip by.</param>
+      <param name="layout">CellLayout for flipping.</param>
+    </member>
+    <member name="T:UnityEngine.GridBrushBase.FlipAxis">
+      <summary>
+        <para>Flip tiles in the GridBrushBase along this axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.FlipAxis.X">
+      <summary>
+        <para>Flip the brush in the X Axis.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.FlipAxis.Y">
+      <summary>
+        <para>Flip the brush in the Y Axis.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.FloodFill(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Flood fills data onto a grid given the starting coordinates of the cell.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Targets of flood fill operation. By default the currently selected GameObject.</param>
+      <param name="position">Starting position of the flood fill.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Move(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt,UnityEngine.BoundsInt)">
+      <summary>
+        <para>Move is called when user moves the area previously selected with the selection marquee.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of the move operation. By default the currently selected GameObject.</param>
+      <param name="from">Source bounds of the move.</param>
+      <param name="to">Target bounds of the move.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.MoveEnd(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt)">
+      <summary>
+        <para>MoveEnd is called when user has ended the move of the area previously selected with the selection marquee.</para>
+      </summary>
+      <param name="position">Layers affected by the move operation.</param>
+      <param name="brushTarget">Target of the move operation. By default the currently selected GameObject.</param>
+      <param name="gridLayout">Grid used for layout.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.MoveStart(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt)">
+      <summary>
+        <para>MoveEnd is called when user starts moving the area previously selected with the selection marquee.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of the move operation. By default the currently selected GameObject.</param>
+      <param name="position">Position where the move operation has started.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Paint(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Paints data into a grid within the given bounds.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of the paint operation. By default the currently selected GameObject.</param>
+      <param name="position">The coordinates of the cell to paint data to.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Pick(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Picks data from a grid given the coordinates of the cells.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Target of the paint operation. By default the currently selected GameObject.</param>
+      <param name="position">The coordinates of the cells to paint data from.</param>
+      <param name="pivot">Pivot of the picking brush.</param>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.ResetZPosition">
+      <summary>
+        <para>Resets Z position changes of the GridBrushBase.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Rotate(UnityEngine.GridBrushBase/RotationDirection,UnityEngine.GridLayout/CellLayout)">
+      <summary>
+        <para>Rotates all tiles on the grid brush with the given GridBrushBase.RotationDirection.</para>
+      </summary>
+      <param name="direction">Direction to rotate by.</param>
+      <param name="layout">CellLayout for rotating.</param>
+    </member>
+    <member name="T:UnityEngine.GridBrushBase.RotationDirection">
+      <summary>
+        <para>Rotate tiles in the GridBrushBase in this direction.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.RotationDirection.Clockwise">
+      <summary>
+        <para>Rotates tiles clockwise.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.RotationDirection.CounterClockwise">
+      <summary>
+        <para>Rotates tiles counter-clockwise.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.GridBrushBase.Select(UnityEngine.GridLayout,UnityEngine.GameObject,UnityEngine.BoundsInt)">
+      <summary>
+        <para>Select an area of a grid.</para>
+      </summary>
+      <param name="gridLayout">Grid used for layout.</param>
+      <param name="brushTarget">Targets of paint operation. By default the currently selected GameObject.</param>
+      <param name="position">Area to get selected.</param>
+    </member>
+    <member name="T:UnityEngine.GridBrushBase.Tool">
+      <summary>
+        <para>Options for the Tool mode of the GridBrushBase.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Box">
+      <summary>
+        <para>Identifies a Box Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Erase">
+      <summary>
+        <para>Identifies an Erase Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.FloodFill">
+      <summary>
+        <para>Identifies a Flood Fill Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Move">
+      <summary>
+        <para>Identifies a Move Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Other">
+      <summary>
+        <para>Identifies a Custom Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Paint">
+      <summary>
+        <para>Identifies a Paint Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Pick">
+      <summary>
+        <para>Identifies a Pick Tool.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.GridBrushBase.Tool.Select">
+      <summary>
+        <para>Identifies a Select Tool.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.ITilemap">
+      <summary>
+        <para>Class passed onto Tiles when information is queried from the Tiles.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.ITilemap.cellBounds">
+      <summary>
+        <para>Returns the boundaries of the Tilemap in cell size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.ITilemap.localBounds">
+      <summary>
+        <para>Returns the boundaries of the Tilemap in local space size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.ITilemap.origin">
+      <summary>
+        <para>The origin of the Tilemap in cell position.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.ITilemap.size">
+      <summary>
+        <para>The size of the Tilemap in cells.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.#ctor(UnityEngine.Tilemaps.Tilemap)">
+      <summary>
+        <para>Initializes and returns an instance of Tilemaps.ITilemap.</para>
+      </summary>
+      <param name="tilemap">The Tilemaps.Tilemap to wrap.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetColor(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the color of a Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Color of the Tilemaps.Tile at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetComponent">
+      <summary>
+        <para>Returns the component of type T if the GameObject of the tile map has one attached, null if it doesn't.</para>
+      </summary>
+      <returns>
+        <para>The Component of type T to retrieve.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetSprite(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Sprite used in a Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Sprite at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.Tile at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.Tile placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.Tile of type T at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.Tile of type T placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetTileEntityId(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the EntityId of the Tilemaps.Tile at the given xyz coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">The position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>EntityId of the Tilemaps.TileBase placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetTileFlags(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tile Flags of the Tile at the given position.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.TileFlags from the Tilemaps.Tile.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.GetTransformMatrix(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the transform matrix of a Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The transform matrix.</para>
+      </returns>
+    </member>
+    <member name="?:UnityEngine.Tilemaps.ITilemap.implop_ITilemap(Tilemap)(UnityEngine.Tilemaps.Tilemap)">
+      <summary>
+        <para>Tilemaps.Tilemap can be implicitly converted to Tilemaps.ITilemap.</para>
+      </summary>
+      <param name="tilemap">The Tilemaps.Tilemap to convert to Tilemaps.ITilemap.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.RefreshTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Refreshes a Tile at the given XYZ coordinates of a cell in the :Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.ITilemap.RefreshTiles(Unity.Collections.NativeArray`1&lt;UnityEngine.Vector3Int&gt;)">
+      <summary>
+        <para>Refreshes Tiles at the given xyz coordinates of cells in the Tilemaps.Tilemap from the array.</para>
+      </summary>
+      <param name="positionArray">An array of positions of Tiles on the Tilemaps.Tilemap to refresh.</param>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tile">
+      <summary>
+        <para>Class for a default tile in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tile.color">
+      <summary>
+        <para>Color of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tile.flags">
+      <summary>
+        <para>Tilemaps.TileFlags of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tile.gameObject">
+      <summary>
+        <para>GameObject of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tile.sprite">
+      <summary>
+        <para>Sprite to be rendered at the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tile.transform">
+      <summary>
+        <para>Matrix4x4|Transform matrix of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tile.ColliderType">
+      <summary>
+        <para>Enum for determining what collider shape is generated for this Tilemaps.Tile by the Tilemaps.TilemapCollider2D.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tile.ColliderType.Grid">
+      <summary>
+        <para>The grid layout boundary outline is used as the collider shape for the Tilemaps.Tile by the Tilemaps.TilemapCollider2D.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tile.ColliderType.None">
+      <summary>
+        <para>No collider shape is generated for the Tilemaps.Tile by the Tilemaps.TilemapCollider2D.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tile.ColliderType.Sprite">
+      <summary>
+        <para>The Sprite outline is used as the collider shape for the Tilemaps.Tile by the Tilemaps.TilemapCollider2D.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tile.GetTileData(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&amp;)">
+      <summary>
+        <para>Retrieves the tile rendering data for the Tilemaps.Tile.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="tilemap">The Tilemaps.Tilemap the tile is present on.</param>
+      <param name="tileData">Data to render the tile. This is filled with Tilemaps.Tile, Tilemaps.Tile._color and Tilemaps.Tile._transform.</param>
+      <returns>
+        <para>Whether the call was successful. This returns true for Tilemaps.Tile.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tile.OnEnable">
+      <summary>
+        <para></para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tile.OnValidate">
+      <summary>
+        <para></para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileAnimationData">
+      <summary>
+        <para>A Struct for the required data for animating a Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationData.animatedSprites">
+      <summary>
+        <para>The array of that are ordered by appearance in the animation.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationData.animationSpeed">
+      <summary>
+        <para>The animation speed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationData.animationStartTime">
+      <summary>
+        <para>The start time of the animation. The animation will begin at this time offset.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationData.flags">
+      <summary>
+        <para>Tilemaps.TileAnimationFlags for controlling the Tile Animation.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileAnimationEntityIdData">
+      <summary>
+        <para>A struct for the required data for animating a Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationEntityIdData.animatedSpritesEntityIds">
+      <summary>
+        <para>The array of  the Entityids of, ordered by appearance in the animation.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationEntityIdData.animationSpeed">
+      <summary>
+        <para>The animation speed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationEntityIdData.animationStartTime">
+      <summary>
+        <para>The start time of the animation. The animation will begin at this time offset.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileAnimationEntityIdData.flags">
+      <summary>
+        <para>Tilemaps.TileAnimationFlags for controlling the Tile animation.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileAnimationFlags">
+      <summary>
+        <para>Options for flags controlling behavior for a Tile Animation on a Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileAnimationFlags.LoopOnce">
+      <summary>
+        <para>Loops the Tile Animation once, then stops on the last Sprite of the animation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileAnimationFlags.None">
+      <summary>
+        <para>Sets no Tilemaps.TileAnimationFlags and the Tile Animation will run normally.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileAnimationFlags.PauseAnimation">
+      <summary>
+        <para>Pauses the Tile Animation, stopping it from running.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileAnimationFlags.SyncAnimation">
+      <summary>
+        <para>When set, this will sync the start time of this Tile Animation with other Tile Animations that are the same.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileAnimationFlags.UnscaledTime">
+      <summary>
+        <para>When true, the unscaled time is used to run the Tile Animation. Otherwise, the scaled time is used to run the Tile Animation.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileAnimationFlags.UpdatePhysics">
+      <summary>
+        <para>Updates the Physics Shape in the Tilemaps.TilemapCollider2D whenever the Tile Animation switches to the next Sprite in the animation.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileBase">
+      <summary>
+        <para>Base class for a tile in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileBase.cachedEntityId">
+      <summary>
+        <para>The cached EntityId of the Tilemaps.TileBase.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TileBase.GetTileAnimationData(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileAnimationData&amp;)">
+      <summary>
+        <para>Retrieves any tile animation data from the scripted tile.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="tilemap">The Tilemaps.Tilemap the tile is present on.</param>
+      <param name="tileAnimationData">Data to run an animation on the tile.</param>
+      <returns>
+        <para>Whether the call was successful.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TileBase.GetTileData(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&amp;)">
+      <summary>
+        <para>Retrieves any tile rendering data from the scripted tile.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="tilemap">The Tilemaps.Tilemap the tile is present on.</param>
+      <param name="tileData">Data to render the tile.</param>
+      <returns>
+        <para>Whether the call was successful.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TileBase.OnDisable">
+      <summary>
+        <para>This function is called when the Tilemaps.TileBase goes out of scope. Override this to deinitialize any data for the Tilemaps.TileBase.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TileBase.OnEnable">
+      <summary>
+        <para>This function is called when the Tilemaps.TileBase is loaded. Override this to initialize any data for the Tilemaps.TileBase.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TileBase.RefreshTile(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap)">
+      <summary>
+        <para>This method is called when the tile is refreshed.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="tilemap">The Tilemaps.Tilemap the tile is present on.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TileBase.StartUp(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.GameObject)">
+      <summary>
+        <para>StartUp is called on the first frame of the running Scene.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="tilemap">The Tilemaps.Tilemap the tile is present on.</param>
+      <param name="go">The GameObject instantiated for the Tile.</param>
+      <returns>
+        <para>Whether the call was successful.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileChangeData">
+      <summary>
+        <para>Represents the position and Tilemaps.Tile information to change in a Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileChangeData.color">
+      <summary>
+        <para>The color to set the Tilemaps.Tile to.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileChangeData.position">
+      <summary>
+        <para>The position to change Tilemaps.Tile properties at.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileChangeData.tile">
+      <summary>
+        <para>The Tilemaps.Tile to set on the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileChangeData.transform">
+      <summary>
+        <para>The transform matrix to set the Tilemaps.Tile to.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileChangeReason">
+      <summary>
+        <para>Options for the reasons why tiles of a Tilemaps.Tilemap have changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.ColliderType">
+      <summary>
+        <para>The Tilemaps.Tile.ColliderType of a Tilemaps.Tile changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.Color">
+      <summary>
+        <para>The color of a Tilemaps.Tile changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.Flags">
+      <summary>
+        <para>The Tilemaps.TileFlags of a Tilemaps.Tile changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.Physics">
+      <summary>
+        <para>The changes which require colliders to be rebuilt for physics.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.Replaced">
+      <summary>
+        <para>A Tilemaps.Tile was set, cleared or refreshed, so any of its properties may have changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.SpriteAnimation">
+      <summary>
+        <para>The animation of a Tilemaps.Tile changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileChangeReason.Transform">
+      <summary>
+        <para>The transform matrix of a Tilemaps.Tile changed.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileData">
+      <summary>
+        <para>A Struct for the required data for rendering a Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.color">
+      <summary>
+        <para>Color of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.flags">
+      <summary>
+        <para>Tilemaps.TileFlags of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.gameObject">
+      <summary>
+        <para>GameObject of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.gameObjectEntityId">
+      <summary>
+        <para>EntityId of the GameObject of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.sprite">
+      <summary>
+        <para>Sprite to be rendered at the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.spriteEntityId">
+      <summary>
+        <para>EntityId of the Sprite to be rendered at the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TileData.transform">
+      <summary>
+        <para>Matrix4x4|Transform matrix of the Tilemaps.Tile.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TileFlags">
+      <summary>
+        <para>Flags controlling behavior for the Tilemaps.TileBase.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileFlags.InstantiateGameObjectRuntimeOnly">
+      <summary>
+        <para>Tilemaps.TileBase does not instantiate its associated GameObject in editor mode and instantiates it only during Play mode.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileFlags.KeepGameObjectRuntimeOnly">
+      <summary>
+        <para>Keeps the Tilemaps.TileBase's associated GameObject in Play mode when replaced with another Tilemaps.TileBase or erased</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileFlags.LockAll">
+      <summary>
+        <para>All lock flags.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileFlags.LockColor">
+      <summary>
+        <para>Tilemaps.TileBase locks any color set by brushes or the user.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileFlags.LockTransform">
+      <summary>
+        <para>Tilemaps.TileBase locks any transform matrix set by brushes or the user.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TileFlags.None">
+      <summary>
+        <para>No Tilemaps.TileFlags are set.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tilemap">
+      <summary>
+        <para>The Tilemap stores Sprites in a layout marked by a Grid component.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.animationFrameRate">
+      <summary>
+        <para>The frame rate for all Tile animations in the Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.cellBounds">
+      <summary>
+        <para>Returns the boundaries of the Tilemaps.Tilemap in cell size.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.color">
+      <summary>
+        <para>The color of the Tilemaps.Tilemap layer.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.editorPreviewOrigin">
+      <summary>
+        <para>The origin of the Tilemaps.Tilemap in cell position inclusive of editor preview Tiles.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.editorPreviewSize">
+      <summary>
+        <para>The size of the Tilemaps.Tilemap in cells inclusive of editor preview Tiles.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.layoutGrid">
+      <summary>
+        <para>Gets the Grid associated with this Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.localBounds">
+      <summary>
+        <para>Returns the boundaries of the Tilemaps.Tilemap in local space size.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Tilemaps.Tilemap.loopEndedForTileAnimation(System.Action`2&lt;UnityEngine.Tilemaps.Tilemap,Unity.Collections.NativeArray`1&lt;UnityEngine.Vector3Int&gt;&gt;)">
+      <summary>
+        <para>Callback when Tiles on a Tilemap have reached the end of their loop for their Tile Animation.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.orientation">
+      <summary>
+        <para>Orientation of the Tiles in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.orientationMatrix">
+      <summary>
+        <para>Orientation Matrix of the orientation of the Tiles in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.origin">
+      <summary>
+        <para>The origin of the Tilemaps.Tilemap in cell position.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.size">
+      <summary>
+        <para>The size of the Tilemaps.Tilemap in cells.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.tileAnchor">
+      <summary>
+        <para>Gets the anchor point of Tiles in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Tilemaps.Tilemap.tilemapChanged(System.Action`2&lt;UnityEngine.Tilemaps.Tilemap,UnityEngine.Tilemaps.TilemapChangeReason&gt;)">
+      <summary>
+        <para>Callback when a Tilemap itself has changed, rather than the Tiles on it.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.Tilemaps.Tilemap.tilemapPositionsChanged(System.Action`2&lt;UnityEngine.Tilemaps.Tilemap,Unity.Collections.NativeArray`1&lt;UnityEngine.Vector3Int&gt;&gt;)">
+      <summary>
+        <para>Callback when Tiles on a Tilemap have changed.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.Tilemaps.Tilemap.tilemapTileChanged(System.Action`2&lt;UnityEngine.Tilemaps.Tilemap,UnityEngine.Tilemaps.Tilemap/SyncTile[]&gt;)">
+      <summary>
+        <para>Callback when Tiles on a Tilemap have changed.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.Tilemaps.Tilemap.tilemapTilesChanged(System.Action`3&lt;UnityEngine.Tilemaps.Tilemap,Unity.Collections.NativeArray`1&lt;UnityEngine.Tilemaps.Tilemap/SyncTile&gt;,UnityEngine.Tilemaps.TileChangeReason&gt;)">
+      <summary>
+        <para>Callback when Tiles on a Tilemap have changed, without allocating.</para>
+      </summary>
+      <param name="value"></param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.AddTileAnimationFlags(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileAnimationFlags)">
+      <summary>
+        <para>Adds the Tilemaps.TileAnimationFlags onto the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">The position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="flags">Tilemaps.TileAnimationFlags to add with bitwise OR (|) onto the flags provided by Tilemaps.Tile.Tilemaps.TileBase.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.AddTileFlags(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileFlags)">
+      <summary>
+        <para>Adds the Tilemaps.TileFlags onto the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="flags">Tilemaps.TileFlags to add (with bitwise or) onto the flags provided by Tilemaps.Tile.Tilemaps.TileBase.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.BoxFill(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase,System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+        <para>Does a box fill with the given Tilemaps.Tile on the Tilemaps.Tilemap. Starts from given coordinates and fills the limits from start to end (inclusive).</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <param name="tile">Tilemaps.Tile to place.</param>
+      <param name="startX">The minimum X coordinate limit to fill to.</param>
+      <param name="startY">The minimum Y coordinate limit to fill to.</param>
+      <param name="endX">The maximum X coordinate limit to fill to.</param>
+      <param name="endY">The maximum Y coordinate limit to fill to.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.ClearAllEditorPreviewTiles">
+      <summary>
+        <para>Clears all editor preview Tilemaps.Tiles that are placed in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.ClearAllTiles">
+      <summary>
+        <para>Clears all Tilemaps.Tiles that are placed in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.CompressBounds">
+      <summary>
+        <para>Compresses the Tilemaps.Tilemap._origin and Tilemaps.Tilemap._size of the Tilemaps.Tilemap to bounds where Tilemaps.Tiles exist.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.ContainsTile(UnityEngine.Tilemaps.TileBase)">
+      <summary>
+        <para>Returns true if the Tilemaps.Tilemap contains the given Tilemaps.Tile. Returns false if not.</para>
+      </summary>
+      <param name="tileAsset">Tile to check.</param>
+      <returns>
+        <para>Whether the Tilemaps.Tilemap contains the Tile.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.DeleteCells(UnityEngine.Vector3Int,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Removes cells from within the Tilemaps.Tilemap's bounds.</para>
+      </summary>
+      <param name="position">The target position to remove from.</param>
+      <param name="deleteCells">The number of columns, rows and layers of cells to remove.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.DeleteCells(UnityEngine.Vector3Int,System.Int32,System.Int32,System.Int32)">
+      <summary>
+        <para>Removes cells from within the Tilemaps.Tilemap's bounds.</para>
+      </summary>
+      <param name="position">Target position to delete from.</param>
+      <param name="numColumns">The number of columns to remove.</param>
+      <param name="numRows">The number of rows to remove.</param>
+      <param name="numLayers">The number of layers of cells to remove.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.EditorPreviewBoxFill(UnityEngine.Vector3Int,UnityEngine.Object,System.Int32,System.Int32,System.Int32,System.Int32)">
+      <summary>
+        <para>Does an editor preview of a box fill with the given Tilemaps.Tile on the Tilemaps.Tilemap. Starts from given coordinates and fills the limits from start to end (inclusive).</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <param name="tile">Tilemaps.Tile to place.</param>
+      <param name="startX">The start X coordinate limit to fill to.</param>
+      <param name="startY">The start Y coordinate limit to fill to.</param>
+      <param name="endX">The ending X coordinate limit to fill to.</param>
+      <param name="endY">The ending Y coordinate limit to fill to.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.EditorPreviewFloodFill(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase)">
+      <summary>
+        <para>Does an editor preview of a flood fill with the given Tilemaps.Tile to place. on the Tilemaps.Tilemap starting from the given coordinates.</para>
+      </summary>
+      <param name="position">Start position of the flood fill on the Tilemaps.Tilemap.</param>
+      <param name="tile">Tilemaps.TileBase to place.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.FloodFill(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase)">
+      <summary>
+        <para>Does a flood fill with the given Tilemaps.Tile to place. on the Tilemaps.Tilemap starting from the given coordinates.</para>
+      </summary>
+      <param name="position">Start position of the flood fill on the Tilemaps.Tilemap.</param>
+      <param name="tile">Tilemaps.Tile to place.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetAnimationFrame(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Retrieves the current animation frame for a Tile at the given position.</para>
+      </summary>
+      <param name="position">Grid cell position.</param>
+      <returns>
+        <para>Returns the current animation frame. Returns -1 when there is no animation for the Tile at the given position.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetAnimationFrameCount(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Retrieves the number of animation frames for a Tile at the given position.</para>
+      </summary>
+      <param name="position">Grid cell position.</param>
+      <returns>
+        <para>Returns the number of animation frames. Returns 0 when there is no animation for the Tile at the given position.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetAnimationTime(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Retrieves the current running animation time for a Tile at the given position.</para>
+      </summary>
+      <param name="position">Grid cell position.</param>
+      <returns>
+        <para>Returns the running animation time in seconds.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetCellCenterLocal(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the logical center coordinate of a Grid cell in local space. The logical center for a cell of the Tilemaps.Tilemap is defined by the Tile Anchor of the Tilemap.</para>
+      </summary>
+      <param name="position">Grid cell position.</param>
+      <returns>
+        <para>Returns the center of the cell transformed into local space coordinates.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetCellCenterWorld(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the logical center coordinate of a Grid cell in world space. The logical center for a cell of the Tilemaps.Tilemap is defined by the Tile Anchor of the Tilemap.</para>
+      </summary>
+      <param name="position">Grid cell position.</param>
+      <returns>
+        <para>Returns the center of the cell transformed into world space coordinates.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetColliderType(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Collider type of a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Collider type of the Tilemaps.Tile at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetColor(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Color of a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Color of the Tilemaps.Tile at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewColor(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Color of an editor preview Tilemaps.Tile given the XYZ coordinates of a cell in the  Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Color of the editor preview Tilemaps.Tile at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewSprite(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Sprite used in an editor preview Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Sprite at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the editor preview Tilemaps.Tile at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The editor preview Tilemaps.Tile placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the editor preview Tilemaps.Tile at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The editor preview Tilemaps.Tile placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewTileEntityId(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the EntityId of the editor preview Tilemaps.Tile at the given xyz coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">The position of the editor preview Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The EntityId of the editor preview Tilemaps.Tile placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewTileFlags(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.TileFlags of the editor preview Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.TileFlags from the editor preview Tilemaps.Tile.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetEditorPreviewTransformMatrix(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the transform matrix of an editor preview Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The transform matrix.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetInstantiatedObject(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the GameObject instantiated by a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>GameObject instantiated by the Tilemaps.Tile at the position.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetObjectToInstantiate(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the GameObject which will be instantiated by a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">The position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Returns the GameObject to be instantiated by the Tilemaps.Tile at the position.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetSprite(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Sprite used in a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Sprite at the XYZ coordinate.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.Tile at the given XYZ coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.TileBase placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.Tile of type T at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.TileBase|Tile of type T placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileAnimationFlags(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.TileAnimationFlags of the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">The position of the Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Returns the Tilemaps.TileAnimationFlags of the Tilemaps.Tile.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileEntityId(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the EntityId of the Tilemaps.Tile at the given xyz coordinates of a cell in the Tilemap.</para>
+      </summary>
+      <param name="position">The position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The EntityId of the Tilemaps.TileBase placed at the cell.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileEntityIdsFromBlockOffset(UnityEngine.Vector3Int,UnityEngine.BoundsInt,Unity.Collections.NativeArray`1&lt;UnityEngine.EntityId&gt;)">
+      <summary>
+        <para>Gets a block of EntityIds at an offset from the position and stores them into the given array of EntityIds in the same order.</para>
+      </summary>
+      <param name="position">The position on the Tilemaps.Tilemap.</param>
+      <param name="blockOffset">Bounds of the offsets from the position on the Tilemaps.Tilemap.</param>
+      <param name="tileEntityIds">Array to hold the resulting EntityIds.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileEntityIdsFromOffsets(UnityEngine.Vector3Int,Unity.Collections.NativeArray`1&lt;UnityEngine.Vector3Int&gt;,Unity.Collections.NativeArray`1&lt;UnityEngine.EntityId&gt;)">
+      <summary>
+        <para>Gets an array of EntityIds at an offset from the position and stores them into the given array of EntityIds in the same order.</para>
+      </summary>
+      <param name="position">The position on the Tilemaps.Tilemap.</param>
+      <param name="offsets">Offsets from the position on the Tilemaps.Tilemap.</param>
+      <param name="tileEntityIds">Array to hold the resulting EntityIds.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTileFlags(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the Tilemaps.TileFlags of the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>Tilemaps.TileFlags from the Tilemaps.Tile.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTiles(UnityEngine.BoundsInt,Unity.Collections.Allocator)">
+      <summary>
+        <para>Retrieves all tiles within the given bounds as a Tilemaps.Tilemap.TileArray.</para>
+      </summary>
+      <param name="bounds">The bounds from which to retrieve the tiles.</param>
+      <param name="allocator">The Unity.Collections.Allocator type used to allocate the memory for the Tilemaps.Tilemap.TileArray.  You must use Unity.Collections.Allocator.Temp, Unity.Collections.Allocator.Domain, or Unity.Collections.Allocator.Persistent. The default value is Unity.Collections.Allocator.Temp.</param>
+      <returns>
+        <para>A Tilemaps.Tilemap.TileArray containing all the Tilemaps.TileBase instances in the bounds.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTiles(UnityEngine.BoundsInt,Unity.Collections.MemoryLabel)">
+      <summary>
+        <para>Retrieves a Tilemaps.Tilemap.TileArray within the given bounds.</para>
+      </summary>
+      <param name="bounds">The bounds to retrieve from.</param>
+      <param name="memoryLabel">Memory label used for profiling and tracking this memory allocation in Unity.</param>
+      <returns>
+        <para>Tilemaps.Tilemap.TileArray containing the Tilemaps.TileBases in the bounds.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTiles(UnityEngine.BoundsInt,UnityEngine.Tilemaps.Tilemap/PositionArray&amp;,UnityEngine.Tilemaps.Tilemap/TileArray&amp;,Unity.Collections.Allocator,System.Boolean)">
+      <summary>
+        <para>Retrieves all tiles within the given bounds as a Tilemaps.Tilemap.TileArray, with their corresponding positions in a Tilemaps.Tilemap.PositionArray. Only positions containing a Tilemaps.Tile are included.</para>
+      </summary>
+      <param name="bounds">The bounds from which to retrieve the tiles.</param>
+      <param name="positions">A Tilemaps.Tilemap.PositionArray containing the position of each Tilemaps.TileBase in the bounds.</param>
+      <param name="tiles">The Tilemaps.Tilemap.TileArray containing all the Tilemaps.TileBase instances in the bounds.</param>
+      <param name="allocator">The Unity.Collections.Allocator type used to allocate the memory for the Tilemaps.Tilemap.TileArray.  You must use Unity.Collections.Allocator.Temp, Unity.Collections.Allocator.Domain, or Unity.Collections.Allocator.Persistent. The default value is Unity.Collections.Allocator.Temp.</param>
+      <param name="withinBounds">Whether to retrieve the tiles within the given bounds.</param>
+      <returns>
+        <para>The number of positions and tiles retrieved.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTiles(UnityEngine.BoundsInt,UnityEngine.Tilemaps.Tilemap/PositionArray&amp;,UnityEngine.Tilemaps.Tilemap/TileArray&amp;,Unity.Collections.MemoryLabel,System.Boolean)">
+      <summary>
+        <para>Retrieves all tiles within the given bounds as a Tilemaps.Tilemap.TileArray, with their corresponding positions in a Tilemaps.Tilemap.PositionArray. Only positions containing a Tilemaps.Tile are included.</para>
+      </summary>
+      <param name="bounds">The bounds from which to retrieve the tiles.</param>
+      <param name="positions">A Tilemaps.Tilemap.PositionArray containing the position of each Tilemaps.TileBase in the bounds.</param>
+      <param name="tiles">The Tilemaps.Tilemap.TileArray containing all the Tilemaps.TileBase instances in the bounds.</param>
+      <param name="memoryLabel">Memory label used for profiling and tracking this memory allocation in Unity.</param>
+      <param name="withinBounds">Whether to retrieve the tiles within the given bounds. The default value is True.</param>
+      <returns>
+        <para>The number of positions and tiles retrieved.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTilesBlock(UnityEngine.BoundsInt)">
+      <summary>
+        <para>Retrieves an array of Tiles with the given bounds.</para>
+      </summary>
+      <param name="bounds">The bounds to retrieve from.</param>
+      <returns>
+        <para>The array of Tilemaps.Tiles at the given bounds.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTilesBlockNonAlloc(UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])">
+      <summary>
+        <para>Retrieves an array of Tiles with the given bounds.</para>
+      </summary>
+      <param name="bounds">The bounds to retrieve from.</param>
+      <param name="tiles">The array of Tilemaps.Tiles to contain the Tiles at the given bounds.</param>
+      <returns>
+        <para>Returns the number of Tiles retrieved, including null entries.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTilesRangeCount(UnityEngine.Vector3Int,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Retrieves the number of Tiles within the given range, inclusive of the Cells at both the starting position and the ending positions. This method begins at the given starting position and iterates through all available Z Positions, then iterates through the X and Y positions until it reaches the ending position.</para>
+      </summary>
+      <param name="startPosition">The starting position of the range to retrieve Tiles from.</param>
+      <param name="endPosition">The ending position of the range to retrieve Tiles from.</param>
+      <returns>
+        <para>Returns the number of Tiles within the given range.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTilesRangeNonAlloc(UnityEngine.Vector3Int,UnityEngine.Vector3Int,UnityEngine.Vector3Int[],UnityEngine.Tilemaps.TileBase[])">
+      <summary>
+        <para>Retrieves an array of Tiles within the given range, inclusive of the Cells at both the starting position and the ending positions. This method begins at the given starting position and iterates through all available Z Positions, then iterates through the X and Y positions until it reaches the ending position.</para>
+      </summary>
+      <param name="startPosition">The starting position of the range to retrieve Tiles from.</param>
+      <param name="endPosition">The ending position of the range to retrieve Tiles from.</param>
+      <param name="positions">The positions of Tiles within the given range.</param>
+      <param name="tiles">The Tiles within the given range.</param>
+      <returns>
+        <para>Returns the number of positions and Tiles retrieved.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetTransformMatrix(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Gets the transform matrix of a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+      <returns>
+        <para>The transform matrix.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedSprites(Unity.Collections.Allocator)">
+      <summary>
+        <para>Returns a Tilemaps.Tilemap.SpriteArray containing the unique Sprite instances used in the Tilemaps.Tilemap. The array is allocated using the given Allocator.</para>
+      </summary>
+      <param name="allocator">The allocator type used to allocate the memory for the Tilemaps.Tilemap.SpriteArray. The default value is Unity.Collections.Allocator.Temp.</param>
+      <returns>
+        <para>A Tilemaps.Tilemap.SpriteArray containing the all unique Sprite assets used in the Tilemaps.Tilemap.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedSprites(Unity.Collections.MemoryLabel)">
+      <summary>
+        <para>Returns a Tilemaps.Tilemap.SpriteArray containing the unique Sprite instances used in the Tilemaps.Tilemap. The array is allocated using the given Allocator.</para>
+      </summary>
+      <param name="memoryLabel">Memory label used for profiling and tracking this memory allocation in Unity.</param>
+      <returns>
+        <para>A Tilemaps.Tilemap.SpriteArray containing the all unique Sprite assets used in the Tilemaps.Tilemap.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedSpritesCount">
+      <summary>
+        <para>Gets the total number of different Sprites used in the Tilemaps.Tilemap.</para>
+      </summary>
+      <returns>
+        <para>The total number of different Sprites used in the Tilemaps.Tilemap.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedSpritesNonAlloc(UnityEngine.Sprite[])">
+      <summary>
+        <para>Fills the given array with the total number of different Sprites used in the Tilemaps.Tilemap and returns the number of Sprites filled.</para>
+      </summary>
+      <param name="usedSprites">The array to be filled.</param>
+      <returns>
+        <para>The number of Sprites filled.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedTiles(Unity.Collections.Allocator)">
+      <summary>
+        <para>Returns a Tilemaps.Tilemap.TileArray containing the unique Tilemaps.Tile instances used in this Tilemaps.Tilemap. The array is allocated using the given Allocator.</para>
+      </summary>
+      <param name="allocator">The allocator type used to allocate the memory for the Tilemaps.Tilemap.SpriteArray. The default value is Unity.Collections.Allocator.Temp.</param>
+      <returns>
+        <para>A Tilemaps.Tilemap.TileArray containing the all unique Tilemaps.Tile instances used in the Tilemaps.Tilemap.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedTiles(Unity.Collections.MemoryLabel)">
+      <summary>
+        <para>Returns a Tilemaps.Tilemap.TileArray allocated by the given MemoryLabel with the unique Tilemaps.Tiles used in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="memoryLabel">Memory label used for profiling and tracking this memory allocation in Unity.</param>
+      <returns>
+        <para>Tilemaps.Tilemap.TileArray containing the unique Tilemaps.Tiles used in the Tilemaps.Tilemap.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedTilesCount">
+      <summary>
+        <para>Gets the total number of different Tilemaps.Tiles used in the Tilemaps.Tilemap.</para>
+      </summary>
+      <returns>
+        <para>The total number of different Tilemaps.Tiles used in the Tilemaps.Tilemap.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.GetUsedTilesNonAlloc(UnityEngine.Tilemaps.TileBase[])">
+      <summary>
+        <para>Fills the given array with the total number of different Tilemaps.Tiles used in the Tilemaps.Tilemap and returns the number of Tilemaps.Tiles filled.</para>
+      </summary>
+      <param name="usedTiles">The array to be filled.</param>
+      <returns>
+        <para>The number of Tiles filled.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.HasEditorPreviewTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Returns whether there is an editor preview Tile at the position.</para>
+      </summary>
+      <param name="position">Position to check.</param>
+      <returns>
+        <para>Returns true if there is an Editor Preview Tile at the position. Returns false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.HasTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Returns whether there is a Tilemaps.Tile at the position.</para>
+      </summary>
+      <param name="position">Position to check.</param>
+      <returns>
+        <para>Returns true if there is a Tile at the position. Returns false otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.InsertCells(UnityEngine.Vector3Int,UnityEngine.Vector3Int)">
+      <summary>
+        <para>Inserts cells into the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">The target position to insert at.</param>
+      <param name="insertCells">The number of columns, rows or layers of cells to insert.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.InsertCells(UnityEngine.Vector3Int,System.Int32,System.Int32,System.Int32)">
+      <summary>
+        <para>Inserts cells into the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">The target position to insert at.</param>
+      <param name="numColumns">The number of columns to insert.</param>
+      <param name="numRows">The number of rows to insert.</param>
+      <param name="numLayers">The number of layers of cells to insert.</param>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tilemap.Orientation">
+      <summary>
+        <para>Determines the orientation of Tilemaps.Tiles in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.Custom">
+      <summary>
+        <para>Use a custom orientation to all tiles in the tile map.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.XY">
+      <summary>
+        <para>Orients Tiles in the XY plane.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.XZ">
+      <summary>
+        <para>Orients Tiles in the XZ plane.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.YX">
+      <summary>
+        <para>Orients Tiles in the YX plane.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.YZ">
+      <summary>
+        <para>Orients Tiles in the YZ plane.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.ZX">
+      <summary>
+        <para>Orients Tiles in the ZX plane.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.Tilemap.Orientation.ZY">
+      <summary>
+        <para>Orients Tiles in the ZY plane.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tilemap.PositionArray">
+      <summary>
+        <para>A read-only array containing Tilemap positions.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.PositionArray.Dispose">
+      <summary>
+        <para>Frees allocated memory for the Tilemaps.Tilemap.PositionArray.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.PositionArray.GetEnumerator">
+      <summary>
+        <para>Retrieves an iterator that allows you to iterate over all elements within the Tilemaps.Tilemap.PositionArray.</para>
+      </summary>
+      <returns>
+        <para>An iterator that allows you to iterate over all elements within the Tilemaps.Tilemap.PositionArray.</para>
+      </returns>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.PositionArray.Length">
+      <summary>
+        <para>The number of elements in the Tilemaps.Tilemap.PositionArray.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.PositionArray.this">
+      <summary>
+        <para>Returns the Vector3Int position indexed in the Tilemaps.Tilemap.PositionArray.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.RefreshAllTiles">
+      <summary>
+        <para>Refreshes all Tilemaps.Tiles in the Tilemaps.Tilemap. The Tilemap will retrieve the rendering data, animation data and other data for all tiles and update all relevant components.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.RefreshTile(UnityEngine.Vector3Int)">
+      <summary>
+        <para>Refreshes a Tilemaps.Tile at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tilemaps.Tile on the Tilemaps.Tilemap.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.RemoveTileAnimationFlags(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileAnimationFlags)">
+      <summary>
+        <para>Removes the Tilemaps.TileAnimationFlags from the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">The position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="flags">The Tilemaps.TileAnimationFlags to remove from the Tilemaps.Tile.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.RemoveTileFlags(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileFlags)">
+      <summary>
+        <para>Removes the Tilemaps.TileFlags from the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="flags">Tilemaps.TileFlags to remove from the Tilemaps.Tile.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.ResizeBounds">
+      <summary>
+        <para>Resizes Tiles in the Tilemaps.Tilemap to bounds defined by Tilemaps.Tilemap._origin and Tilemaps.Tilemap._size.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetAnimationFrame(UnityEngine.Vector3Int,System.Int32)">
+      <summary>
+        <para>Sets the current animation frame for a Tile at the given position.</para>
+      </summary>
+      <param name="position">The grid cell position.</param>
+      <param name="frame">The animation frame to set to.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetAnimationTime(UnityEngine.Vector3Int,System.Single)">
+      <summary>
+        <para>Sets the running animation time for a Tile at the given position.</para>
+      </summary>
+      <param name="position">The grid cell position.</param>
+      <param name="time">The running animation time in seconds.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetColliderType(UnityEngine.Vector3Int,UnityEngine.Tilemaps.Tile/ColliderType)">
+      <summary>
+        <para>Sets the Collider type of a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="colliderType">Collider type to set the Tilemaps.Tile to at the XYZ coordinate.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetColor(UnityEngine.Vector3Int,UnityEngine.Color)">
+      <summary>
+        <para>Sets the color of a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="color">Color to set the Tilemaps.Tile to at the XYZ coordinate.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetEditorPreviewColor(UnityEngine.Vector3Int,UnityEngine.Color)">
+      <summary>
+        <para>Sets the color of an editor preview Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tile on the Tilemaps.Tilemap.</param>
+      <param name="color">Color to set the editor preview Tilemaps.Tile to at the XYZ coordinate.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetEditorPreviewTile(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase)">
+      <summary>
+        <para>Sets an editor preview Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tile on the Tilemaps.Tilemap.</param>
+      <param name="tile">The editor preview Tilemaps.Tile to be placed the cell.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetEditorPreviewTransformMatrix(UnityEngine.Vector3Int,UnityEngine.Matrix4x4)">
+      <summary>
+        <para>Sets the transform matrix of an editor preview Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the editor preview Tile on the Tilemaps.Tilemap.</param>
+      <param name="transform">The transform matrix.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTile(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileBase)">
+      <summary>
+        <para>Sets a Tilemaps.Tile at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="tile">The Tilemaps.Tile to be placed in the cell.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTile(UnityEngine.Tilemaps.TileChangeData,System.Boolean)">
+      <summary>
+        <para>Sets a Tilemaps.Tile with additional properties at the given XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="tileChangeData">The Tilemaps.Tile with additional properties to be placed in the cell.</param>
+      <param name="ignoreLockFlags">Whether to ignore Lock Flags set in the Tile's TileFlags when applying Color and Transform changes from Tilemaps.TileChangeData.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTileAnimationFlags(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileAnimationFlags)">
+      <summary>
+        <para>Sets the Tilemaps.TileAnimationFlags onto the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">The position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="flags">The Tilemaps.TileAnimationFlags to set onto the Tilemaps.Tile.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTileFlags(UnityEngine.Vector3Int,UnityEngine.Tilemaps.TileFlags)">
+      <summary>
+        <para>Sets the Tilemaps.TileFlags onto the Tilemaps.Tile at the given position.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="flags">Tilemaps.TileFlags to set onto the Tilemaps.Tile.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTiles(UnityEngine.Vector3Int[],UnityEngine.Tilemaps.TileBase[])">
+      <summary>
+        <para>Sets an array of Tilemaps.Tiles at the given XYZ coordinates of the corresponding cells in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="positionArray">An array of positions of tiles on the Tilemaps.Tilemap.</param>
+      <param name="tileArray">An array of Tilemaps.Tiles to be placed.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTiles(Unity.Collections.NativeArray`1&lt;UnityEngine.Vector3Int&gt;,UnityEngine.Tilemaps.Tilemap/TileArray)">
+      <summary>
+        <para>Sets an array of Tilemaps.Tiles at the given XYZ coordinates of the corresponding cells in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="positionArray">The array of positions of tiles on the Tilemaps.Tilemap.</param>
+      <param name="tileArray">The array of Tilemaps.Tiles to place.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTiles(UnityEngine.Tilemaps.TileChangeData[],System.Boolean)">
+      <summary>
+        <para>Sets an array of Tilemaps.Tiles with additonal properties at the given XYZ coordinates of the corresponding cells in the Tilemaps.Tilemap. The Color and Transform of the Tilemaps.TileChangeData will take precedence over the values from the Tilemaps.Tile.</para>
+      </summary>
+      <param name="tileChangeDataArray">The array of Tilemaps.Tiles with additional properties to place.</param>
+      <param name="ignoreLockFlags">Whether to ignore lock flags set in the tile's TileFlags when applying color and transform changes from Tilemaps.TileChangeData.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTiles(Unity.Collections.NativeArray`1&lt;UnityEngine.Vector3Int&gt;,UnityEngine.Tilemaps.Tilemap/TileArray,Unity.Collections.NativeArray`1&lt;UnityEngine.Color&gt;,Unity.Collections.NativeArray`1&lt;UnityEngine.Matrix4x4&gt;,System.Boolean)">
+      <summary>
+        <para>Sets an array of Tilemaps.Tiles with additonal properties at the given XYZ coordinates of the corresponding cells in the Tilemaps.Tilemap. The color and transform of the corresponding arrays will take precedence over the values from the Tilemaps.Tile.</para>
+      </summary>
+      <param name="positionArray">An array of positions of tiles on the Tilemaps.Tilemap.</param>
+      <param name="tileArray">The array of Tilemaps.Tiles to place.</param>
+      <param name="colorArray">The array of colors for tiles on the Tilemaps.Tilemap.</param>
+      <param name="transformArray">The array of transforms for tiles on the Tilemaps.Tilemap.</param>
+      <param name="ignoreLockFlags">Whether to ignore lock flags set in the tile's TileFlags when applying color and transform changes from Tilemaps.TileChangeData.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTilesBlock(UnityEngine.BoundsInt,UnityEngine.Tilemaps.TileBase[])">
+      <summary>
+        <para>Fills an area with array of Tilemaps.Tiles.</para>
+      </summary>
+      <param name="position">The area to fill.</param>
+      <param name="tileArray">The array of Tilemaps.Tiles to be placed.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTilesBlock(UnityEngine.BoundsInt,UnityEngine.Tilemaps.Tilemap/TileArray)">
+      <summary>
+        <para>Fills an area with an array of Tilemaps.Tiles.</para>
+      </summary>
+      <param name="position">The area to fill.</param>
+      <param name="tileArray">The array of Tilemaps.Tiles to place.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SetTransformMatrix(UnityEngine.Vector3Int,UnityEngine.Matrix4x4)">
+      <summary>
+        <para>Sets the transform matrix of a Tilemaps.Tile given the XYZ coordinates of a cell in the Tilemaps.Tilemap.</para>
+      </summary>
+      <param name="position">Position of the Tile on the Tilemaps.Tilemap.</param>
+      <param name="transform">The transform matrix.</param>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tilemap.SpriteArray">
+      <summary>
+        <para>A read-only array containing Sprite EntityIds.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SpriteArray.Dispose">
+      <summary>
+        <para>Frees allocated memory for the Tilemaps.Tilemap.SpriteArray.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SpriteArray.GetEnumerator">
+      <summary>
+        <para>Retrieves an iterator that allows you to iterate over all elements within the Tilemaps.Tilemap.SpriteArray.</para>
+      </summary>
+      <returns>
+        <para>An iterator that allows you to iterate over all elements within the Tilemaps.Tilemap.SpriteArray.</para>
+      </returns>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.SpriteArray.Length">
+      <summary>
+        <para>The number of elements in the Tilemaps.Tilemap.SpriteArray.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.SpriteArray.this">
+      <summary>
+        <para>Returns the Sprite indexed in the Tilemaps.Tilemap.SpriteArray.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.SwapTile(UnityEngine.Tilemaps.TileBase,UnityEngine.Tilemaps.TileBase)">
+      <summary>
+        <para>Swaps all existing Tilemaps.Tiles of changeTile to newTile and refreshes all the swapped Tilemaps.Tiles.</para>
+      </summary>
+      <param name="changeTile">Tile to swap.</param>
+      <param name="newTile">Tile to swap to.</param>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tilemap.SyncTile">
+      <summary>
+        <para>A Struct for containing changes to a Tilemaps.Tile when it has been changed on a Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.SyncTile.hasTile">
+      <summary>
+        <para>Whether there is a Tilemaps.Tile at the given position on the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.SyncTile.position">
+      <summary>
+        <para>The position of the Tilemaps.Tile on a Tilemaps.Tilemap which has changed.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.SyncTile.tile">
+      <summary>
+        <para>The Tilemaps.Tile at the given position on the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.SyncTile.tileData">
+      <summary>
+        <para>The properties of the Tilemaps.Tile at the given position on the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.Tilemap.TileArray">
+      <summary>
+        <para>A read-only array containing Tile EntityIds.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.TileArray.#ctor(System.Int32,Unity.Collections.Allocator)">
+      <summary>
+        <para>Creates a new array and allocates enough memory to fit the provided number of elements.</para>
+      </summary>
+      <param name="length">The number of elements to allocate.</param>
+      <param name="allocator">The Unity.Collections.Allocator to use for the data.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.TileArray.#ctor(System.Int32,Unity.Collections.MemoryLabel)">
+      <summary>
+        <para>Creates a new array and allocates enough memory to fit the provided number of elements, using the specified memory label.</para>
+      </summary>
+      <param name="length">The number of elements to allocate.</param>
+      <param name="memoryLabel">The Unity.Collections.MemoryLabel to allocate under.</param>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.TileArray.Dispose">
+      <summary>
+        <para>Frees allocated memory for the Tilemaps.Tilemap.TileArray.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.Tilemap.TileArray.GetEnumerator">
+      <summary>
+        <para>Retrieves an iterator that allows you to iterate over all elements within the Tilemaps.Tilemap.TileArray.</para>
+      </summary>
+      <returns>
+        <para>An iterator that allows you to iterate over all elements within the Tilemaps.Tilemap.TileArray.</para>
+      </returns>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.TileArray.Length">
+      <summary>
+        <para>The number of elements in the Tilemaps.Tilemap.TileArray.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.Tilemap.TileArray.this">
+      <summary>
+        <para>Returns the Tilemaps.TileBase indexed in the Tilemaps.Tilemap.TileArray.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TilemapChangeReason">
+      <summary>
+        <para>Options for the reasons why a Tilemaps.Tilemap itself has changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapChangeReason.Dimensions">
+      <summary>
+        <para>The origin or size of the Tilemaps.Tilemap changed.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapChangeReason.EditorPreview">
+      <summary>
+        <para>The change was made to the editor preview of the Tilemaps.Tilemap rather than to the
+Tilemaps.Tilemap itself.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapChangeReason.Everything">
+      <summary>
+        <para>All map-wide changes.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapChangeReason.Geometry">
+      <summary>
+        <para>The geometry of the Tilemaps.Tilemap changed, including changes to its Grid.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapChangeReason.Property">
+      <summary>
+        <para>A property of the Tilemaps.Tilemap, such as its tile anchor, orientation or color, changed.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TilemapCollider2D">
+      <summary>
+        <para>Collider for 2D physics representing shapes defined by the corresponding Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapCollider2D.extrusionFactor">
+      <summary>
+        <para>The amount of Collider shapes each Tile extrudes to facilitate compositing with neighboring Tiles. This eliminates fine gaps between Tiles when using a CompositeCollider2D. This is calculated in Unity units within world space.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapCollider2D.hasTilemapChanges">
+      <summary>
+        <para>Returns true if there are Tilemap changes that require processing for Collider updates. Returns false otherwise.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapCollider2D.maximumTileChangeCount">
+      <summary>
+        <para>Maximum number of Tile Changes accumulated before doing a full collider rebuild instead of an incremental rebuild.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapCollider2D.useDelaunayMesh">
+      <summary>
+        <para>When the value is true, the Collider uses an additional Delaunay triangulation step to produce the Collider mesh. When the value is false, this additional step does not occur.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TilemapCollider2D.ProcessTilemapChanges">
+      <summary>
+        <para>Processes Tilemap changes for Collider updates immediately, if there are any.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TilemapRenderer">
+      <summary>
+        <para>The tile map renderer is used to render the tile map marked out by a component.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.chunkCullingBounds">
+      <summary>
+        <para>Bounds used for culling of Tilemaps.Tilemap chunks.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.chunkSize">
+      <summary>
+        <para>Size in number of tiles of each chunk created by the Tilemaps.TilemapRenderer.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.detectChunkCullingBounds">
+      <summary>
+        <para>Returns whether the Tilemaps.TilemapRenderer automatically detects the bounds to extend chunk culling by.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.maskInteraction">
+      <summary>
+        <para>Specifies how the Tilemaps.Tilemap interacts with the masks.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.maxChunkCount">
+      <summary>
+        <para>Maximum number of chunks the Tilemaps.TilemapRenderer caches in memory.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.maxFrameAge">
+      <summary>
+        <para>Maximum number of frames the Tilemaps.TilemapRenderer keeps unused chunks in memory.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.mode">
+      <summary>
+        <para>The mode in which the Tilemaps.TilemapRenderer batches the for rendering.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Tilemaps.TilemapRenderer.sortOrder">
+      <summary>
+        <para>Active sort order for the Tilemaps.TilemapRenderer.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TilemapRenderer.DetectChunkCullingBounds">
+      <summary>
+        <para>Returns whether the Tilemaps.TilemapRenderer automatically detects the bounds to extend chunk culling by.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.DetectChunkCullingBounds.Auto">
+      <summary>
+        <para>The Tilemaps.TilemapRenderer will automatically detect the bounds of extension by inspecting the Sprite/s used in the Tilemaps.Tilemap.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.DetectChunkCullingBounds.Manual">
+      <summary>
+        <para>The user adds in the values used for extend the bounds for culling of Tilemaps.Tilemap chunks.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TilemapRenderer.GetShaderUserValue">
+      <summary>
+        <para>Returns the custom value assigned to this renderer.</para>
+      </summary>
+      <returns>
+        <para>The integer assigned to the renderer as a custom value.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TilemapRenderer.Mode">
+      <summary>
+        <para>Determines how the Tilemaps.TilemapRenderer should batch the for rendering.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.Mode.Chunk">
+      <summary>
+        <para>Batches each Sprite from the Tilemaps.Tilemap into grouped chunks to be rendered.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.Mode.Individual">
+      <summary>
+        <para>Sends each Sprite from the Tilemaps.Tilemap to be rendered individually.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.Mode.SRPBatch">
+      <summary>
+        <para>Sends batchable Sprites from the Tilemaps.Tilemap in chunks to be rendered and can be batched using the Scriptable Render Pipeline (SRP) batching system.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Tilemaps.TilemapRenderer.SetShaderUserValue(System.UInt32)">
+      <summary>
+        <para>Assign a custom value to this renderer.</para>
+      </summary>
+      <param name="v">The integer to assign to the renderer as a custom value to be used in shaders.</param>
+    </member>
+    <member name="T:UnityEngine.Tilemaps.TilemapRenderer.SortOrder">
+      <summary>
+        <para>Sort order for all tiles rendered by the Tilemaps.TilemapRenderer.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.SortOrder.BottomLeft">
+      <summary>
+        <para>Sorts tiles for rendering starting from the tile with the lowest X and the lowest Y cell positions.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.SortOrder.BottomRight">
+      <summary>
+        <para>Sorts tiles for rendering starting from the tile with the highest X and the lowest Y cell positions.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.SortOrder.TopLeft">
+      <summary>
+        <para>Sorts tiles for rendering starting from the tile with the lowest X and the highest Y cell positions.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Tilemaps.TilemapRenderer.SortOrder.TopRight">
+      <summary>
+        <para>Sorts tiles for rendering starting from the tile with the highest X and the lowest Y cell positions.</para>
+      </summary>
+    </member>
+    <member name="A:UnityEngine.TilemapModule">
+      <summary>
+        <para>The Tilemap module implements the Tilemap class.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,66 @@
+[
+  {
+    "role": "BASELINE",
+    "command": [
+      "py",
+      "-3",
+      "-X",
+      "utf8",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\verify_state.py",
+      "D:\\UnityHub\\Project\\程序化生成\\Temp\\VoxelBaseline"
+    ],
+    "stdout": "DENSITY_SHA256=8230dd4221e251731cb5bb866ad593436dc731d24c62ed1ad8991671da019e6a\nVOXEL_FEATURE=False\nfinal=33.870700718800066\ntemp=0.5498639742326455\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "MODIFIED",
+    "command": [
+      "py",
+      "-3",
+      "-X",
+      "utf8",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\verify_state.py",
+      "D:\\UnityHub\\Project\\程序化生成"
+    ],
+    "stdout": "DENSITY_SHA256=8230dd4221e251731cb5bb866ad593436dc731d24c62ed1ad8991671da019e6a\nVOXEL_FEATURE=True\nfinal=33.870700718800066\ntemp=0.5498639742326455\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "ROLLBACK_COMMAND",
+    "command": [
+      "C:/Program Files/Git/bin/bash.exe",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\ROLLBACK.sh",
+      "D:\\UnityHub\\Project\\程序化生成\\Temp\\VoxelRollback"
+    ],
+    "stdout": "ROLLBACK: voxel preview additions removed; baseline density sources preserved\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "ROLLBACK",
+    "command": [
+      "py",
+      "-3",
+      "-X",
+      "utf8",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\verify_state.py",
+      "D:\\UnityHub\\Project\\程序化生成\\Temp\\VoxelRollback"
+    ],
+    "stdout": "DENSITY_SHA256=8230dd4221e251731cb5bb866ad593436dc731d24c62ed1ad8991671da019e6a\nVOXEL_FEATURE=False\nfinal=33.870700718800066\ntemp=0.5498639742326455\n",
+    "stderr": "",
+    "exit_status": 0
+  },
+  {
+    "role": "REAPPLY",
+    "command": [
+      "git",
+      "apply",
+      "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\VoxelWorldVisualization\\VoxelWorld.patch"
+    ],
+    "stdout": "",
+    "stderr": "",
+    "exit_status": 0
+  }
+]

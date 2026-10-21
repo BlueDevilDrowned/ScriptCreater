@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<doc>
+  <members>
+    <assembly>
+      <name>UnityEngine.ScriptingReflectionModule</name>
+    </assembly>
+    <member name="A:UnityEngine.ScriptingReflectionModule">
+      <summary>
+        <para>Reads type, field and assembly metadata from the scripting runtime without System.Reflection.</para>
+      </summary>
+    </member>
+  </members>
+</doc>

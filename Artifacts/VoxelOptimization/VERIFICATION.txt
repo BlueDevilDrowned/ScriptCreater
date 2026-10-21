@@ -1,0 +1,36 @@
+VOXEL OPTIMIZATION VERIFICATION
+TARGET: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Voxels\VoxelWorldPreview.cs
+TARGET: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Voxels\VoxelMeshBuilder.cs
+GOAL: runtime generation uses complete-volume sampling plus Burst face-mask meshing; reduce List growth, upload CPU mesh data once, and remove per-chunk logging.
+
+BASELINE
+Command: Select-String -Path BASELINE_VoxelWorldPreview.cs -Pattern 'FillRegion'
+Stdout: one match (runtime coroutine sampled each chunk with FillRegion)
+Exit: 0
+Preview SHA256: 19AC6771284C22EF22456830B29A589FB06C563A506342603AB2895B50AACD12
+Mesh SHA256: F3098C069F66B1C4E6AAEA53CC625F310D9E3C873E77FD909A42B425071DCEB8
+
+MODIFIED
+Command: dotnet build '程序化生成.slnx' --no-restore -v:minimal
+Stdout: 已成功生成。 0 个警告 0 个错误
+Stderr: empty
+Exit: 0
+Preview SHA256: 6BC0C0AE5D5E85675592CADEE5CB29C0B97B7C921E51B546B0E0512F1CE1219B
+Mesh SHA256: F16B186DB1D2E9FD0B805C82492BE47625DEC6913BA12E5B30E92C67C228EECE
+Observed transition: GenerateOverFrames now calls volume.Fill once, then BuildChunkMeshesWithJobs when useJobsForMesh is enabled; per-chunk Debug.Log was removed; generated meshes call UploadMeshData(true).
+
+ROLLBACK
+Command: ROLLBACK.sh ROLLBACK_COPY_VoxelPreview.cs and ROLLBACK.sh ROLLBACK_COPY_VoxelMeshBuilder.cs (Git for Windows sh)
+Stdout: rollback preview and mesh copies restored
+Stderr: empty
+Exit: 0
+Preview SHA256 equals baseline: true (19AC6771284C22EF22456830B29A589FB06C563A506342603AB2895B50AACD12)
+Mesh SHA256 equals baseline: true (F3098C069F66B1C4E6AAEA53CC625F310D9E3C873E77FD909A42B425071DCEB8)
+
+REAPPLY
+Command: copied current TARGET files back into MODIFIED_* artifact roles
+Stdout: modified copies restored
+Exit: 0
+
+LIMITATION
+Density sampling remains managed IDensityFunction code on the main thread; Greedy Meshing and 16x16x16 vertical chunking are not included in this safe first patch.
