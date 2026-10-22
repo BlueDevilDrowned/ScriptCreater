@@ -1,588 +1,257 @@
---- /dev/null
-+++ b/Density/BlendedNoiseFunction.cs
-@@ -0,0 +1,24 @@
+--- a/Density/OriginalTerrainProvider.cs
++++ b/Density/OriginalTerrainProvider.cs
+@@ -0,0 +1,26 @@
 +using System;
-+
 +namespace ProceduralGeneration.WorldGen.Density
 +{
-+    /// <summary>学习版空间混合；selector 的 [-1,1] 映射至权重 [0,1]。</summary>
-+    internal sealed class BlendedNoiseFunction : IDensityFunction
++    internal static class OriginalTerrainProvider
 +    {
-+        private readonly IDensityFunction a, b, selector;
-+        public BlendedNoiseFunction(IDensityFunction a, IDensityFunction b, IDensityFunction selector)
++        public static IDensityFunction PeaksAndValleys(IDensityFunction r)
 +        {
-+            this.a = a ?? throw new ArgumentNullException(nameof(a));
-+            this.b = b ?? throw new ArgumentNullException(nameof(b));
-+            this.selector = selector ?? throw new ArgumentNullException(nameof(selector));
++            var inner = DensityFunctions.Abs(DensityFunctions.Subtract(DensityFunctions.Abs(r), DensityFunctions.Constant(2.0 / 3.0)));
++            return DensityFunctions.Multiply(DensityFunctions.Constant(-3), DensityFunctions.Subtract(inner, DensityFunctions.Constant(1.0 / 3.0)));
 +        }
-+        public double Sample(in DensityContext context)
++        public static IDensityFunction Offset(IDensityFunction c, IDensityFunction e, IDensityFunction p)
 +        {
-+            double t = Math.Max(0, Math.Min(1, (selector.Sample(context) + 1) * 0.5));
-+            if (t == 0) return a.Sample(context);
-+            if (t == 1) return b.Sample(context);
-+            double value = a.Sample(context);
-+            return value + (b.Sample(context) - value) * t;
++            var a=ErosionOffset(e,p,-.15,0,0); var b=ErosionOffset(e,p,-.10,.03,.10); var d=ErosionOffset(e,p,-.10,.03,.70); var f=ErosionOffset(e,p,-.05,.03,1);
++            return DensityFunctions.Spline(c,new CubicSplinePoint(-1.10,.044),new CubicSplinePoint(-1.02,-.2222),new CubicSplinePoint(-.51,-.2222),new CubicSplinePoint(-.44,-.12),new CubicSplinePoint(-.18,-.12),new CubicSplinePoint(-.16,a),new CubicSplinePoint(-.10,b),new CubicSplinePoint(.25,d),new CubicSplinePoint(1,f));
 +        }
++        public static IDensityFunction Factor(IDensityFunction c, IDensityFunction e, IDensityFunction p)
++        { return DensityFunctions.Spline(c,new CubicSplinePoint(-.19,3.95),new CubicSplinePoint(-.15,ErosionFactor(e,p,6.25,true)),new CubicSplinePoint(-.10,ErosionFactor(e,p,5.47,true)),new CubicSplinePoint(.03,ErosionFactor(e,p,5.08,true)),new CubicSplinePoint(.06,ErosionFactor(e,p,4.69,false))); }
++        public static IDensityFunction Jaggedness(IDensityFunction c, IDensityFunction e, IDensityFunction p)
++        { var ridge=DensityFunctions.Spline(p,new CubicSplinePoint(-1,0),new CubicSplinePoint(-.4,.5),new CubicSplinePoint(0,0),new CubicSplinePoint(.4,1),new CubicSplinePoint(1,0)); var er=DensityFunctions.Spline(e,new CubicSplinePoint(-1,1),new CubicSplinePoint(-.5775,1),new CubicSplinePoint(-.375,0)); return DensityFunctions.Spline(c,new CubicSplinePoint(-.11,0),new CubicSplinePoint(.03,DensityFunctions.Multiply(ridge,er)),new CubicSplinePoint(.65,ridge)); }
++        private static IDensityFunction ErosionOffset(IDensityFunction e,IDensityFunction p,double a,double b,double c)
++        { var r=DensityFunctions.Spline(p,new CubicSplinePoint(-1,a),new CubicSplinePoint(-.4,b),new CubicSplinePoint(0,c),new CubicSplinePoint(.4,c+.07),new CubicSplinePoint(1,c)); return DensityFunctions.Spline(e,new CubicSplinePoint(-.85,r),new CubicSplinePoint(-.70,r),new CubicSplinePoint(-.40,r),new CubicSplinePoint(-.35,r),new CubicSplinePoint(-.10,r),new CubicSplinePoint(.20,r),new CubicSplinePoint(.70,r)); }
++        private static IDensityFunction ErosionFactor(IDensityFunction e,IDensityFunction p,double scale,bool mountain)
++        { var broad=DensityFunctions.Spline(e,new CubicSplinePoint(-.2,6.3),new CubicSplinePoint(.2,scale)); var r=DensityFunctions.Spline(p,new CubicSplinePoint(-1,scale),new CubicSplinePoint(-.4,scale),new CubicSplinePoint(0,scale),new CubicSplinePoint(.4,mountain ? .625 : 1.37),new CubicSplinePoint(1,scale)); return DensityFunctions.Spline(e,new CubicSplinePoint(-.6,broad),new CubicSplinePoint(-.5,r),new CubicSplinePoint(-.35,broad),new CubicSplinePoint(-.25,broad),new CubicSplinePoint(-.1,r),new CubicSplinePoint(.03,broad),new CubicSplinePoint(.58,r)); }
 +    }
 +}
---- /dev/null
-+++ b/Density/BlendedNoiseFunction.cs.meta
-@@ -0,0 +1,2 @@
-+fileFormatVersion: 2
-+guid: a9c7a4b796724ec3a63772ae1df7c15e
---- a/Density/DensityFunctions.cs
-+++ b/Density/DensityFunctions.cs
-@@ -7,6 +7,10 @@
-         public static IDensityFunction Constant(double value) => new ConstantFunction(value);
-         public static IDensityFunction Noise(int seed, double scale = 0.01, double amplitude = 1.0)
-             => new ValueNoiseFunction(seed, scale, amplitude);
-+        public static IDensityFunction FractalNoise(int seed, double xzFrequency = 0.02, double yFrequency = 0.01, int octaves = 4)
-+            => new OctaveNoiseFunction(seed, xzFrequency, yFrequency, octaves);
-+        public static IDensityFunction BlendNoise(IDensityFunction a, IDensityFunction b, IDensityFunction selector)
-+            => new BlendedNoiseFunction(a, b, selector);
-         /// <summary>固定输入场的 Y=0，保留 XZ 变化。</summary>
-         public static IDensityFunction ProjectXZ(IDensityFunction input) => new ProjectedXZFunction(input);
-         public static IDensityFunction Noise2D(int seed, double scale = 0.01, double amplitude = 1.0)
---- /dev/null
-+++ b/Density/OctaveNoiseFunction.cs
-@@ -0,0 +1,34 @@
-+using System;
 +
-+namespace ProceduralGeneration.WorldGen.Density
-+{
-+    /// <summary>归一化分形 ValueNoise：频率逐层翻倍，振幅逐层减半。</summary>
-+    internal sealed class OctaveNoiseFunction : IDensityFunction
-+    {
-+        private readonly ValueNoiseFunction[] layers;
-+        private readonly double weightSum;
-+        public OctaveNoiseFunction(int seed, double xzFrequency, double yFrequency, int octaves)
-+        {
-+            if (octaves < 1 || octaves > 16) throw new ArgumentOutOfRangeException(nameof(octaves));
-+            if (!WorldGenerationSettings.Finite(xzFrequency) || !WorldGenerationSettings.Finite(yFrequency) ||
-+                xzFrequency <= 0 || yFrequency <= 0 ||
-+                Math.Max(xzFrequency, yFrequency) * Math.Pow(2, octaves - 1) > 0.5)
-+                throw new ArgumentOutOfRangeException(nameof(xzFrequency));
-+            layers = new ValueNoiseFunction[octaves];
-+            double frequency = 1, weight = 1;
-+            for (int i = 0; i < octaves; i++)
-+            {
-+                layers[i] = new ValueNoiseFunction(unchecked(seed + i * 1013), xzFrequency * frequency, yFrequency * frequency, weight);
-+                weightSum += weight;
-+                frequency *= 2;
-+                weight *= 0.5;
-+            }
-+        }
-+        public double Sample(in DensityContext context)
-+        {
-+            double value = 0;
-+            foreach (var layer in layers) value += layer.Sample(context);
-+            return value / weightSum;
-+        }
-+    }
-+}
---- /dev/null
-+++ b/Density/OctaveNoiseFunction.cs.meta
+--- a/Density/OriginalTerrainProvider.cs.meta
++++ b/Density/OriginalTerrainProvider.cs.meta
 @@ -0,0 +1,2 @@
 +fileFormatVersion: 2
-+guid: 4f3369c529434212b76024d9d1b74a01
---- a/Density/ValueNoiseFunction.cs
-+++ b/Density/ValueNoiseFunction.cs
-@@ -7,8 +7,13 @@
-         private readonly int seed;
-         private readonly double scale;
-         private readonly double amplitude;
-+        private readonly double yScale;
-         public ValueNoiseFunction(int seed, double scale, double amplitude)
-+            : this(seed, scale, scale, amplitude) { }
-+        public ValueNoiseFunction(int seed, double scale, double yScale, double amplitude)
-         {
-+            if (!WorldGenerationSettings.Finite(yScale) || yScale <= 0) throw new ArgumentOutOfRangeException(nameof(yScale));
-+            this.yScale = yScale;
-             if (scale <= 0) throw new ArgumentOutOfRangeException(nameof(scale));
-             this.seed = seed;
-             this.scale = scale;
-@@ -17,7 +22,7 @@
-         public double Sample(in DensityContext context)
-         {
-             double x = context.X * scale;
--            double y = context.Y * scale;
-+            double y = context.Y * yScale;
-             double z = context.Z * scale;
-             int x0 = FloorToInt(x), y0 = FloorToInt(y), z0 = FloorToInt(z);
-             double tx = Smooth(x - x0), ty = Smooth(y - y0), tz = Smooth(z - z0);
++guid: 060f6c80a5ec4e24afb1955536d2fc07
 --- a/Density/WorldFields.cs
 +++ b/Density/WorldFields.cs
-@@ -58,8 +58,10 @@
-         }
- 
-         /// <summary>用一个种子生成可运行的学习版世界场集合。</summary>
--        public static WorldFields CreateLearningDefaults(int seed)
-+        public static WorldFields CreateLearningDefaults(int seed, WorldGenerationSettings settings = null)
-         {
-+            settings = settings ?? new WorldGenerationSettings();
-+            settings.Validate();
+@@ -65,31 +65,11 @@
              // 地形环境是二维场：同一 XZ 列共享样条参数，不随 Y 漂移。
              IDensityFunction continents = DensityFunctions.Noise2D(seed + 1, 0.0025, 1.0);
              IDensityFunction erosion = DensityFunctions.Noise2D(seed + 2, 0.008, 1.0);
-@@ -89,7 +91,7 @@
-                 new CubicSplinePoint(0.60, 0.55, 0.80),
-                 new CubicSplinePoint(1.0, 1.00, 0.20));
+-            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise2D(seed + 3, 0.012, 1.0));
+-            IDensityFunction lowlandOffset = DensityFunctions.Spline(erosion,
+-                new CubicSplinePoint(-1.0, -0.55, 0.0),
+-                new CubicSplinePoint(0.0, -0.20, 0.1),
+-                new CubicSplinePoint(1.0, 0.05, 0.0));
+-            IDensityFunction mountainOffset = DensityFunctions.Spline(erosion,
+-                new CubicSplinePoint(-1.0, 0.10, 0.0),
+-                new CubicSplinePoint(0.0, 0.35, 0.2),
+-                new CubicSplinePoint(1.0, 0.70, 0.0));
+-            IDensityFunction offset = DensityFunctions.Spline(continents,
+-                new CubicSplinePoint(-1.0, lowlandOffset, 0.15),
+-                new CubicSplinePoint(-0.35, lowlandOffset, 0.80),
+-                new CubicSplinePoint(0.10, DensityFunctions.Constant(0.05), 0.35),
+-                new CubicSplinePoint(0.55, mountainOffset, 0.55),
+-                new CubicSplinePoint(1.0, mountainOffset, -0.30));
+-            IDensityFunction factor = DensityFunctions.Spline(erosion,
+-                new CubicSplinePoint(-1.0, 1.35, 0.0),
+-                new CubicSplinePoint(-0.30, 1.10, -0.20),
+-                new CubicSplinePoint(0.25, 0.65, -0.35),
+-                new CubicSplinePoint(1.0, 0.30, 0.0));
+-            IDensityFunction jaggedness = DensityFunctions.Spline(ridges,
+-                new CubicSplinePoint(0.0, 0.02, 0.0),
+-                new CubicSplinePoint(0.25, 0.12, 0.40),
+-                new CubicSplinePoint(0.60, 0.55, 0.80),
+-                new CubicSplinePoint(1.0, 1.00, 0.20));
++            IDensityFunction ridges = DensityFunctions.Noise2D(seed + 3, 0.012, 1.0);
++            IDensityFunction foldedRidges = OriginalTerrainProvider.PeaksAndValleys(ridges);
++            IDensityFunction offset = DensityFunctions.Add(DensityFunctions.Constant(-0.50375), OriginalTerrainProvider.Offset(continents, erosion, foldedRidges));
++            IDensityFunction factor = OriginalTerrainProvider.Factor(continents, erosion, foldedRidges);
++            IDensityFunction jaggedness = OriginalTerrainProvider.Jaggedness(continents, erosion, foldedRidges);
              // 垂直渐变只提供中尺度趋势；上下边界由 VerticalSlideFunction 处理。
--            IDensityFunction vertical = DensityFunctions.YClampedGradient(0, 160, 0.75, -0.75);
-+            IDensityFunction vertical = DensityFunctions.YClampedGradient(settings.GradientFromY, settings.GradientToY, settings.GradientFromValue, settings.GradientToValue);
+             IDensityFunction vertical = DensityFunctions.YClampedGradient(settings.GradientFromY, settings.GradientToY, settings.GradientFromValue, settings.GradientToValue);
              IDensityFunction depth = DensityFunctions.Add(vertical, offset);
-             // 原版 JAGGED 的 Y 采样倍率为 0；Jaggedness 是强度，不是正向密度常量。
-             IDensityFunction jaggedNoise = DensityFunctions.Noise2D(seed + 6, 0.035, 1.0);
-@@ -97,16 +99,19 @@
-                 jaggedness, DensityFunctions.HalfNegative(jaggedNoise));
-             IDensityFunction baseTerrain = DensityFunctions.NoiseGradientDensity(
-                 factor, DensityFunctions.Add(depth, jaggedTerm));
-+            IDensityFunction noiseA = DensityFunctions.FractalNoise(unchecked(seed + 4), settings.NoiseXZFrequency, settings.NoiseYFrequency, settings.NoiseOctaves);
-+            IDensityFunction noiseB = DensityFunctions.FractalNoise(unchecked(seed + 10004), settings.NoiseXZFrequency, settings.NoiseYFrequency, settings.NoiseOctaves);
-+            IDensityFunction selector = DensityFunctions.FractalNoise(unchecked(seed + 20004), settings.SelectorXZFrequency, settings.SelectorYFrequency, settings.NoiseOctaves);
-             IDensityFunction base3DNoise = DensityFunctions.Multiply(
--                DensityFunctions.Noise(seed + 4, 0.02, 1.0), 0.35);
-+                DensityFunctions.BlendNoise(noiseA, noiseB, selector), settings.BaseNoiseStrength);
-             IDensityFunction rawDensity = DensityFunctions.Add(baseTerrain, base3DNoise);
-             IDensityFunction finalDensity = DensityFunctions.VerticalSlide(
-                 rawDensity,
--                minY: 0,
--                maxY: 160,
--                bottomSize: 24,
-+                minY: settings.MinY,
-+                maxY: settings.MaxYExclusive,
-+                bottomSize: settings.BottomSlideSize,
-                 bottomTarget: 1.0,
--                topSize: 24,
-+                topSize: settings.TopSlideSize,
-                 topTarget: -1.0);
- 
-             return new WorldFields(
---- /dev/null
-+++ b/Density/WorldGenerationSettings.cs
-@@ -0,0 +1,48 @@
-+using System;
-+
-+namespace ProceduralGeneration.WorldGen.Density
-+{
-+    /// <summary>所有高度使用体素坐标；世界范围为 [MinY, MaxYExclusive)。</summary>
-+    [Serializable]
-+    public sealed class WorldGenerationSettings
-+    {
-+        public int MinY = 0;
-+        public int MaxYExclusive = 160;
-+        public int GradientFromY = 0;
-+        public int GradientToY = 160;
-+        public double GradientFromValue = 0.75;
-+        public double GradientToValue = -0.75;
-+        public int BottomSlideSize = 24;
-+        public int TopSlideSize = 24;
-+        public double BaseNoiseStrength = 0.35;
-+        public int NoiseOctaves = 4;
-+        public double NoiseXZFrequency = 0.02;
-+        public double NoiseYFrequency = 0.01;
-+        public double SelectorXZFrequency = 0.008;
-+        public double SelectorYFrequency = 0.004;
-+
-+        internal static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
-+        public void Validate()
-+        {
-+            long height = (long)MaxYExclusive - MinY;
-+            if (height <= 0 || GradientFromY >= GradientToY ||
-+                (long)GradientToY - GradientFromY > int.MaxValue ||
-+                BottomSlideSize < 0 || TopSlideSize < 0 ||
-+                (long)BottomSlideSize + TopSlideSize > height)
-+                throw new ArgumentException("Invalid world bounds, gradient range or slide sizes.");
-+            if (!Finite(GradientFromValue) || !Finite(GradientToValue) ||
-+                !Finite(BaseNoiseStrength) || BaseNoiseStrength < 0 || NoiseOctaves < 1 || NoiseOctaves > 16)
-+                throw new ArgumentException("Invalid gradient values, noise strength or octave count.");
-+            foreach (double f in new[] { NoiseXZFrequency, NoiseYFrequency, SelectorXZFrequency, SelectorYFrequency })
-+                if (!Finite(f) || f <= 0 || f * Math.Pow(2, NoiseOctaves - 1) > 0.5)
-+                    throw new ArgumentException("Noise frequencies must be positive; highest octave must not exceed 0.5 per voxel.");
-+        }
-+
-+        public void ValidateWindow(int originY, int height)
-+        {
-+            Validate();
-+            if (height <= 0 || originY < MinY || (long)originY + height > MaxYExclusive)
-+                throw new ArgumentException($"Preview Y window must fit [{MinY}, {MaxYExclusive}).");
-+        }
-+    }
-+}
---- /dev/null
-+++ b/Density/WorldGenerationSettings.cs.meta
-@@ -0,0 +1,2 @@
-+fileFormatVersion: 2
-+guid: 1c4dece0785b424286af2b97ba5c2bcf
---- /dev/null
-+++ b/Density/XZFieldMap.cs
-@@ -0,0 +1,75 @@
-+using System;
-+
-+namespace ProceduralGeneration.WorldGen.Density
-+{
-+    /// <summary>只读采样当前世界场。P 是参考变换，不会修改世界的山脊输入。</summary>
-+    public sealed class XZFieldMap
-+    {
-+        public enum Field { Continents, Erosion, Ridges, PeaksAndValleys }
-+
-+        public int OriginX { get; }
-+        public int OriginZ { get; }
-+        public int Width { get; }
-+        public int Depth { get; }
-+        public int Resolution { get; }
-+        private readonly double[][] values;
-+        private readonly double[] minima = new double[4];
-+        private readonly double[] maxima = new double[4];
-+
-+        public XZFieldMap(WorldFields fields, int originX, int originZ, int width, int depth, int resolution)
-+        {
-+            if (fields == null) throw new ArgumentNullException(nameof(fields));
-+            if (width < 1 || depth < 1 || resolution < 2 || resolution > 512)
-+                throw new ArgumentOutOfRangeException(nameof(resolution), "Positive spans and resolution 2..512 are required.");
-+            if ((long)originX + width - 1 > int.MaxValue || (long)originZ + depth - 1 > int.MaxValue)
-+                throw new ArgumentOutOfRangeException(nameof(originX), "Sample bounds exceed integer coordinates.");
-+            OriginX = originX;
-+            OriginZ = originZ;
-+            Width = width;
-+            Depth = depth;
-+            Resolution = resolution;
-+            values = new double[4][];
-+            for (int f = 0; f < 4; f++)
-+            {
-+                values[f] = new double[resolution * resolution];
-+                minima[f] = double.PositiveInfinity;
-+                maxima[f] = double.NegativeInfinity;
-+            }
-+            for (int z = 0; z < resolution; z++)
-+            for (int x = 0; x < resolution; x++)
-+            {
-+                var point = new DensityContext(GetX(x), 0, GetZ(z));
-+                int index = z * resolution + x;
-+                Store(0, index, fields.Continents.Sample(point));
-+                Store(1, index, fields.Erosion.Sample(point));
-+                double ridge = fields.Ridges.Sample(point);
-+                Store(2, index, ridge);
-+                Store(3, index, -(Math.Abs(Math.Abs(ridge) - 2.0 / 3.0) - 1.0 / 3.0) * 3.0);
-+            }
-+        }
-+
-+        private void Store(int field, int index, double value)
-+        {
-+            values[field][index] = value;
-+            minima[field] = Math.Min(minima[field], value);
-+            maxima[field] = Math.Max(maxima[field], value);
-+        }
-+
-+        private int Coordinate(int origin, int span, int index)
-+        {
-+            if (index < 0 || index >= Resolution) throw new ArgumentOutOfRangeException(nameof(index));
-+            return (int)(origin + (long)index * (span - 1) / (Resolution - 1));
-+        }
-+
-+        public int GetX(int x) => Coordinate(OriginX, Width, x);
-+        public int GetZ(int z) => Coordinate(OriginZ, Depth, z);
-+        public double Minimum(Field field) => minima[(int)field];
-+        public double Maximum(Field field) => maxima[(int)field];
-+        public double GetValue(Field field, int x, int z)
-+        {
-+            if (x < 0 || x >= Resolution || z < 0 || z >= Resolution)
-+                throw new ArgumentOutOfRangeException(nameof(x));
-+            return values[(int)field][z * Resolution + x];
-+        }
-+    }
-+}
---- /dev/null
-+++ b/Density/XZFieldMap.cs.meta
-@@ -0,0 +1,2 @@
-+fileFormatVersion: 2
-+guid: 87fce4aac0a54c9fbd63f189a7dff478
 --- a/Density/世界生成变更记录.md
 +++ b/Density/世界生成变更记录.md
-@@ -60,3 +60,24 @@
- 独立 C# 验证对比修改前、修改后、回滚后的同一组坐标与 Seed，检查列参数、Depth、最终密度；另检查二维不变性、三维变化、算子顺序和边界。完整命令、输出、退出码及哈希见 `Artifacts/XZTerrainMigration/VERIFICATION.txt`。
- 
- 后续可分别推进：真实地形样条与坐标尺度、分形/混合基础噪声、群系与材质、洞穴。每一步单独记录与验证，避免同时修改所有因素。
+@@ -81,3 +81,10 @@
+ - 第三张可切换到 P=-3*(abs(abs(R)-2/3)-1/3)，色阶 [-1,1]，标注为参考；P 未接入当前地形，也不意味着已复刻原版噪声。
+ - 纯 C# 验证采样与实际世界场一致、坐标端点、跨窗口一致性、种子与 Y 不变性、P 公式及边界；同源采样导出 CSV 和 PNG 供静态观察。编译与完整命令见原四角色中的 `Artifacts/HeightBlendedMigration/VERIFICATION.txt`，补充材料在 `Supplements/XZMaps`。
+ - 本次不改变地形公式与已有场景。编辑器窗口的实际 Unity 交互尚未运行检查。
 +
 +
-+## 2026-10-19：统一世界高度与分形混合基础噪声
++## 2026-10-21：原版 C/E/R 地形参数映射
 +
-+- 新增独立 `WorldGenerationSettings`，世界范围为 `[MinY, MaxYExclusive)`，默认 `[0,160)`，单位是体素坐标。Inspector 可编辑；预览窗口仍独立，越界时报错，密度函数自身仍可在任意 Y 采样。
-+- 垂直梯度端点单独配置，不随预览窗口移动。上下滑动使用统一世界边界，默认厚度 24；拒绝倒置范围、重叠滑动、非有限参数等。
-+- 新增独立 `OctaveNoiseFunction`、`BlendedNoiseFunction`；分形采用频率翻倍、振幅减半、除以权重总和的 ValueNoise。每层独立稳定种子，支持不同 XZ/Y 频率。
-+- A/B/选择场各 4 层。A/B 默认 XZ=0.02、Y=0.01；选择场 XZ=0.008、Y=0.004。最高层频率限制为每体素 0.5，避免配置明显超出体素采样能力。
-+- `t=clamp((selector+1)/2,0,1)`，`Base3D=Strength*lerp(A,B,t)`；默认 Strength=0.35。替换原单层基础噪声，不改变二维环境场与算子顺序。
-+- 这是学习版结构，不复刻原版 ImprovedNoise、16/16/8 octave、smear、随机序列和数值尺度。分形与混合同时使用。
-+- 验证记录位于 `Artifacts/HeightBlendedMigration/VERIFICATION.txt`，包含原状态、修改、回滚及独立检查。Unity 场景视觉结果尚未检查。
-+
-+
-+## 2026-10-19：XZ 环境参数可视化
-+
-+- 新增独立 `XZFieldMap`，直接采样 `WorldFields.Continents/Erosion/Ridges`，不修改地形场。采样坐标单位为体素，Y 固定为 0；这些参数已是二维场。
-+- 新增编辑器窗口 `Window/Procedural Generation/XZ Parameter Maps`。默认 seed=12345，X/Z 范围 [-512,511]，每图 256×256；可调整种子、起点、范围、分辨率，或读取选中 `VoxelWorldPreview` 的种子与 XZ 窗口。
-+- C/E 色阶固定 [-1,1]，当前 R=|noise| 色阶固定 [0,1]。低值蓝色、中值浅色、高值橙色；联动十字线同时显示 C/E/R/参考 P 的精确采样值与坐标。地图向右 +X、向上 +Z；局部最值仅作读数，不参与自动归一化。
-+- 第三张可切换到 P=-3*(abs(abs(R)-2/3)-1/3)，色阶 [-1,1]，标注为参考；P 未接入当前地形，也不意味着已复刻原版噪声。
-+- 纯 C# 验证采样与实际世界场一致、坐标端点、跨窗口一致性、种子与 Y 不变性、P 公式及边界；同源采样导出 CSV 和 PNG 供静态观察。编译与完整命令见原四角色中的 `Artifacts/HeightBlendedMigration/VERIFICATION.txt`，补充材料在 `Supplements/XZMaps`。
-+- 本次不改变地形公式与已有场景。编辑器窗口的实际 Unity 交互尚未运行检查。
---- /dev/null
-+++ b/Editor.meta
-@@ -0,0 +1,8 @@
-+fileFormatVersion: 2
-+guid: 5aea4f193400457497f4a3244cf0320a
-+folderAsset: yes
-+DefaultImporter:
-+  externalObjects: {}
-+  userData:
-+  assetBundleName:
-+  assetBundleVariant:
---- /dev/null
-+++ b/Editor/WorldFieldMapWindow.cs
-@@ -0,0 +1,167 @@
-+using System;
-+using ProceduralGeneration.WorldGen.Density;
-+using ProceduralGeneration.WorldGen.Voxels;
-+using UnityEditor;
-+using UnityEngine;
-+
-+namespace ProceduralGeneration.WorldGen.Editor
-+{
-+    /// <summary>独立的 XZ 参数地图，不生成网格，也不改写世界场。</summary>
-+    public sealed class WorldFieldMapWindow : EditorWindow
-+    {
-+        [SerializeField] private int seed = 12345;
-+        [SerializeField] private Vector2Int origin = new Vector2Int(-512, -512);
-+        [SerializeField] private Vector2Int span = new Vector2Int(1024, 1024);
-+        [SerializeField] private int resolution = 256;
-+        [SerializeField] private bool showReferenceP;
-+        private XZFieldMap map;
-+        private int sampledSeed;
-+        private Texture2D[] textures;
-+        private Texture2D legend;
-+        private Vector2 scroll;
-+        private int selectedX, selectedZ;
-+        private string error;
-+
-+        [MenuItem("Window/Procedural Generation/XZ Parameter Maps")]
-+        public static void Open()
-+        {
-+            var window = GetWindow<WorldFieldMapWindow>("XZ 参数地图");
-+            window.minSize = new Vector2(360, 440);
-+            window.Show();
-+        }
-+
-+        private void OnEnable() { wantsMouseMove = true; }
-+        private void OnDisable() { ReleaseTextures(); }
-+
-+        private void OnGUI()
-+        {
-+            scroll = EditorGUILayout.BeginScrollView(scroll);
-+            EditorGUILayout.LabelField("世界场 · XZ 参数地图", EditorStyles.boldLabel);
-+            EditorGUILayout.HelpBox("C/E/当前山脊直接读取 WorldFields。蓝色低、浅色中、橙色高；色阶固定，不按局部最值拉伸。地图向右为 +X，向上为 +Z。", MessageType.Info);
-+            seed = EditorGUILayout.IntField("世界种子", seed);
-+            origin = EditorGUILayout.Vector2IntField("起点 X / Z（体素）", origin);
-+            span = EditorGUILayout.Vector2IntField("范围 X / Z（体素数）", span);
-+            resolution = EditorGUILayout.IntPopup("每张图分辨率", resolution, new[] { "128", "256", "512" }, new[] { 128, 256, 512 });
-+            showReferenceP = EditorGUILayout.Toggle("第三张显示参考 P", showReferenceP);
-+            EditorGUILayout.BeginHorizontal();
-+            if (GUILayout.Button("刷新地图")) RefreshMaps();
-+            if (GUILayout.Button("读取选中预览范围")) ReadPreview();
-+            EditorGUILayout.EndHorizontal();
-+            if (!string.IsNullOrEmpty(error)) EditorGUILayout.HelpBox(error, MessageType.Error);
-+
-+            if (map != null)
++- 新增 `OriginalTerrainProvider`，移植原版 `TerrainProvider` 的大陆性控制点与嵌套样条结构；Offset 使用 C 控制点 `[-1.10,-1.02,-0.51,-0.44,-0.18,-0.16,-0.10,0.25,1.0]`，Factor 使用 `[-0.19,-0.15,-0.10,0.03,0.06]`，Jaggedness 使用 `-0.11、0.03、0.65`。
++- Ridges 改为保留原始带符号二维场；增加原版 `P=-3*(abs(abs(R)-2/3)-1/3)`，P 参与 Offset、Factor、Jaggedness；Offset 加入原版 GLOBAL_OFFSET=-0.50375。
++- 保留当前项目的坐标尺度、学习版三维混合噪声和垂直滑动；尚未实现原版 shiftedNoise2d、-0.50375 校准及全部辅助曲线逐点数值等价。
+--- a/Voxels/VoxelMeshBuilder.cs
++++ b/Voxels/VoxelMeshBuilder.cs
+@@ -179,89 +179,31 @@
+             var vertices = new List<Vector3>(Math.Min(voxelCount * 24, 250_000));
+             var normals = new List<Vector3>(vertices.Capacity);
+             var triangles = new List<int>(Math.Min(voxelCount * 36, 375_000));
+-            BuildGreedyFaces(volume, faceMask, voxelSize, startX, endX, startZ, endZ, vertices, normals, triangles);
++            for (int z = startZ; z < endZ; z++)
++            for (int y = 0; y < volume.Height; y++)
++            for (int x = startX; x < endX; x++)
 +            {
-+                EditorGUILayout.LabelField($"已采样 Seed={sampledSeed} · X=[{map.OriginX}, {map.GetX(map.Resolution - 1)}] · Z=[{map.OriginZ}, {map.GetZ(map.Resolution - 1)}]", EditorStyles.wordWrappedLabel);
-+                EditorGUILayout.LabelField("修改上方种子或范围后点击刷新。读数对应已采样的地图。", EditorStyles.miniLabel);
-+                bool horizontal = position.width >= 780;
-+                float side = Mathf.Clamp(horizontal ? (position.width - 65) / 3 : position.width - 42, 96, 512);
-+                if (horizontal) EditorGUILayout.BeginHorizontal();
-+                DrawMap(XZFieldMap.Field.Continents, "C · 大陆性", side);
-+                DrawMap(XZFieldMap.Field.Erosion, "E · 侵蚀度", side);
-+                DrawMap(showReferenceP ? XZFieldMap.Field.PeaksAndValleys : XZFieldMap.Field.Ridges,
-+                    showReferenceP ? "P · 峰谷（参考）" : "R · 当前山脊 |noise|", side);
-+                if (horizontal) EditorGUILayout.EndHorizontal();
-+                if (showReferenceP)
-+                    EditorGUILayout.HelpBox("P = -3 × (||R| - 2/3| - 1/3)。这里只用于对照；当前地形仍使用 R=|noise|，没有接入 P。", MessageType.Info);
-+                EditorGUILayout.LabelField($"采样点 X={map.GetX(selectedX)}, Z={map.GetZ(selectedZ)}", EditorStyles.boldLabel);
-+                EditorGUILayout.LabelField($"C={map.GetValue(XZFieldMap.Field.Continents, selectedX, selectedZ):F5}    E={map.GetValue(XZFieldMap.Field.Erosion, selectedX, selectedZ):F5}");
-+                EditorGUILayout.LabelField($"R={map.GetValue(XZFieldMap.Field.Ridges, selectedX, selectedZ):F5}    参考 P={map.GetValue(XZFieldMap.Field.PeaksAndValleys, selectedX, selectedZ):F5}");
-+            }
-+            else EditorGUILayout.HelpBox("点击刷新地图。默认观察 1024×1024 体素，以便看清大尺度变化。也可选中 Voxel World Preview 后读取它的种子与范围。", MessageType.None);
-+            EditorGUILayout.EndScrollView();
-+        }
-+
-+        private void ReadPreview()
-+        {
-+            var preview = Selection.activeGameObject == null ? null : Selection.activeGameObject.GetComponent<VoxelWorldPreview>();
-+            if (preview == null) { error = "请先选中带有 VoxelWorldPreview 的场景对象。"; return; }
-+            seed = preview.Seed;
-+            origin = new Vector2Int(preview.SampleOrigin.x, preview.SampleOrigin.z);
-+            span = new Vector2Int(preview.WorldSize.x, preview.WorldSize.z);
-+            RefreshMaps();
-+        }
-+
-+        private void RefreshMaps()
-+        {
-+            try
-+            {
-+                var next = new XZFieldMap(WorldFields.CreateLearningDefaults(seed), origin.x, origin.y, span.x, span.y, resolution);
-+                ReleaseTextures();
-+                map = next;
-+                sampledSeed = seed;
-+                selectedX = selectedZ = map.Resolution / 2;
-+                textures = new Texture2D[4];
-+                for (int field = 0; field < 4; field++)
++                int index = x + volume.Width * (y + volume.Height * z);
++                byte mask = faceMask[index];
++                if (mask == 0) continue;
++                var position = new Vector3(x, y, z);
++                for (int face = 0; face < 6; face++)
 +                {
-+                    var pixels = new Color32[resolution * resolution];
-+                    for (int z = 0; z < resolution; z++)
-+                    for (int x = 0; x < resolution; x++)
++                    if ((mask & (1 << face)) == 0) continue;
++                    int start = vertices.Count;
++                    var direction = Directions[face];
++                    for (int corner = 0; corner < 4; corner++)
 +                    {
-+                        double value = map.GetValue((XZFieldMap.Field)field, x, z);
-+                        float t = (float)(field == 2 ? value : (value + 1) * 0.5);
-+                        pixels[z * resolution + x] = Palette(t);
++                        vertices.Add((position + Corners[face * 4 + corner]) * voxelSize);
++                        normals.Add((Vector3)direction);
 +                    }
-+                    textures[field] = MakeTexture(resolution, resolution, pixels);
++                    triangles.Add(start); triangles.Add(start + 1); triangles.Add(start + 2);
++                    triangles.Add(start); triangles.Add(start + 2); triangles.Add(start + 3);
 +                }
-+                var ramp = new Color32[128];
-+                for (int i = 0; i < ramp.Length; i++) ramp[i] = Palette(i / 127f);
-+                legend = MakeTexture(128, 1, ramp);
-+                error = null;
 +            }
-+            catch (ArgumentException exception) { error = exception.Message; }
-+        }
-+
-+        private static Color Palette(float t)
-+        {
-+            var low = new Color32(26, 75, 154, 255);
-+            var mid = new Color32(239, 242, 238, 255);
-+            var high = new Color32(201, 70, 43, 255);
-+            return t <= 0.5f ? Color.Lerp(low, mid, t * 2) : Color.Lerp(mid, high, t * 2 - 1);
-+        }
-+
-+        private static Texture2D MakeTexture(int width, int height, Color32[] pixels)
-+        {
-+            var texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
-+            texture.hideFlags = HideFlags.HideAndDontSave;
-+            texture.wrapMode = TextureWrapMode.Clamp;
-+            texture.filterMode = FilterMode.Point;
-+            texture.SetPixels32(pixels);
-+            texture.Apply(false, true);
-+            return texture;
-+        }
-+
-+        private void DrawMap(XZFieldMap.Field field, string title, float side)
-+        {
-+            EditorGUILayout.BeginVertical(GUILayout.Width(side));
-+            GUILayout.Label(title, EditorStyles.boldLabel);
-+            Rect rect = GUILayoutUtility.GetRect(side, side, GUILayout.ExpandWidth(false));
-+            GUI.DrawTexture(rect, textures[(int)field], ScaleMode.StretchToFill);
-+            if (rect.Contains(Event.current.mousePosition) && (Event.current.type == EventType.MouseMove || Event.current.type == EventType.MouseDown))
-+            {
-+                selectedX = Mathf.Clamp((int)((Event.current.mousePosition.x - rect.x) / rect.width * map.Resolution), 0, map.Resolution - 1);
-+                selectedZ = map.Resolution - 1 - Mathf.Clamp((int)((Event.current.mousePosition.y - rect.y) / rect.height * map.Resolution), 0, map.Resolution - 1);
-+                Repaint();
-+            }
-+            float px = rect.x + (selectedX + 0.5f) / map.Resolution * rect.width;
-+            float py = rect.y + (map.Resolution - selectedZ - 0.5f) / map.Resolution * rect.height;
-+            EditorGUI.DrawRect(new Rect(px - 1, rect.y, 3, rect.height), new Color(0, 0, 0, 0.6f));
-+            EditorGUI.DrawRect(new Rect(rect.x, py - 1, rect.width, 3), new Color(0, 0, 0, 0.6f));
-+            EditorGUI.DrawRect(new Rect(px, rect.y, 1, rect.height), Color.white);
-+            EditorGUI.DrawRect(new Rect(rect.x, py, rect.width, 1), Color.white);
-+            Rect bar = GUILayoutUtility.GetRect(side, 10, GUILayout.ExpandWidth(false));
-+            GUI.DrawTexture(bar, legend, ScaleMode.StretchToFill);
-+            GUILayout.Label(field == XZFieldMap.Field.Ridges ? "0                 0.5                 1" : "−1                  0                  +1", EditorStyles.miniLabel);
-+            GUILayout.Label($"采样最值 {map.Minimum(field):F3} ～ {map.Maximum(field):F3}", EditorStyles.miniLabel);
-+            EditorGUILayout.EndVertical();
-+        }
-+
-+        private void ReleaseTextures()
-+        {
-+            if (textures != null) foreach (var texture in textures) if (texture != null) DestroyImmediate(texture);
-+            if (legend != null) DestroyImmediate(legend);
-+            textures = null;
-+            legend = null;
-+            map = null;
-+        }
-+    }
-+}
---- /dev/null
-+++ b/Editor/WorldFieldMapWindow.cs.meta
-@@ -0,0 +1,2 @@
-+fileFormatVersion: 2
-+guid: a05bbcb6dd8a442a869c72b8ad844af0
---- a/Voxels/VoxelWorldControls.cs
-+++ b/Voxels/VoxelWorldControls.cs
-@@ -84,9 +84,9 @@
-                 preview.Generate(new Vector3Int(x, y, z), worldSeed, new Vector3Int(ox, oy, oz), cellSize);
-                 message = $"Generated {x} x {y} x {z}. Solid: {preview.Volume.SolidCount}";
+             var mesh = new Mesh { name = $"Density Voxel Chunk {startX},{startZ}", indexFormat = IndexFormat.UInt32 };
+             mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds(); mesh.UploadMeshData(true);
+             return mesh;
+         }
+-
+-        private static void BuildGreedyFaces(VoxelVolume volume, NativeArray<byte> faceMask, float voxelSize,
+-            int startX, int endX, int startZ, int endZ,
+-            List<Vector3> vertices, List<Vector3> normals, List<int> triangles)
+-        {
+-            // Each face is reduced independently on its constant-coordinate planes.
+-            // u/v are the two axes in the plane; the resulting quad keeps the original
+-            // winding by using a face-specific base corner and signed edge vectors.
+-            for (int face = 0; face < 6; face++)
+-            {
+-                int planeCount, uCount, vCount;
+-                if (face <= 1) { planeCount = endX - startX; uCount = volume.Height; vCount = endZ - startZ; }
+-                else if (face <= 3) { planeCount = volume.Height; uCount = endX - startX; vCount = endZ - startZ; }
+-                else { planeCount = endZ - startZ; uCount = volume.Height; vCount = endX - startX; }
+-
+-                for (int plane = 0; plane < planeCount; plane++)
+-                {
+-                    var used = new bool[uCount * vCount];
+-                    for (int v = 0; v < vCount; v++)
+-                    for (int u = 0; u < uCount; u++)
+-                    {
+-                        int usedIndex = u + uCount * v;
+-                        if (used[usedIndex] || !HasFace(volume, faceMask, face, plane, u, v, startX, endX, startZ, endZ)) continue;
+-                        int width = 1;
+-                        while (u + width < uCount && !used[u + width + uCount * v]
+-                            && HasFace(volume, faceMask, face, plane, u + width, v, startX, endX, startZ, endZ)) width++;
+-                        int height = 1;
+-                        bool expand = true;
+-                        while (v + height < vCount && expand)
+-                        {
+-                            for (int testU = 0; testU < width; testU++)
+-                                if (used[u + testU + uCount * (v + height)]
+-                                    || !HasFace(volume, faceMask, face, plane, u + testU, v + height, startX, endX, startZ, endZ))
+-                                { expand = false; break; }
+-                            if (expand) height++;
+-                        }
+-                        for (int markV = 0; markV < height; markV++)
+-                        for (int markU = 0; markU < width; markU++)
+-                            used[u + markU + uCount * (v + markV)] = true;
+-                        AppendGreedyQuad(face, plane, u, v, width, height, startX, startZ, voxelSize, vertices, normals, triangles);
+-                    }
+-                }
+-            }
+-        }
+-
+-        private static bool HasFace(VoxelVolume volume, NativeArray<byte> faceMask, int face, int plane, int u, int v,
+-            int startX, int endX, int startZ, int endZ)
+-        {
+-            int x, y, z;
+-            if (face <= 1) { x = startX + plane; y = u; z = startZ + v; }
+-            else if (face <= 3) { x = startX + u; y = plane; z = startZ + v; }
+-            else { x = startX + v; y = u; z = startZ + plane; }
+-            int index = x + volume.Width * (y + volume.Height * z);
+-            return (faceMask[index] & (1 << face)) != 0;
+-        }
+-
+-        private static void AppendGreedyQuad(int face, int plane, int u, int v, int width, int height,
+-            int startX, int startZ, float voxelSize, List<Vector3> vertices, List<Vector3> normals, List<int> triangles)
+-        {
+-            Vector3 origin;
+-            Vector3 du;
+-            Vector3 dv;
+-            Vector3 normal = Directions[face];
+-            if (face == 0) { origin = new Vector3(startX + plane + 1, u, startZ + v); du = Vector3.up; dv = Vector3.forward; }
+-            else if (face == 1) { origin = new Vector3(startX + plane, u, startZ + v + 1); du = Vector3.up; dv = Vector3.back; }
+-            else if (face == 2) { origin = new Vector3(startX + u, plane + 1, startZ + v); du = Vector3.right; dv = Vector3.forward; }
+-            else if (face == 3) { origin = new Vector3(startX + u, plane, startZ + v + 1); du = Vector3.right; dv = Vector3.back; }
+-            else if (face == 4) { origin = new Vector3(startX + v + 1, u, startZ + plane + 1); du = Vector3.up; dv = Vector3.left; }
+-            else { origin = new Vector3(startX + v, u, startZ + plane); du = Vector3.up; dv = Vector3.right; }
+-
+-            int start = vertices.Count;
+-            vertices.Add(origin * voxelSize);
+-            vertices.Add((origin + du * width) * voxelSize);
+-            vertices.Add((origin + du * width + dv * height) * voxelSize);
+-            vertices.Add((origin + dv * height) * voxelSize);
+-            normals.Add(normal); normals.Add(normal); normals.Add(normal); normals.Add(normal);
+-            triangles.Add(start); triangles.Add(start + 1); triangles.Add(start + 2);
+-            triangles.Add(start); triangles.Add(start + 2); triangles.Add(start + 3);
+-        }
+     }
+ }
+--- a/Voxels/VoxelVolume.cs
++++ b/Voxels/VoxelVolume.cs
+@@ -1,6 +1,4 @@
+ using System;
+-using System.Threading;
+-using System.Threading.Tasks;
+ using ProceduralGeneration.WorldGen.Density;
+ using Unity.Collections;
+ 
+@@ -40,27 +38,6 @@
              }
--            catch (ArgumentException)
-+            catch (ArgumentException error)
-             {
--                message = "World size and voxel size must be positive and finite.";
-+                message = error.Message;
-             }
-             catch (OverflowException)
-             {
+         }
+ 
+-        /// <summary>并行填充完整体素体积。密度函数图必须保持无共享可变状态。</summary>
+-        public void FillParallel(IDensityFunction density, int originX = 0, int originY = 0, int originZ = 0)
+-        {
+-            if (density == null) throw new ArgumentNullException(nameof(density));
+-            int solidCount = 0;
+-            Parallel.For(0, Depth, z =>
+-            {
+-                int localSolidCount = 0;
+-                for (int y = 0; y < Height; y++)
+-                for (int x = 0; x < Width; x++)
+-                {
+-                    var context = new DensityContext(checked(originX + x), checked(originY + y), checked(originZ + z));
+-                    bool value = density.Sample(context) > 0.0;
+-                    solid[x + Width * (y + Height * z)] = value;
+-                    if (value) localSolidCount++;
+-                }
+-                Interlocked.Add(ref solidCount, localSolidCount);
+-            });
+-            SolidCount = solidCount;
+-        }
+-
+         /// <summary>只生成一个 XZ 区块范围，适合分帧生成。调用前可重复填充不同区域。</summary>
+         public void FillRegion(IDensityFunction density, int startX, int endX, int startZ, int endZ,
+             int originX = 0, int originY = 0, int originZ = 0)
 --- a/Voxels/VoxelWorldPreview.cs
 +++ b/Voxels/VoxelWorldPreview.cs
-@@ -14,6 +14,7 @@
-     {
-         [SerializeField] private Vector3Int worldSize = new Vector3Int(128, 128, 128);
-         [SerializeField, Min(0.001f)] private float voxelSize = 0.5f;
-+        [SerializeField] private WorldGenerationSettings generationSettings = new WorldGenerationSettings();
-         [SerializeField] private int seed = 12345;
-         [SerializeField] private Vector3Int sampleOrigin = Vector3Int.zero;
-         [SerializeField] private Color solidColor = new Color(0.5f, 0.55f, 0.6f, 1f);
-@@ -48,6 +49,7 @@
-                 int endY = origin.y + size.y - 1;
-                 int endZ = origin.z + size.z - 1;
-             }
-+            ValidateWindow(origin.y, size.y);
-             worldSize = size;
-             seed = worldSeed;
-             sampleOrigin = origin;
-@@ -55,6 +57,12 @@
-             Generate();
-         }
- 
-+        private void ValidateWindow(int originY, int height)
-+        {
-+            generationSettings = generationSettings ?? new WorldGenerationSettings();
-+            generationSettings.ValidateWindow(originY, height);
-+        }
-+
-         private void Start()
-         {
-             if (generateOnStart) StartGeneration();
-@@ -74,6 +82,7 @@
-         /// <summary>运行时开始分帧生成；已完成的区块会立即显示。</summary>
-         public void StartGeneration()
-         {
-+            ValidateWindow(sampleOrigin.y, worldSize.y);
-             if (generationRoutine != null) StopCoroutine(generationRoutine);
-             generationRoutine = StartCoroutine(GenerateOverFrames());
-         }
-@@ -83,8 +92,9 @@
-             if (worldSize.x <= 0 || worldSize.y <= 0 || worldSize.z <= 0 || voxelSize <= 0
-                 || float.IsNaN(voxelSize) || float.IsInfinity(voxelSize))
-                 throw new ArgumentOutOfRangeException(nameof(worldSize), "Size and voxel size must be positive and finite.");
-+            ValidateWindow(sampleOrigin.y, worldSize.y);
+@@ -96,7 +96,7 @@
              var timer = Stopwatch.StartNew();
--            var fields = WorldFields.CreateLearningDefaults(seed);
-+            var fields = WorldFields.CreateLearningDefaults(seed, generationSettings);
+             var fields = WorldFields.CreateLearningDefaults(seed, generationSettings);
              var volume = new VoxelVolume(worldSize.x, worldSize.y, worldSize.z);
-             volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
+-            volume.FillParallel(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
++            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
              long samplingMilliseconds = timer.ElapsedMilliseconds;
-@@ -114,9 +124,10 @@
-             if (worldSize.x <= 0 || worldSize.y <= 0 || worldSize.z <= 0 || voxelSize <= 0
-                 || float.IsNaN(voxelSize) || float.IsInfinity(voxelSize))
-                 throw new ArgumentOutOfRangeException(nameof(worldSize), "Size and voxel size must be positive and finite.");
-+            ValidateWindow(sampleOrigin.y, worldSize.y);
-             var timer = Stopwatch.StartNew();
              ClearGeneratedMeshes();
--            var fields = WorldFields.CreateLearningDefaults(seed);
-+            var fields = WorldFields.CreateLearningDefaults(seed, generationSettings);
-             var volume = new VoxelVolume(worldSize.x, worldSize.y, worldSize.z);
-             Volume = volume;
-             GetComponent<MeshFilter>().sharedMesh = null;
+             var meshes = useJobsForMesh
+@@ -139,7 +139,7 @@
+             // correct boundary information. The mesh pass uses the same Burst face
+             // visibility path as synchronous generation instead of BuildRegion's
+             // main-thread List-based implementation.
+-            volume.FillParallel(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
++            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
+             var meshTimer = Stopwatch.StartNew();
+             var meshes = useJobsForMesh
+                 ? VoxelMeshBuilder.BuildChunkMeshesWithJobs(volume, voxelSize, 16)

@@ -1,0 +1,3 @@
+PASS: exclusive world bounds, independent windows, moved gradient/slides, invalid settings
+PASS: blend clamp/endpoints/midpoint, one-octave identity, 3 seeds x 189 samples, bounds/determinism/Y/seed/XZ columns
+PASS: zero-strength preserves terrain formula; ALL_CHECKS_PASSED

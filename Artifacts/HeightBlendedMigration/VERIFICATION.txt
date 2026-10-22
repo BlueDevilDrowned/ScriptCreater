@@ -477,3 +477,303 @@ XZ_MAPS_RENDER: Python Pillow; source Supplements/XZMaps/samples.csv, 65536 C# s
 D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\xz-parameters.png SHA256 0145692adedad8523ca9f8bddd130fac719c7b9247d8429b922c7f892b54142e; image verify=PASS; size=1460x760
 D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Supplements\XZMaps\xz-cep-reference.png SHA256 1b173e35dd9529b90a54e4c12ba68c92863c954a5122d36661d51c95bc840bff; image verify=PASS; size=1460x760
 FINAL_REOPEN: all four roles read; new project files equal modified artifact; WorldFields hash unchanged. Both PNG layouts visually inspected. Unity editor interaction not run.
+
+ORIGINAL_TERRAIN_BASELINE_CURRENT
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\BASELINE_CURRENT\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+ORIGINAL_TERRAIN_MODIFIED_CURRENT
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=-0.5404995674505982 y120=-0.5404995674505982 same=True
+Offset: y24=0.8565796677853189 y120=0.8565796677853189 same=True
+Factor: y24=2.5678009669320385 y120=2.5678009669320385 same=True
+Jaggedness: y24=0.647526658541458 y120=0.647526658541458 same=True
+y=0 depth=1.606579667785319 density=1
+y=24 depth=1.381579667785319 density=16.543136377245112
+y=80 depth=0.8565796677853189 density=11.184692891172649
+y=120 depth=0.4815796677853189 density=7.303509072206019
+y=160 depth=0.10657966778531891 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+ORIGINAL_TERRAIN_MODIFIED_CHECKS
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Checks.cs"]
+exit: 0
+stdout:
+PASS: exclusive world bounds, independent windows, moved gradient/slides, invalid settings
+PASS: blend clamp/endpoints/midpoint, one-octave identity, 3 seeds x 189 samples, bounds/determinism/Y/seed/XZ columns
+PASS: zero-strength preserves terrain formula; ALL_CHECKS_PASSED
+
+stderr:
+
+
+ORIGINAL_TERRAIN_BASELINE_CURRENT
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\BASELINE_CURRENT\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+ORIGINAL_TERRAIN_MODIFIED_CURRENT
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=-0.5404995674505982 y120=-0.5404995674505982 same=True
+Offset: y24=0.8565796677853189 y120=0.8565796677853189 same=True
+Factor: y24=2.5678009669320385 y120=2.5678009669320385 same=True
+Jaggedness: y24=0.647526658541458 y120=0.647526658541458 same=True
+y=0 depth=1.606579667785319 density=1
+y=24 depth=1.381579667785319 density=16.543136377245112
+y=80 depth=0.8565796677853189 density=11.184692891172649
+y=120 depth=0.4815796677853189 density=7.303509072206019
+y=160 depth=0.10657966778531891 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+ORIGINAL_TERRAIN_MODIFIED_CHECKS
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Checks.cs"]
+exit: 0
+stdout:
+PASS: exclusive world bounds, independent windows, moved gradient/slides, invalid settings
+PASS: blend clamp/endpoints/midpoint, one-octave identity, 3 seeds x 189 samples, bounds/determinism/Y/seed/XZ columns
+PASS: zero-strength preserves terrain formula; ALL_CHECKS_PASSED
+
+stderr:
+
+
+ORIGINAL_TERRAIN_BASELINE_CURRENT
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\BASELINE_CURRENT\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+ORIGINAL_TERRAIN_MODIFIED_CURRENT
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=-0.5404995674505982 y120=-0.5404995674505982 same=True
+Offset: y24=0.8565796677853189 y120=0.8565796677853189 same=True
+Factor: y24=2.5678009669320385 y120=2.5678009669320385 same=True
+Jaggedness: y24=0.647526658541458 y120=0.647526658541458 same=True
+y=0 depth=1.606579667785319 density=1
+y=24 depth=1.381579667785319 density=16.543136377245112
+y=80 depth=0.8565796677853189 density=11.184692891172649
+y=120 depth=0.4815796677853189 density=7.303509072206019
+y=160 depth=0.10657966778531891 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+ORIGINAL_TERRAIN_MODIFIED_CHECKS
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Checks.cs"]
+exit: 0
+stdout:
+PASS: exclusive world bounds, independent windows, moved gradient/slides, invalid settings
+PASS: blend clamp/endpoints/midpoint, one-octave identity, 3 seeds x 189 samples, bounds/determinism/Y/seed/XZ columns
+PASS: zero-strength preserves terrain formula; ALL_CHECKS_PASSED
+
+stderr:
+
+ORIGINAL_TERRAIN_PATCH_BYTE_MATCH=True
+ORIGINAL_TERRAIN_ROLLBACK_HASH_MATCH=True
+ORIGINAL_TERRAIN_BASELINE_OUTPUT=1.6994421502096944; MODIFIED_OUTPUT=11.18469289117265; ROLLBACK_OUTPUT=1.6994421502096944
+Changed symbols: OriginalTerrainProvider, WorldFields C/E/R mapping, folded P
+
+FINAL_ORIGINAL_TERRAIN_BASELINE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\BASELINE_CURRENT\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+FINAL_ORIGINAL_TERRAIN_MODIFIED
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=-0.5404995674505982 y120=-0.5404995674505982 same=True
+Offset: y24=0.3528296677853189 y120=0.3528296677853189 same=True
+Factor: y24=2.5678009669320385 y120=2.5678009669320385 same=True
+Jaggedness: y24=0.647526658541458 y120=0.647526658541458 same=True
+y=0 depth=1.1028296677853189 density=1
+y=24 depth=0.8778296677853189 density=11.369017428877054
+y=80 depth=0.3528296677853189 density=6.01057394280459
+y=120 depth=-0.02217033221468112 density=2.129390123837961
+y=160 depth=-0.3971703322146811 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+FINAL_ORIGINAL_TERRAIN_BASELINE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\BASELINE_CURRENT\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+FINAL_ORIGINAL_TERRAIN_MODIFIED
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=-0.5404995674505982 y120=-0.5404995674505982 same=True
+Offset: y24=0.3528296677853189 y120=0.3528296677853189 same=True
+Factor: y24=2.5678009669320385 y120=2.5678009669320385 same=True
+Jaggedness: y24=0.647526658541458 y120=0.647526658541458 same=True
+y=0 depth=1.1028296677853189 density=1
+y=24 depth=0.8778296677853189 density=11.369017428877054
+y=80 depth=0.3528296677853189 density=6.01057394280459
+y=120 depth=-0.02217033221468112 density=2.129390123837961
+y=160 depth=-0.3971703322146811 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+FINAL_ORIGINAL_TERRAIN_BASELINE
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\BASELINE_CURRENT\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+FINAL_ORIGINAL_TERRAIN_MODIFIED
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\MODIFIED_FILE\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=-0.5404995674505982 y120=-0.5404995674505982 same=True
+Offset: y24=0.3528296677853189 y120=0.3528296677853189 same=True
+Factor: y24=2.5678009669320385 y120=2.5678009669320385 same=True
+Jaggedness: y24=0.647526658541458 y120=0.647526658541458 same=True
+y=0 depth=1.1028296677853189 density=1
+y=24 depth=0.8778296677853189 density=11.369017428877054
+y=80 depth=0.3528296677853189 density=6.01057394280459
+y=120 depth=-0.02217033221468112 density=2.129390123837961
+y=160 depth=-0.3971703322146811 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+
+FINAL_ORIGINAL_TERRAIN_ROLLBACK
+command: ["dotnet", "run", "--project", "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj", "-p:SourceDir=D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Supplements\\OriginalTerrainMapping\\ROLLBACK_FINAL\\Density", "-p:TestProgram=Program.cs"]
+exit: 0
+stdout:
+Continents: y24=0.5544259445737089 y120=0.5544259445737089 same=True
+Erosion: y24=0.4870856194523814 y120=0.4870856194523814 same=True
+Ridges: y24=0.5404995674505982 y120=0.5404995674505982 same=True
+Offset: y24=0.5462496197448974 y120=0.5462496197448974 same=True
+Factor: y24=0.5283778075378334 y120=0.5283778075378334 same=True
+Jaggedness: y24=0.4875101731927333 y120=0.4875101731927333 same=True
+y=0 depth=1.2962496197448974 density=1
+y=24 depth=1.0712496197448975 density=2.607818916686543
+y=80 depth=0.5462496197448974 density=1.53216406534191
+y=120 depth=0.17124961974489739 density=0.7101149854665884
+y=160 depth=-0.20375038025510261 density=-1
+SAMPLE_SUCCESS
+
+stderr:
+
+FINAL_ORIGINAL_TERRAIN_PATCH_RECONSTRUCTED_TEXT=True (Git text attributes normalize CRLF/LF)
+FINAL_ORIGINAL_TERRAIN_ROLLBACK_HASH_MATCH=True
+FINAL_BASELINE_MODIFIED_ROLLBACK_DENSITY=1.6994421502096944 -> 6.01057394280459 -> 1.6994421502096944

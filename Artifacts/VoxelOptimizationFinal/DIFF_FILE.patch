@@ -1,0 +1,24 @@
+diff --git a/Artifacts/VoxelOptimizationGreedy/MODIFIED_VoxelWorldPreview.cs b/Artifacts/VoxelOptimizationFinal/MODIFIED_VoxelWorldPreview.cs
+index 8274dc5..bf9c0fb 100644
+--- a/Artifacts/VoxelOptimizationGreedy/MODIFIED_VoxelWorldPreview.cs
++++ b/Artifacts/VoxelOptimizationFinal/MODIFIED_VoxelWorldPreview.cs
+@@ -96,7 +96,7 @@ private void GenerateSynchronously()
+             var timer = Stopwatch.StartNew();
+             var fields = WorldFields.CreateLearningDefaults(seed, generationSettings);
+             var volume = new VoxelVolume(worldSize.x, worldSize.y, worldSize.z);
+-            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
++            volume.FillParallel(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
+             long samplingMilliseconds = timer.ElapsedMilliseconds;
+             ClearGeneratedMeshes();
+             var meshes = useJobsForMesh
+@@ -139,7 +139,7 @@ private IEnumerator GenerateOverFrames()
+             // correct boundary information. The mesh pass uses the same Burst face
+             // visibility path as synchronous generation instead of BuildRegion's
+             // main-thread List-based implementation.
+-            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
++            volume.FillParallel(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
+             var meshTimer = Stopwatch.StartNew();
+             var meshes = useJobsForMesh
+                 ? VoxelMeshBuilder.BuildChunkMeshesWithJobs(volume, voxelSize, 16)
+warning: in the working copy of 'Artifacts/VoxelOptimizationGreedy/MODIFIED_VoxelMeshBuilder.cs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Artifacts/VoxelOptimizationFinal/MODIFIED_VoxelMeshBuilder.cs', LF will be replaced by CRLF the next time Git touches it

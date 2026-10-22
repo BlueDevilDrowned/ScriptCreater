@@ -65,31 +65,11 @@ public sealed class WorldFields
             // 地形环境是二维场：同一 XZ 列共享样条参数，不随 Y 漂移。
             IDensityFunction continents = DensityFunctions.Noise2D(seed + 1, 0.0025, 1.0);
             IDensityFunction erosion = DensityFunctions.Noise2D(seed + 2, 0.008, 1.0);
-            IDensityFunction ridges = DensityFunctions.Abs(DensityFunctions.Noise2D(seed + 3, 0.012, 1.0));
-            IDensityFunction lowlandOffset = DensityFunctions.Spline(erosion,
-                new CubicSplinePoint(-1.0, -0.55, 0.0),
-                new CubicSplinePoint(0.0, -0.20, 0.1),
-                new CubicSplinePoint(1.0, 0.05, 0.0));
-            IDensityFunction mountainOffset = DensityFunctions.Spline(erosion,
-                new CubicSplinePoint(-1.0, 0.10, 0.0),
-                new CubicSplinePoint(0.0, 0.35, 0.2),
-                new CubicSplinePoint(1.0, 0.70, 0.0));
-            IDensityFunction offset = DensityFunctions.Spline(continents,
-                new CubicSplinePoint(-1.0, lowlandOffset, 0.15),
-                new CubicSplinePoint(-0.35, lowlandOffset, 0.80),
-                new CubicSplinePoint(0.10, DensityFunctions.Constant(0.05), 0.35),
-                new CubicSplinePoint(0.55, mountainOffset, 0.55),
-                new CubicSplinePoint(1.0, mountainOffset, -0.30));
-            IDensityFunction factor = DensityFunctions.Spline(erosion,
-                new CubicSplinePoint(-1.0, 1.35, 0.0),
-                new CubicSplinePoint(-0.30, 1.10, -0.20),
-                new CubicSplinePoint(0.25, 0.65, -0.35),
-                new CubicSplinePoint(1.0, 0.30, 0.0));
-            IDensityFunction jaggedness = DensityFunctions.Spline(ridges,
-                new CubicSplinePoint(0.0, 0.02, 0.0),
-                new CubicSplinePoint(0.25, 0.12, 0.40),
-                new CubicSplinePoint(0.60, 0.55, 0.80),
-                new CubicSplinePoint(1.0, 1.00, 0.20));
+            IDensityFunction ridges = DensityFunctions.Noise2D(seed + 3, 0.012, 1.0);
+            IDensityFunction foldedRidges = OriginalTerrainProvider.PeaksAndValleys(ridges);
+            IDensityFunction offset = DensityFunctions.Add(DensityFunctions.Constant(-0.50375), OriginalTerrainProvider.Offset(continents, erosion, foldedRidges));
+            IDensityFunction factor = OriginalTerrainProvider.Factor(continents, erosion, foldedRidges);
+            IDensityFunction jaggedness = OriginalTerrainProvider.Jaggedness(continents, erosion, foldedRidges);
             // 垂直渐变只提供中尺度趋势；上下边界由 VerticalSlideFunction 处理。
             IDensityFunction vertical = DensityFunctions.YClampedGradient(settings.GradientFromY, settings.GradientToY, settings.GradientFromValue, settings.GradientToValue);
             IDensityFunction depth = DensityFunctions.Add(vertical, offset);

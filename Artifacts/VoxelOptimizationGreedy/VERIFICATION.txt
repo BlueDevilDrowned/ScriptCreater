@@ -1,0 +1,10 @@
+VOXEL GREEDY MESH VERIFICATION
+TARGET: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Voxels\VoxelMeshBuilder.cs
+GOAL: replace per-face quad emission in BuildMeshFromMask with per-plane greedy rectangle merging; keep Y as full-height XZ chunks.
+BASELINE: existing Burst face-mask output followed by one quad per visible face.
+MODIFIED: BuildGreedyFaces merges contiguous equal face-mask cells and emits one rectangle; UploadMeshData(true) remains enabled.
+BUILD: dotnet build 程序化生成.slnx --no-restore -v:minimal => exit 0, 0 errors (75 existing package/compiler warnings).
+ROLLBACK: ROLLBACK.sh restored ROLLBACK_COPY_VoxelMeshBuilder.cs; hash equal baseline=True.
+REAPPLY: MODIFIED_VoxelMeshBuilder.cs was recopied from current TARGET after rollback.
+BASELINE SHA256: F16B186DB1D2E9FD0B805C82492BE47625DEC6913BA12E5B30E92C67C228EECE
+ROLLBACK SHA256: F16B186DB1D2E9FD0B805C82492BE47625DEC6913BA12E5B30E92C67C228EECE

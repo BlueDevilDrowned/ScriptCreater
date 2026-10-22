@@ -1,0 +1,115 @@
+warning: in the working copy of 'Artifacts/VoxelOptimizationGreedy/BASELINE_VoxelMeshBuilder.cs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Artifacts/VoxelOptimizationGreedy/MODIFIED_VoxelMeshBuilder.cs', LF will be replaced by CRLF the next time Git touches it
+diff --git a/Artifacts/VoxelOptimizationGreedy/BASELINE_VoxelMeshBuilder.cs b/Artifacts/VoxelOptimizationGreedy/MODIFIED_VoxelMeshBuilder.cs
+index 81fe3ac..730b942 100644
+--- a/Artifacts/VoxelOptimizationGreedy/BASELINE_VoxelMeshBuilder.cs
++++ b/Artifacts/VoxelOptimizationGreedy/MODIFIED_VoxelMeshBuilder.cs
+@@ -179,31 +179,89 @@ private static Mesh BuildMeshFromMask(VoxelVolume volume, NativeArray<byte> face
+             var vertices = new List<Vector3>(Math.Min(voxelCount * 24, 250_000));
+             var normals = new List<Vector3>(vertices.Capacity);
+             var triangles = new List<int>(Math.Min(voxelCount * 36, 375_000));
+-            for (int z = startZ; z < endZ; z++)
+-            for (int y = 0; y < volume.Height; y++)
+-            for (int x = startX; x < endX; x++)
++            BuildGreedyFaces(volume, faceMask, voxelSize, startX, endX, startZ, endZ, vertices, normals, triangles);
++            var mesh = new Mesh { name = $"Density Voxel Chunk {startX},{startZ}", indexFormat = IndexFormat.UInt32 };
++            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds(); mesh.UploadMeshData(true);
++            return mesh;
++        }
++
++        private static void BuildGreedyFaces(VoxelVolume volume, NativeArray<byte> faceMask, float voxelSize,
++            int startX, int endX, int startZ, int endZ,
++            List<Vector3> vertices, List<Vector3> normals, List<int> triangles)
++        {
++            // Each face is reduced independently on its constant-coordinate planes.
++            // u/v are the two axes in the plane; the resulting quad keeps the original
++            // winding by using a face-specific base corner and signed edge vectors.
++            for (int face = 0; face < 6; face++)
+             {
+-                int index = x + volume.Width * (y + volume.Height * z);
+-                byte mask = faceMask[index];
+-                if (mask == 0) continue;
+-                var position = new Vector3(x, y, z);
+-                for (int face = 0; face < 6; face++)
++                int planeCount, uCount, vCount;
++                if (face <= 1) { planeCount = endX - startX; uCount = volume.Height; vCount = endZ - startZ; }
++                else if (face <= 3) { planeCount = volume.Height; uCount = endX - startX; vCount = endZ - startZ; }
++                else { planeCount = endZ - startZ; uCount = volume.Height; vCount = endX - startX; }
++
++                for (int plane = 0; plane < planeCount; plane++)
+                 {
+-                    if ((mask & (1 << face)) == 0) continue;
+-                    int start = vertices.Count;
+-                    var direction = Directions[face];
+-                    for (int corner = 0; corner < 4; corner++)
++                    var used = new bool[uCount * vCount];
++                    for (int v = 0; v < vCount; v++)
++                    for (int u = 0; u < uCount; u++)
+                     {
+-                        vertices.Add((position + Corners[face * 4 + corner]) * voxelSize);
+-                        normals.Add((Vector3)direction);
++                        int usedIndex = u + uCount * v;
++                        if (used[usedIndex] || !HasFace(volume, faceMask, face, plane, u, v, startX, endX, startZ, endZ)) continue;
++                        int width = 1;
++                        while (u + width < uCount && !used[u + width + uCount * v]
++                            && HasFace(volume, faceMask, face, plane, u + width, v, startX, endX, startZ, endZ)) width++;
++                        int height = 1;
++                        bool expand = true;
++                        while (v + height < vCount && expand)
++                        {
++                            for (int testU = 0; testU < width; testU++)
++                                if (used[u + testU + uCount * (v + height)]
++                                    || !HasFace(volume, faceMask, face, plane, u + testU, v + height, startX, endX, startZ, endZ))
++                                { expand = false; break; }
++                            if (expand) height++;
++                        }
++                        for (int markV = 0; markV < height; markV++)
++                        for (int markU = 0; markU < width; markU++)
++                            used[u + markU + uCount * (v + markV)] = true;
++                        AppendGreedyQuad(face, plane, u, v, width, height, startX, startZ, voxelSize, vertices, normals, triangles);
+                     }
+-                    triangles.Add(start); triangles.Add(start + 1); triangles.Add(start + 2);
+-                    triangles.Add(start); triangles.Add(start + 2); triangles.Add(start + 3);
+                 }
+             }
+-            var mesh = new Mesh { name = $"Density Voxel Chunk {startX},{startZ}", indexFormat = IndexFormat.UInt32 };
+-            mesh.SetVertices(vertices); mesh.SetNormals(normals); mesh.SetTriangles(triangles, 0); mesh.RecalculateBounds(); mesh.UploadMeshData(true);
+-            return mesh;
++        }
++
++        private static bool HasFace(VoxelVolume volume, NativeArray<byte> faceMask, int face, int plane, int u, int v,
++            int startX, int endX, int startZ, int endZ)
++        {
++            int x, y, z;
++            if (face <= 1) { x = startX + plane; y = u; z = startZ + v; }
++            else if (face <= 3) { x = startX + u; y = plane; z = startZ + v; }
++            else { x = startX + v; y = u; z = startZ + plane; }
++            int index = x + volume.Width * (y + volume.Height * z);
++            return (faceMask[index] & (1 << face)) != 0;
++        }
++
++        private static void AppendGreedyQuad(int face, int plane, int u, int v, int width, int height,
++            int startX, int startZ, float voxelSize, List<Vector3> vertices, List<Vector3> normals, List<int> triangles)
++        {
++            Vector3 origin;
++            Vector3 du;
++            Vector3 dv;
++            Vector3 normal = Directions[face];
++            if (face == 0) { origin = new Vector3(startX + plane + 1, u, startZ + v); du = Vector3.up; dv = Vector3.forward; }
++            else if (face == 1) { origin = new Vector3(startX + plane, u, startZ + v + 1); du = Vector3.up; dv = Vector3.back; }
++            else if (face == 2) { origin = new Vector3(startX + u, plane + 1, startZ + v); du = Vector3.right; dv = Vector3.forward; }
++            else if (face == 3) { origin = new Vector3(startX + u, plane, startZ + v + 1); du = Vector3.right; dv = Vector3.back; }
++            else if (face == 4) { origin = new Vector3(startX + v + 1, u, startZ + plane + 1); du = Vector3.up; dv = Vector3.left; }
++            else { origin = new Vector3(startX + v, u, startZ + plane); du = Vector3.up; dv = Vector3.right; }
++
++            int start = vertices.Count;
++            vertices.Add(origin * voxelSize);
++            vertices.Add((origin + du * width) * voxelSize);
++            vertices.Add((origin + du * width + dv * height) * voxelSize);
++            vertices.Add((origin + dv * height) * voxelSize);
++            normals.Add(normal); normals.Add(normal); normals.Add(normal); normals.Add(normal);
++            triangles.Add(start); triangles.Add(start + 1); triangles.Add(start + 2);
++            triangles.Add(start); triangles.Add(start + 2); triangles.Add(start + 3);
+         }
+     }
+ }

@@ -1,0 +1,9 @@
+VOXEL OPTIMIZATION FINAL VERIFICATION
+TARGETS: D:\UnityHub\Project\程序化生成\Assets\Scripts\WorldGen\Voxels\VoxelVolume.cs; VoxelMeshBuilder.cs; VoxelWorldPreview.cs
+CHANGES: FillParallel uses Parallel.For for complete-volume sampling; BuildChunkMeshesWithJobs uses greedy rectangle merging; runtime and editor generation use the parallel fill and Jobs mesh path; Y remains full-height XZ 16x16 chunks.
+BUILD: dotnet build 程序化生成.slnx --no-restore -v:minimal => exit 0; stdout ends with 已成功生成 / 0 个警告 / 0 个错误; stderr empty.
+ROLLBACK: ROLLBACK.ps1 restored ROLLBACK_COPY_VoxelVolume.cs; hash equal baseline=True.
+BASELINE VoxelVolume SHA256: EDAD133AC6CD710FFB41A56657D1F76EE17BBB0D2D6A951CD37498ABA8F2F67C
+ROLLBACK VoxelVolume SHA256: EDAD133AC6CD710FFB41A56657D1F76EE17BBB0D2D6A951CD37498ABA8F2F67C
+REAPPLY: current VoxelVolume copied back to MODIFIED_VoxelVolume.cs after rollback.
+LIMITATION: FillParallel is managed worker-thread parallelism, not Burst, because IDensityFunction is an interface graph and CacheOnceFunction is stateful; converting the entire density graph to Burst-compatible structs is a separate refactor.
