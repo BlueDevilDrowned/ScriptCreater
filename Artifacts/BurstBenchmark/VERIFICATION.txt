@@ -1,0 +1,79 @@
+COMMAND: ['dotnet', 'build', 'UnityCompile.csproj', '--nologo', '-v:q']
+STDOUT:
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.34
+
+STDERR:
+
+EXIT: 0
+
+BASELINE: same input num=1000, startAll=true, Update(); modified also exercises disabled/invalid branches.
+COMMAND: ['dotnet', 'run', '--project', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Runner/Runner.csproj'), '-c', 'Release', '--nologo']
+STDOUT:
+LOGIC HARNESS ONLY: Unity APIs substituted; no native Burst compilation or performance validation.
+Close Busrt for1000need:0
+Open Busrt for1000need:0
+Flags reset: PASS
+
+STDERR:
+
+EXIT: 0
+
+MODIFIED: same input num=1000, startAll=true, Update(); modified also exercises disabled/invalid branches.
+COMMAND: ['dotnet', 'run', '--project', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Runner/Runner.csproj'), '-c', 'Release', '--nologo']
+STDOUT:
+LOGIC HARNESS ONLY: Unity APIs substituted; no native Burst compilation or performance validation.
+Managed Job: num=1000, average=0.0014 ms, checksum=1486834589
+Burst Job: num=1000, average=0.0014 ms, checksum=1486834589
+Checksums match. Managed/Burst time ratio: 1.01x
+Flags reset: PASS
+WARNING: Burst is disabled. Enable Jobs > Burst > Enable Compilation; Burst measurement skipped.
+Managed Job: num=1000, average=0.0015 ms, checksum=1486834589
+WARNING: num and repetitions must both be >= 1.
+
+STDERR:
+
+EXIT: 0
+
+COMMAND: ['C:\\Program Files\\Git\\bin\\bash.exe', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/ROLLBACK.sh'), WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Restored.cs')]
+STDOUT:
+
+STDERR:
+
+EXIT: 0
+
+ROLLBACK: same input num=1000, startAll=true, Update(); modified also exercises disabled/invalid branches.
+COMMAND: ['dotnet', 'run', '--project', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Runner/Runner.csproj'), '-c', 'Release', '--nologo']
+STDOUT:
+LOGIC HARNESS ONLY: Unity APIs substituted; no native Burst compilation or performance validation.
+Close Busrt for1000need:0
+Open Busrt for1000need:0
+Flags reset: PASS
+
+STDERR:
+
+EXIT: 0
+
+COMMAND: ['git', '-c', 'core.autocrlf=false', 'apply', '--unsafe-paths', '--directory=Artifacts/BurstBenchmark/PatchCheck', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/DIFF.patch')]
+STDOUT:
+
+STDERR:
+
+EXIT: 0
+
+Patch reconstruction verified byte-for-byte against MODIFIED_FILE.
+BASELINE SHA256: 2cf0c89c86d78821388de2508eb8d52e824fa476f1ffea8512c038d7e898b659
+MODIFIED SHA256: 56ace28a86ec41a9c39da5b1c39c78042426f23866f13c5a144b4f6c7b904042
+ROLLBACK SHA256: 2cf0c89c86d78821388de2508eb8d52e824fa476f1ffea8512c038d7e898b659
+Changed: test/test1 -> RunBenchmark, ManagedJob/BurstJob, Calculate, Stopwatch, repetitions; original flags retained.
+Original baseline bytes preserved in BASELINE.cs. Rollback executed on separate Restored.cs.
+Prior preparation errors: BurstCompiler.cs lookup exit 1 (incorrect package source path); apply_patch delete/add rejected for duplicate path; subsequent patch context rejected (CRLF source). Corrected using literal UTF-8 file write. Neither failed patch modified target.
+Previous harness attempt exit 1: expected checksum literal was incorrect. Independently recalculated uint algorithm in Python: 1486834589. Corrected expected value. First attempt retained in VERIFICATION.first-attempt.txt.
+Second verification exit 1: isolated compile references omitted ManagedKernelModule and Burst; corrected reference selection. Record retained in VERIFICATION.second-attempt.txt.
+Third verification exit 1: Unity 7 BurstCompileAttribute is in UnityEngine.BurstModule; added actual engine module reference. Record retained in VERIFICATION.third-attempt.txt.
+Patch reconstruction checks initially failed byte-hash comparison because git apply preserved original CRLF (4388 vs 4265 bytes; normalized text matched). Preserved original CRLF convention in modified source for byte-exact reconstruction. A diagnostic reapplication to an already changed copy exited 1; reset check copy from baseline before final apply.
+LIMIT: harness substitutes Unity APIs. Checksums/control flow only. Actual Unity native Burst execution and timings not verified.

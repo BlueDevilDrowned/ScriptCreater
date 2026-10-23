@@ -1,0 +1,74 @@
+COMMAND: ['dotnet', 'build', 'UnityCompile.csproj', '--nologo', '-v:q']
+STDOUT:
+D:\UnityHub\Project\程序化生成\Assets\Scripts\Learn\burstTest.cs(116,6): error CS0246: 未能找到类型或命名空间名“BurstCompileAttribute”(是否缺少 using 指令或程序集引用?) [D:\UnityHub\Project\程序化生成\Artifacts\BurstBenchmark\UnityCompile.csproj]
+D:\UnityHub\Project\程序化生成\Assets\Scripts\Learn\burstTest.cs(116,6): error CS0246: 未能找到类型或命名空间名“BurstCompile”(是否缺少 using 指令或程序集引用?) [D:\UnityHub\Project\程序化生成\Artifacts\BurstBenchmark\UnityCompile.csproj]
+
+生成失败。
+
+D:\UnityHub\Project\程序化生成\Assets\Scripts\Learn\burstTest.cs(116,6): error CS0246: 未能找到类型或命名空间名“BurstCompileAttribute”(是否缺少 using 指令或程序集引用?) [D:\UnityHub\Project\程序化生成\Artifacts\BurstBenchmark\UnityCompile.csproj]
+D:\UnityHub\Project\程序化生成\Assets\Scripts\Learn\burstTest.cs(116,6): error CS0246: 未能找到类型或命名空间名“BurstCompile”(是否缺少 using 指令或程序集引用?) [D:\UnityHub\Project\程序化生成\Artifacts\BurstBenchmark\UnityCompile.csproj]
+    0 个警告
+    2 个错误
+
+已用时间 00:00:01.37
+
+STDERR:
+
+EXIT: 1
+
+BASELINE: same input num=1000, startAll=true, Update(); modified also exercises disabled/invalid branches.
+COMMAND: ['dotnet', 'run', '--project', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Runner/Runner.csproj'), '-c', 'Release', '--nologo']
+STDOUT:
+LOGIC HARNESS ONLY: Unity APIs substituted; no native Burst compilation or performance validation.
+Close Busrt for1000need:0
+Open Busrt for1000need:0
+Flags reset: PASS
+
+STDERR:
+
+EXIT: 0
+
+MODIFIED: same input num=1000, startAll=true, Update(); modified also exercises disabled/invalid branches.
+COMMAND: ['dotnet', 'run', '--project', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Runner/Runner.csproj'), '-c', 'Release', '--nologo']
+STDOUT:
+LOGIC HARNESS ONLY: Unity APIs substituted; no native Burst compilation or performance validation.
+Managed Job: num=1000, average=0.0015 ms, checksum=1486834589
+Burst Job: num=1000, average=0.0015 ms, checksum=1486834589
+Checksums match. Managed/Burst time ratio: 1.01x
+Flags reset: PASS
+WARNING: Burst is disabled. Enable Jobs > Burst > Enable Compilation; Burst measurement skipped.
+Managed Job: num=1000, average=0.0015 ms, checksum=1486834589
+WARNING: num and repetitions must both be >= 1.
+
+STDERR:
+
+EXIT: 0
+
+COMMAND: ['C:\\Program Files\\Git\\bin\\bash.exe', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/ROLLBACK.sh'), WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Restored.cs')]
+STDOUT:
+
+STDERR:
+
+EXIT: 0
+
+ROLLBACK: same input num=1000, startAll=true, Update(); modified also exercises disabled/invalid branches.
+COMMAND: ['dotnet', 'run', '--project', WindowsPath('D:/UnityHub/Project/程序化生成/Artifacts/BurstBenchmark/Runner/Runner.csproj'), '-c', 'Release', '--nologo']
+STDOUT:
+LOGIC HARNESS ONLY: Unity APIs substituted; no native Burst compilation or performance validation.
+Close Busrt for1000need:0
+Open Busrt for1000need:0
+Flags reset: PASS
+
+STDERR:
+
+EXIT: 0
+
+BASELINE SHA256: 2cf0c89c86d78821388de2508eb8d52e824fa476f1ffea8512c038d7e898b659
+MODIFIED SHA256: 8ab4f24128cbeb00544763fd33c9784e7160f291a0956dcba425823cb711f675
+ROLLBACK SHA256: 2cf0c89c86d78821388de2508eb8d52e824fa476f1ffea8512c038d7e898b659
+Changed: test/test1 -> RunBenchmark, ManagedJob/BurstJob, Calculate, Stopwatch, repetitions; original flags retained.
+Original baseline bytes preserved in BASELINE.cs. Rollback executed on separate Restored.cs.
+Prior preparation errors: BurstCompiler.cs lookup exit 1 (incorrect package source path); apply_patch delete/add rejected for duplicate path; subsequent patch context rejected (CRLF source). Corrected using literal UTF-8 file write. Neither failed patch modified target.
+Previous harness attempt exit 1: expected checksum literal was incorrect. Independently recalculated uint algorithm in Python: 1486834589. Corrected expected value. First attempt retained in VERIFICATION.first-attempt.txt.
+Second verification exit 1: isolated compile references omitted ManagedKernelModule and Burst; corrected reference selection. Record retained in VERIFICATION.second-attempt.txt.
+LIMIT: harness substitutes Unity APIs. Checksums/control flow only. Actual Unity native Burst execution and timings not verified.

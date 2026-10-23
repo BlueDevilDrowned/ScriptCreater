@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ProceduralGeneration.WorldGen.Density;
 using UnityEngine;
 
@@ -20,8 +19,17 @@ namespace ProceduralGeneration.WorldGen.Voxels
         [SerializeField] private Color solidColor = new Color(0.5f, 0.55f, 0.6f, 1f);
         [SerializeField] private Material material;
         [SerializeField] private bool generateOnStart = true;
-        [SerializeField] private bool useJobsForMesh = true;
-        [SerializeField, Min(1)] private int chunksPerFrame = 1;
+        [Tooltip("每帧最多上传的区块 Mesh 数。采样和顶点计算在后台线程，主线程只负责上传。")]
+        [SerializeField, Min(1)] private int chunksPerFrame = 4;
+        [Tooltip("对应 MC NoiseInterpolator：只在 4x8x4 cell 角点计算密度，内部三线性插值。关闭则逐体素精确采样。")]
+        [SerializeField] private bool cellInterpolation = true;
+        [Tooltip("后台线程数，0 = CPU 核心数 - 1。")]
+        [SerializeField, Min(0)] private int workerThreads = 0;
+        // 对应 MC overworld：NoiseSettings.create(-64, 384, 1, 2) → cellWidth 4, cellHeight 8。
+        private const int CellWidth = 4;
+        private const int CellHeight = 8;
+        private ChunkGenerationPipeline activePipeline;
+        private int lastWorkerCount;
         private Mesh generatedMesh;
         private readonly System.Collections.Generic.List<Mesh> generatedChunkMeshes = new System.Collections.Generic.List<Mesh>();
         private Transform chunkRoot;
@@ -30,7 +38,9 @@ namespace ProceduralGeneration.WorldGen.Voxels
         public int ChunksPerFrame => chunksPerFrame;
         public void SetChunksPerFrame(int value) { chunksPerFrame = Math.Max(1, value); }
 
-        public VoxelVolume Volume { get; private set; }
+        /// <summary>已采样的实心体素总数；分帧生成期间会逐步增长。</summary>
+        public long SolidCount { get; private set; }
+        public bool IsGenerating { get; private set; }
         public Vector3Int WorldSize => worldSize;
         public float VoxelSize => voxelSize;
         public int Seed => seed;
@@ -44,7 +54,7 @@ namespace ProceduralGeneration.WorldGen.Voxels
                 throw new ArgumentOutOfRangeException(nameof(size), "Size and voxel size must be positive and finite.");
             checked
             {
-                int count = size.x * size.y * size.z;
+                int chunkVoxels = 16 * 16 * size.y; // 单个区块须能放进一个数组
                 int endX = origin.x + size.x - 1;
                 int endY = origin.y + size.y - 1;
                 int endZ = origin.z + size.z - 1;
@@ -83,95 +93,125 @@ namespace ProceduralGeneration.WorldGen.Voxels
         public void StartGeneration()
         {
             ValidateWindow(sampleOrigin.y, worldSize.y);
-            if (generationRoutine != null) StopCoroutine(generationRoutine);
+            CancelGeneration();
             generationRoutine = StartCoroutine(GenerateOverFrames());
         }
 
+        /// <summary>编辑器下一次性跑完同一条流式区块管线，不分帧（后台线程仍然并行）。</summary>
         private void GenerateSynchronously()
         {
-            if (worldSize.x <= 0 || worldSize.y <= 0 || worldSize.z <= 0 || voxelSize <= 0
-                || float.IsNaN(voxelSize) || float.IsInfinity(voxelSize))
-                throw new ArgumentOutOfRangeException(nameof(worldSize), "Size and voxel size must be positive and finite.");
-            ValidateWindow(sampleOrigin.y, worldSize.y);
-            var timer = Stopwatch.StartNew();
-            var fields = WorldFields.CreateLearningDefaults(seed, generationSettings);
-            var volume = new VoxelVolume(worldSize.x, worldSize.y, worldSize.z);
-            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
-            long samplingMilliseconds = timer.ElapsedMilliseconds;
-            ClearGeneratedMeshes();
-            var meshes = useJobsForMesh
-                ? VoxelMeshBuilder.BuildChunkMeshesWithJobs(volume, voxelSize, 16)
-                : BuildChunkMeshesWithoutJobs(volume);
-            Volume = volume;
-            GetComponent<MeshFilter>().sharedMesh = null;
-            GetComponent<MeshRenderer>().enabled = false;
-            chunkRoot = new GameObject("Voxel Chunks XZ16").transform;
-            chunkRoot.SetParent(transform, false);
-            foreach (Mesh mesh in meshes)
+            using (ChunkGenerationPipeline pipeline = CreatePipeline())
             {
-                generatedChunkMeshes.Add(mesh);
-                var child = new GameObject(mesh.name);
-                child.transform.SetParent(chunkRoot, false);
-                child.AddComponent<MeshFilter>().sharedMesh = mesh;
-                child.AddComponent<MeshRenderer>().sharedMaterial = GetMaterial();
+                activePipeline = pipeline;
+                try
+                {
+                    while (!pipeline.IsComplete)
+                    {
+                        pipeline.Pump(int.MaxValue);
+                        if (!pipeline.IsComplete) pipeline.WaitForWork(50);
+                    }
+                    SolidCount = pipeline.SolidCount;
+                    LogCompletion(pipeline);
+                }
+                finally
+                {
+                    activePipeline = null;
+                }
             }
-            UnityEngine.Debug.Log($"Voxel world: {worldSize}, voxel={voxelSize}, solid={volume.SolidCount}, "
-                + $"chunks={meshes.Count}, jobs={useJobsForMesh}, sample={samplingMilliseconds}ms, total={timer.ElapsedMilliseconds}ms", this);
         }
 
         private IEnumerator GenerateOverFrames()
         {
+            IsGenerating = true;
+            ChunkGenerationPipeline pipeline = CreatePipeline();
+            activePipeline = pipeline;
+            try
+            {
+                while (!pipeline.IsComplete)
+                {
+                    // 主线程每帧只做上传：chunksPerFrame 限制每帧创建的 Mesh 数，采样和顶点计算都在后台。
+                    pipeline.Pump(Math.Max(1, chunksPerFrame));
+                    SolidCount = pipeline.SolidCount;
+                    if (!pipeline.IsComplete) yield return null;
+                }
+                LogCompletion(pipeline);
+            }
+            finally
+            {
+                // 正常结束或抛异常时复位；StopCoroutine 不会走到这里，由 CancelGeneration 复位。
+                pipeline.Dispose();
+                if (activePipeline == pipeline) activePipeline = null;
+                IsGenerating = false;
+                generationRoutine = null;
+            }
+        }
+
+        /// <summary>
+        /// 准备场景并创建流式区块管线：不分配全局体积，每个区块独立采样，
+        /// 只在构建自身及邻居 Mesh 期间保留在内存中，驻留量约 3~4 行区块，与世界深度无关。
+        /// 某区块只要自身和 ±X/±Z 四个邻居都已采样，就能得到正确的边界剔除结果。
+        /// </summary>
+        private ChunkGenerationPipeline CreatePipeline()
+        {
             if (worldSize.x <= 0 || worldSize.y <= 0 || worldSize.z <= 0 || voxelSize <= 0
                 || float.IsNaN(voxelSize) || float.IsInfinity(voxelSize))
                 throw new ArgumentOutOfRangeException(nameof(worldSize), "Size and voxel size must be positive and finite.");
             ValidateWindow(sampleOrigin.y, worldSize.y);
-            var timer = Stopwatch.StartNew();
             ClearGeneratedMeshes();
-            var fields = WorldFields.CreateLearningDefaults(seed, generationSettings);
-            var volume = new VoxelVolume(worldSize.x, worldSize.y, worldSize.z);
-            Volume = volume;
+            SolidCount = 0;
             GetComponent<MeshFilter>().sharedMesh = null;
             GetComponent<MeshRenderer>().enabled = false;
             chunkRoot = new GameObject("Voxel Chunks XZ16").transform;
             chunkRoot.SetParent(transform, false);
 
-            // Sample the complete volume before meshing so neighboring chunks have
-            // correct boundary information. The mesh pass uses the same Burst face
-            // visibility path as synchronous generation instead of BuildRegion's
-            // main-thread List-based implementation.
-            volume.Fill(fields.FinalDensity, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z);
-            var meshTimer = Stopwatch.StartNew();
-            var meshes = useJobsForMesh
-                ? VoxelMeshBuilder.BuildChunkMeshesWithJobs(volume, voxelSize, 16)
-                : BuildChunkMeshesWithoutJobs(volume);
-            meshTimer.Stop();
-
-            int completed = 0;
-            int total = meshes.Count;
-            for (int meshIndex = 0; meshIndex < meshes.Count; meshIndex++)
+            // 后台线程只读这份快照，避免 Inspector 修改与采样并发。
+            WorldGenerationSettings settings = generationSettings.Clone();
+            int worldSeed = seed;
+            int cellW = cellInterpolation ? CellWidth : 1;
+            int cellH = cellInterpolation ? CellHeight : 1;
+            if (cellInterpolation)
             {
-                Mesh mesh = meshes[meshIndex];
-                generatedChunkMeshes.Add(mesh);
-                var child = new GameObject(mesh.name);
-                child.transform.SetParent(chunkRoot, false);
-                child.AddComponent<MeshFilter>().sharedMesh = mesh;
-                child.AddComponent<MeshRenderer>().sharedMaterial = GetMaterial();
-                completed++;
-                if (completed % Math.Max(1, chunksPerFrame) == 0)
-                    yield return null;
+                string warning = settings.GetCellAliasingWarning(cellW, cellH);
+                if (warning != null) UnityEngine.Debug.LogWarning(warning, this);
             }
-            generationRoutine = null;
-            timer.Stop();
-            UnityEngine.Debug.Log($"Voxel world generation complete: {worldSize}, chunks={completed}, solid={volume.SolidCount}, mesh={meshTimer.ElapsedMilliseconds}ms, elapsed={timer.ElapsedMilliseconds}ms", this);
+            int workers = workerThreads > 0 ? workerThreads : Math.Max(1, SystemInfo.processorCount - 1);
+            lastWorkerCount = workers;
+            // 每个采样器有自己的 WorldFields：函数图里的列缓存带可变状态，不能跨线程共享。
+            return new ChunkGenerationPipeline(
+                worldSize.x, worldSize.y, worldSize.z, sampleOrigin.x, sampleOrigin.y, sampleOrigin.z, voxelSize,
+                () => new ChunkDensitySampler(WorldFields.CreateLearningDefaults(worldSeed, settings).FinalDensity, cellW, cellH),
+                data => AddChunkObject(VoxelMeshBuilder.CreateMesh(data)),
+                workers);
         }
 
-        private System.Collections.Generic.List<Mesh> BuildChunkMeshesWithoutJobs(VoxelVolume volume)
+        private void LogCompletion(ChunkGenerationPipeline pipeline)
         {
-            var result = new System.Collections.Generic.List<Mesh>();
-            for (int z = 0; z < volume.Depth; z += 16)
-            for (int x = 0; x < volume.Width; x += 16)
-                result.Add(VoxelMeshBuilder.BuildRegion(volume, voxelSize, x, Math.Min(x + 16, volume.Width), z, Math.Min(z + 16, volume.Depth)));
-            return result;
+            UnityEngine.Debug.Log($"Voxel world generation complete: {worldSize}, chunks={pipeline.MeshedChunks}, solid={pipeline.SolidCount}, "
+                + $"cell={(cellInterpolation ? $"{CellWidth}x{CellHeight}x{CellWidth}" : "off")}, workers={lastWorkerCount}, "
+                + $"peakLoadedChunks={pipeline.PeakLoadedChunks}, sampleCpu={pipeline.SampleMilliseconds:F0}ms, "
+                + $"meshCpu={pipeline.MeshMilliseconds:F0}ms, elapsed={pipeline.ElapsedMilliseconds}ms", this);
+        }
+
+        private void CancelGeneration()
+        {
+            if (generationRoutine != null)
+            {
+                StopCoroutine(generationRoutine);
+                generationRoutine = null;
+            }
+            activePipeline?.Dispose();
+            activePipeline = null;
+            // StopCoroutine 不会触发协程内的 finally，这里手动复位。
+            IsGenerating = false;
+        }
+
+        private void AddChunkObject(Mesh mesh)
+        {
+            generatedChunkMeshes.Add(mesh);
+            var child = new GameObject(mesh.name);
+            child.transform.SetParent(chunkRoot, false);
+            child.AddComponent<MeshFilter>().sharedMesh = mesh;
+            child.AddComponent<MeshRenderer>().sharedMaterial = GetMaterial();
         }
 
         private void ApplyMaterial()
@@ -198,13 +238,9 @@ namespace ProceduralGeneration.WorldGen.Voxels
         [ContextMenu("Clear Voxel World")]
         public void Clear()
         {
-            if (generationRoutine != null)
-            {
-                StopCoroutine(generationRoutine);
-                generationRoutine = null;
-            }
+            CancelGeneration();
             ClearGeneratedMeshes();
-            Volume = null;
+            SolidCount = 0;
         }
 
         private void ClearGeneratedMeshes()
@@ -217,6 +253,12 @@ namespace ProceduralGeneration.WorldGen.Voxels
             generatedMesh = null;
             GetComponent<MeshFilter>().sharedMesh = null;
             GetComponent<MeshRenderer>().enabled = true;
+        }
+
+        private void OnDisable()
+        {
+            // 组件禁用时 Unity 会停止协程但不走 finally，这里取消后台任务。
+            CancelGeneration();
         }
 
         private void OnDestroy()

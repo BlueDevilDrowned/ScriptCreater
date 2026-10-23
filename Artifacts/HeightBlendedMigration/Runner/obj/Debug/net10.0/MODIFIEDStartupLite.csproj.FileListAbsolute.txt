@@ -1,0 +1,15 @@
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\bin\Debug\net10.0\MODIFIEDStartupLite.exe
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\bin\Debug\net10.0\MODIFIEDStartupLite.deps.json
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\bin\Debug\net10.0\MODIFIEDStartupLite.runtimeconfig.json
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\bin\Debug\net10.0\MODIFIEDStartupLite.dll
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\bin\Debug\net10.0\MODIFIEDStartupLite.pdb
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.GeneratedMSBuildEditorConfig.editorconfig
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.AssemblyInfoInputs.cache
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.AssemblyInfo.cs
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.csproj.CoreCompileInputs.cache
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.sourcelink.json
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.dll
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\refint\MODIFIEDStartupLite.dll
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.pdb
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\MODIFIEDStartupLite.genruntimeconfig.cache
+D:\UnityHub\Project\程序化生成\Artifacts\HeightBlendedMigration\Runner\obj\Debug\net10.0\ref\MODIFIEDStartupLite.dll

@@ -63,18 +63,21 @@ public sealed class WorldFields
             settings = settings ?? new WorldGenerationSettings();
             settings.Validate();
             // 地形环境是二维场：同一 XZ 列共享样条参数，不随 Y 漂移。
-            IDensityFunction continents = DensityFunctions.Noise2D(seed + 1, 0.0025, 1.0);
-            IDensityFunction erosion = DensityFunctions.Noise2D(seed + 2, 0.008, 1.0);
-            IDensityFunction ridges = DensityFunctions.Noise2D(seed + 3, 0.012, 1.0);
-            IDensityFunction foldedRidges = OriginalTerrainProvider.PeaksAndValleys(ridges);
-            IDensityFunction offset = DensityFunctions.Add(DensityFunctions.Constant(-0.50375), OriginalTerrainProvider.Offset(continents, erosion, foldedRidges));
-            IDensityFunction factor = OriginalTerrainProvider.Factor(continents, erosion, foldedRidges);
-            IDensityFunction jaggedness = OriginalTerrainProvider.Jaggedness(continents, erosion, foldedRidges);
+            // 对应 MC 的 flatCache/cache2d：二维场和三条样条都按列缓存，同一列只算一次。
+            // 样条内部会多次读取同一个基础噪声，所以基础噪声本身也要缓存。
+            // 注意：缓存带可变状态，WorldFields 实例不是线程安全的，每个线程/任务各建一份。
+            IDensityFunction continents = DensityFunctions.Cache2D(DensityFunctions.Noise2D(seed + 1, 0.0025, 1.0));
+            IDensityFunction erosion = DensityFunctions.Cache2D(DensityFunctions.Noise2D(seed + 2, 0.008, 1.0));
+            IDensityFunction ridges = DensityFunctions.Cache2D(DensityFunctions.Noise2D(seed + 3, 0.012, 1.0));
+            IDensityFunction foldedRidges = DensityFunctions.Cache2D(OriginalTerrainProvider.PeaksAndValleys(ridges));
+            IDensityFunction offset = DensityFunctions.Cache2D(DensityFunctions.Add(DensityFunctions.Constant(-0.50375), OriginalTerrainProvider.Offset(continents, erosion, foldedRidges)));
+            IDensityFunction factor = DensityFunctions.Cache2D(OriginalTerrainProvider.Factor(continents, erosion, foldedRidges));
+            IDensityFunction jaggedness = DensityFunctions.Cache2D(OriginalTerrainProvider.Jaggedness(continents, erosion, foldedRidges));
             // 垂直渐变只提供中尺度趋势；上下边界由 VerticalSlideFunction 处理。
             IDensityFunction vertical = DensityFunctions.YClampedGradient(settings.GradientFromY, settings.GradientToY, settings.GradientFromValue, settings.GradientToValue);
             IDensityFunction depth = DensityFunctions.Add(vertical, offset);
             // 原版 JAGGED 的 Y 采样倍率为 0；Jaggedness 是强度，不是正向密度常量。
-            IDensityFunction jaggedNoise = DensityFunctions.Noise2D(seed + 6, 0.035, 1.0);
+            IDensityFunction jaggedNoise = DensityFunctions.Cache2D(DensityFunctions.Noise2D(seed + 6, 0.035, 1.0));
             IDensityFunction jaggedTerm = DensityFunctions.Multiply(
                 jaggedness, DensityFunctions.HalfNegative(jaggedNoise));
             IDensityFunction baseTerrain = DensityFunctions.NoiseGradientDensity(
@@ -90,9 +93,10 @@ public sealed class WorldFields
                 minY: settings.MinY,
                 maxY: settings.MaxYExclusive,
                 bottomSize: settings.BottomSlideSize,
-                bottomTarget: 1.0,
+                bottomTarget: settings.BottomSlideTarget,
                 topSize: settings.TopSlideSize,
-                topTarget: -1.0);
+                topTarget: settings.TopSlideTarget,
+                topOffset: settings.TopSlideOffset);
 
             return new WorldFields(
                 DensityFunctions.Noise2D(seed + 10, 0.004, 1),

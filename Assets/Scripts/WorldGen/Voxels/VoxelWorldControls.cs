@@ -46,7 +46,7 @@ namespace ProceduralGeneration.WorldGen.Voxels
             DrawVector(ref originX, ref originY, ref originZ);
             GUILayout.Label("Voxel size (Unity units)");
             voxelSize = GUILayout.TextField(voxelSize);
-            GUILayout.Label("Chunks per frame (generation speed)");
+            GUILayout.Label("Mesh uploads per frame (sampling runs in background)");
             chunksPerFrame = GUILayout.TextField(chunksPerFrame);
             if (GUILayout.Button("Generate / Regenerate")) Regenerate();
             if (GUILayout.Button("Clear"))
@@ -82,7 +82,9 @@ namespace ProceduralGeneration.WorldGen.Voxels
             {
                 preview.SetChunksPerFrame(speed);
                 preview.Generate(new Vector3Int(x, y, z), worldSeed, new Vector3Int(ox, oy, oz), cellSize);
-                message = $"Generated {x} x {y} x {z}. Solid: {preview.Volume.SolidCount}";
+                message = preview.IsGenerating
+                    ? $"Generating {x} x {y} x {z} over frames..."
+                    : $"Generated {x} x {y} x {z}. Solid: {preview.SolidCount}";
             }
             catch (ArgumentException error)
             {

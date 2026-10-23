@@ -172,6 +172,82 @@ namespace ProceduralGeneration.WorldGen.Voxels
             return meshes;
         }
 
+        // 主线程便捷路径复用的缓冲。后台线程请各自持有 ChunkMeshData。
+        private static readonly ChunkMeshData MainThreadData = new ChunkMeshData();
+
+        /// <summary>主线程便捷入口：计算顶点并立即创建 Mesh。</summary>
+        public static Mesh BuildChunk(VoxelChunk center, VoxelChunk posX, VoxelChunk negX,
+            VoxelChunk posZ, VoxelChunk negZ, float voxelSize)
+        {
+            BuildChunkData(center, posX, negX, posZ, negZ, voxelSize, MainThreadData);
+            return CreateMesh(MainThreadData);
+        }
+
+        /// <summary>
+        /// 从独立区块数据计算网格顶点，不调用任何 Unity API，可在后台线程执行。
+        /// 邻居为 null 表示世界外（空气），世界边缘会生成封闭表面。
+        /// 邻居区块须与 center 同高；Z 方向邻居须与 center 同宽，X 方向邻居须与 center 同深。
+        /// 顶点使用世界体素坐标（含 StartX/StartZ）。邻居只读，多个线程可以同时读同一个区块。
+        /// </summary>
+        public static void BuildChunkData(VoxelChunk center, VoxelChunk posX, VoxelChunk negX,
+            VoxelChunk posZ, VoxelChunk negZ, float voxelSize, ChunkMeshData output)
+        {
+            if (center == null) throw new ArgumentNullException(nameof(center));
+            if (output == null) throw new ArgumentNullException(nameof(output));
+            if (voxelSize <= 0 || float.IsNaN(voxelSize) || float.IsInfinity(voxelSize))
+                throw new ArgumentOutOfRangeException(nameof(voxelSize));
+            output.Clear();
+            output.Name = $"Density Voxel Chunk {center.StartX},{center.StartZ}";
+            var vertices = output.Vertices;
+            var normals = output.Normals;
+            var triangles = output.Triangles;
+            int sx = center.SizeX, sy = center.SizeY, sz = center.SizeZ;
+            if (center.SolidCount == 0) return;
+            for (int z = 0; z < sz; z++)
+            for (int y = 0; y < sy; y++)
+            for (int x = 0; x < sx; x++)
+            {
+                if (center.Get(x, y, z) == 0) continue;
+                var position = new Vector3(center.StartX + x, y, center.StartZ + z);
+                for (int face = 0; face < 6; face++)
+                {
+                    var d = Directions[face];
+                    if (IsSolid(center, posX, negX, posZ, negZ, x + d.x, y + d.y, z + d.z)) continue;
+                    int start = vertices.Count;
+                    var normal = new Vector3(d.x, d.y, d.z);
+                    for (int corner = 0; corner < 4; corner++)
+                    {
+                        vertices.Add((position + Corners[face * 4 + corner]) * voxelSize);
+                        normals.Add(normal);
+                    }
+                    triangles.Add(start); triangles.Add(start + 1); triangles.Add(start + 2);
+                    triangles.Add(start); triangles.Add(start + 2); triangles.Add(start + 3);
+                }
+            }
+        }
+
+        /// <summary>把顶点数据上传为 Mesh。只能在主线程调用。</summary>
+        public static Mesh CreateMesh(ChunkMeshData data)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            var mesh = new Mesh { name = data.Name ?? "Density Voxel Chunk", indexFormat = IndexFormat.UInt32 };
+            mesh.SetVertices(data.Vertices); mesh.SetNormals(data.Normals); mesh.SetTriangles(data.Triangles, 0);
+            mesh.RecalculateBounds(); mesh.UploadMeshData(true);
+            return mesh;
+        }
+
+        /// <summary>局部坐标越出 center 一格时转到对应邻居；Y 越界或邻居缺失视为空气。</summary>
+        private static bool IsSolid(VoxelChunk c, VoxelChunk posX, VoxelChunk negX, VoxelChunk posZ, VoxelChunk negZ,
+            int x, int y, int z)
+        {
+            if (y < 0 || y >= c.SizeY) return false;
+            if (x >= c.SizeX) return posX != null && posX.Get(0, y, z) != 0;
+            if (x < 0) return negX != null && negX.Get(negX.SizeX - 1, y, z) != 0;
+            if (z >= c.SizeZ) return posZ != null && posZ.Get(x, y, 0) != 0;
+            if (z < 0) return negZ != null && negZ.Get(x, y, negZ.SizeZ - 1) != 0;
+            return c.Get(x, y, z) != 0;
+        }
+
         private static Mesh BuildMeshFromMask(VoxelVolume volume, NativeArray<byte> faceMask, float voxelSize,
             int startX, int endX, int startZ, int endZ)
         {

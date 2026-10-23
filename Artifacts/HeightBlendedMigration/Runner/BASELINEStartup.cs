@@ -1,0 +1,1 @@
+using System; using ProceduralGeneration.WorldGen.Voxels; class Startup { static void Main(){ try { var v=new VoxelVolume(1280,384,1280); Console.WriteLine("ALLOCATED="+(v.Width*v.Height*v.Depth)); } catch(Exception e) { Console.WriteLine(e.GetType().Name+":"+e.Message); } var safe=new VoxelVolume(128,160,128); Console.WriteLine("SAFE="+(safe.Width*safe.Height*safe.Depth)); }}

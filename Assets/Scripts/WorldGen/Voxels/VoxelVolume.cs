@@ -7,6 +7,7 @@ namespace ProceduralGeneration.WorldGen.Voxels
     /// <summary>有限大小的体素数据。坐标单位是体素，不是 Unity 米。</summary>
     public sealed class VoxelVolume
     {
+        public const long MaxVoxelCount = 16000000;
         public int Width { get; }
         public int Height { get; }
         public int Depth { get; }
@@ -17,10 +18,13 @@ namespace ProceduralGeneration.WorldGen.Voxels
         {
             if (width <= 0 || height <= 0 || depth <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width), "Dimensions must be positive.");
+            long voxelCount = (long)width * height * depth;
+            if (voxelCount > MaxVoxelCount)
+                throw new ArgumentException($"Voxel volume has {voxelCount:N0} cells; maximum for full-volume preview is {MaxVoxelCount:N0}. Reduce world size or use streaming chunks.", nameof(width));
             Width = width;
             Height = height;
             Depth = depth;
-            solid = new bool[checked(width * height * depth)];
+            solid = new bool[checked((int)voxelCount)];
         }
 
         public void Fill(IDensityFunction density, int originX = 0, int originY = 0, int originZ = 0)

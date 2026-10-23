@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj",
-      "projectName": "Runner",
-      "projectPath": "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\Runner.csproj",
+      "projectUniqueName": "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\MODIFIEDStartup.csproj",
+      "projectName": "MODIFIEDStartup",
+      "projectPath": "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\MODIFIEDStartup.csproj",
       "packagesPath": "C:\\Users\\BlueDevil\\.nuget\\packages\\",
       "outputPath": "D:\\UnityHub\\Project\\程序化生成\\Artifacts\\HeightBlendedMigration\\Runner\\obj\\",
       "projectStyle": "PackageReference",

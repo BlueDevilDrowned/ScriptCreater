@@ -42,11 +42,14 @@ public static class DensityFunctions
             IDensityFunction input,
             int minY, int maxY,
             int bottomSize, double bottomTarget,
-            int topSize, double topTarget)
+            int topSize, double topTarget, int topOffset = 0)
             => new VerticalSlideFunction(input, minY, maxY,
-                bottomSize, bottomTarget, topSize, topTarget);
+                bottomSize, bottomTarget, topSize, topTarget, topOffset);
         public static IDensityFunction Spline(IDensityFunction coordinate, params CubicSplinePoint[] points)
             => new CubicSplineFunction(coordinate, points);
+
+        /// <summary>按 (X, Z) 缓存上一次结果，对应 MC Cache2D。只用于与 Y 无关的函数；不是线程安全的。</summary>
+        public static IDensityFunction Cache2D(IDensityFunction input) => new ColumnCacheFunction(input);
 
         /// <summary>以一次采样结果为常量的简单缓存，适合固定坐标的重复读取。</summary>
         public static IDensityFunction CacheOnce(IDensityFunction input) => new CacheOnceFunction(input);
