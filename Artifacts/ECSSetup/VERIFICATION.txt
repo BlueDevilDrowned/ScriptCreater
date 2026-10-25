@@ -1,0 +1,40 @@
+ECS environment transaction verification
+
+TARGET
+- Project: D:\UnityHub\Project\程序化生成
+- Target file: Packages/manifest.json
+- Goal: declare official Unity Entities ECS packages
+- Changed dependencies: com.unity.entities=1.5.0; com.unity.entities.graphics=1.5.0
+
+BASELINE
+Command: Get-Content Packages/manifest.json | ConvertFrom-Json | Select-Object -ExpandProperty dependencies | Get-Member -MemberType NoteProperty | Select-String entities
+Stdout: (no matching entities properties)
+Stderr: (none)
+Exit: 1
+SHA256: B0D760FFCA4A20913B105B460B792C0573C8630923ACA70499CF1A4197C15AF6
+
+MODIFIED
+Command: Get-Content Packages/manifest.json | ConvertFrom-Json | Select-Object -ExpandProperty dependencies | Select-Object -ExpandProperty 'com.unity.entities'; Get-Content Packages/manifest.json | ConvertFrom-Json | Select-Object -ExpandProperty dependencies | Select-Object -ExpandProperty 'com.unity.entities.graphics'
+Stdout:
+1.5.0
+1.5.0
+Stderr: (none)
+Exit: 0
+SHA256: recorded after modification by verification command
+
+PACKAGE METADATA
+Command: Invoke-WebRequest https://packages.unity.com/com.unity.entities and https://packages.unity.com/com.unity.entities.graphics
+Observed: both 1.5.0 entries exist; each declares Unity 6000.0 minimum; entities.graphics 1.5.0 depends on entities 1.5.0.
+
+ROLLBACK
+Command: bash Artifacts/ECSSetup/ROLLBACK.sh <separate-modified-copy>
+Observed: restored the copy from manifest.baseline.json; restored SHA256 equals baseline SHA256.
+
+LIMITATION
+Unity Editor executable was not present on this host, so a Unity batchmode compile/import event could not be observed. Unity Package Manager will resolve Packages/packages-lock.json when the project is opened in the matching Editor.
+
+CORRECTED EXECUTION ERROR
+Initial rollback invocation used `bash` directly and failed on Windows PowerShell: `The term 'bash' is not recognized...` (exit surfaced by PowerShell). The same rollback was then executed with the installed Git Bash executable `C:\Program Files\Git\bin\bash.exe`; it exited 0 and restored the baseline hash exactly.
+
+FINAL MODIFIED HASH
+FD226080D051CF9FF0C42218BA9F02DDA4B0A236F95C8994B9CA59F4B1BEA693

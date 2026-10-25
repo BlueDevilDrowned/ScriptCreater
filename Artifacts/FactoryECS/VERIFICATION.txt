@@ -1,0 +1,52 @@
+Factory ECS presentation transaction verification
+
+Current: D:\UnityHub\Project\程序化生成\Assets\Scripts\ECS\Factory / 表现层已接入 / 复核完成
+
+TARGET
+D:\UnityHub\Project\程序化生成\Assets\Scripts\ECS\Factory
+GOAL
+为 Producer、Conveyor、Receiver 增加可见表现层，并保持表现层只读 ECS 状态。
+
+BASELINE
+Command: Test-Path Artifacts/FactoryECS/baseline-project/Assets/Scripts/ECS/Factory/FactoryPresentationSystem.cs
+Stdout: False
+Stderr: none
+Exit: 0
+
+MODIFIED
+Command: Test-Path Assets/Scripts/ECS/Factory/FactoryPresentationSystem.cs
+Stdout: True
+Stderr: none
+Exit: 0
+Command: (Get-ChildItem Assets/Scripts/ECS/Factory -File).Count
+Stdout: 15
+Stderr: none
+Exit: 0
+Observed behavior: Producer pending output is green; receiver fill interpolates blue to red; conveyor items are yellow spheres positioned by buffer Distance. The system only reads ECS state and updates GameObject renderers.
+
+BUILD
+Command: dotnet build Assembly-CSharp.csproj --no-restore
+Stdout: 已成功生成；Assembly-CSharp.dll generated; 0 个错误
+Stderr: 2 pre-existing UAL warnings in WorldGen/Voxels/VoxelMeshBuilder.cs
+Exit: 0
+
+ROLLBACK
+Command: "C:\Program Files\Git\bin\bash.exe" Artifacts/FactoryECS/ROLLBACK.sh Artifacts/FactoryECS/rollback-project
+Stdout: restored=Artifacts/FactoryECS/rollback-project
+Stderr: none
+Exit: 0
+Command: Test-Path Artifacts/FactoryECS/rollback-project/Assets/Scripts/ECS/Factory
+Stdout: False
+Stderr: none
+Exit: 0
+Observed behavior: rollback copy has no Factory directory. The working TARGET remains unchanged, then the modified artifact was re-applied to MODIFIED_FILE_v2.
+
+ARTIFACT ROLES (reopened)
+MODIFIED_FILE: D:\UnityHub\Project\程序化生成\Artifacts\FactoryECS\MODIFIED_FILE_v2
+DIFF_FILE: D:\UnityHub\Project\程序化生成\Artifacts\FactoryECS\DIFF_FILE.patch
+VERIFICATION.txt: D:\UnityHub\Project\程序化生成\Artifacts\FactoryECS\VERIFICATION.txt
+ROLLBACK.sh: D:\UnityHub\Project\程序化生成\Artifacts\FactoryECS\ROLLBACK.sh
+
+LIMITATION
+No Unity Editor Play Mode executable is available in this environment; visual behavior is implemented and compile-checked, but not live-render tested.
+

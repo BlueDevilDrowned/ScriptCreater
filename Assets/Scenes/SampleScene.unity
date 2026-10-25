@@ -610,7 +610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fc659471963e84d9b7fe7097e129cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BurstTest
-  num: 1000
+  num: 1000000
+  repetitions: 5
   starttest: 0
   startburst: 0
   startAll: 0
